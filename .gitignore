@@ -7,3 +7,5 @@ dump.rdb
 client/less
 server/config.json
 client/data/config.json
+*.lock
+*error.log
