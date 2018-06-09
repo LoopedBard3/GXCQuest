@@ -212,16 +212,14 @@ module.exports = Incoming = cls.Class.extend({
             //         self.connection.close('API response is malformed!')
             //     }
             // });
+        // } else if (isGuest) {
 
-        } else if (isGuest) {
+        //     self.player.username = 'Guest' + Utils.randomInt(0, 2000000);
+        //     self.player.password = null;
+        //     self.player.email = nulel;
+        //     self.player.isGuest = true;
 
-            self.player.username = 'Guest' + Utils.randomInt(0, 2000000);
-            self.player.password = null;
-            self.player.email = null;
-            self.player.isGuest = true;
-
-            self.mysql.login(self.player);
-
+        //     self.mysql.login(self.player);
         } else {
             self.mysql.login(self.player, function(result) {
                 if (result.notfounduser) {
