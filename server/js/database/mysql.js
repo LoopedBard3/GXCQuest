@@ -5,7 +5,8 @@ var cls = require('../lib/class'),
     Creator = require('./creator'),
     _ = require('underscore'),
     Loader = require('./loader'),
-    Config = require('../../config.json');
+    Config = require('../../config.json'),
+    hash = require('object-hash');
 
 module.exports = MySQL = cls.Class.extend({
 
@@ -88,59 +89,70 @@ module.exports = MySQL = cls.Class.extend({
         self.creator = new Creator(self);
     },
 
-    login: function(player) {
+    login: function(player, callback) {
         var self = this,
             found;
 
-            log.info('Initiating login for: ' + player.username);
+        log.info('Initiating login for: ' + player.username);
 
-            self.connection.query('SELECT * FROM `player_data`, `player_equipment` WHERE `player_data`.`username`= ? ', [player.username],  function(error, rows, fields) {
-
-                if (error) {
+        self.connection.query('SELECT * FROM `player_data`, `player_equipment` WHERE `player_data`.`username`= ?', [player.username],  function(error, rows, fields) {
+            if (error) {
                 log.error(error);
                 throw error;
             }
 
             _.each(rows, function(row) {
                 if (row.username === player.username) {
-                    found = true;
+                    if (row.password !== hash(player.password)) {
+                        callback({ wrongpassword: true });
+                    } else {
+                        found = true;
 
-                    var data = row;
+                        var data = row;
 
-                    data.armour = data.armour.split(',').map(Number);
-                    data.weapon = data.weapon.split(',').map(Number);
-                    data.pendant = data.pendant.split(',').map(Number);
-                    data.ring = data.ring.split(',').map(Number);
-                    data.boots = data.boots.split(',').map(Number);
+                        data.armour = data.armour.split(',').map(Number);
+                        data.weapon = data.weapon.split(',').map(Number);
+                        data.pendant = data.pendant.split(',').map(Number);
+                        data.ring = data.ring.split(',').map(Number);
+                        data.boots = data.boots.split(',').map(Number);
 
-                    player.load(data);
-                    player.intro();
+                        player.load(data);
+                        player.intro();
+                    }
                 }
             });
 
-            if (!found)
-                self.register(player);
+            if (!found) {
+                callback({ notfounduser: true });
+                // self.register(player);
+            }
         });
     },
 
-    register: function(player) {
+    register: function(player, callback) {
         var self = this;
 
-        self.connection.query('SELECT * FROM `player_data` WHERE `player_data`.`username`= ?', [player.username], function(error, rows, fields) {
+        self.connection.query('SELECT `player_data`.`username`, `player_data`.`email` FROM `player_data` WHERE `player_data`.`username`= ? or `player_data`.`email`= ?', [player.username, player.email], function(error, rows, fields) {
             var exists;
 
             _.each(rows, function(row) {
-                if (row.name === player.username)
+                if (row.username === player.username) {
                     exists = true;
+                    callback({ userexists: true });
+                } else if (row.email === player.email) {
+                    exists = true;
+                    callback({ emailexists: true });
+                }
             });
 
             if (!exists) {
                 log.info('No player data found. Creating new player data for: ' + player.username);
 
                 player.isNew = true;
+                const password = hash(player.password);
                 player.load(self.creator.getPlayerData(player));
 
-                self.creator.save(player);
+                self.creator.save({ ...player, password }, false);
 
                 player.isNew = false;
                 player.intro();
