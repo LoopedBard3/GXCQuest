@@ -1,19 +1,19 @@
-# Tap Tap Adventure
+# GXCQuest
 
-Tap Tap Adventure (TTA) is a massively multi-player online open-source project based on Little Workshop's 2012 demonstration for HTML5 WebSockets - BrowserQuest (BQ).
+GXCQuest (GXQ) is a massively multi-player online open-source project based on Little Workshop's 2012 demonstration for HTML5 WebSockets - BrowserQuest (BQ).
 
 The entirety of the source has been rewritten from the ground up, this includes rendering, networking, sprite parsing, map loading, etc. The code remains true to its coding conventions and follows it thoroughly. Although, compared to its predecessor, the code is far more comprehensive and adaptable, it is, as all other repositories on this website, a work in progress. If your capabilities include following onset conventions, you are welcome to contribute!
 
 The Plan:
 
-- TTA is expected to remain completely open-source, allowing its community to collaborate and aid in the perfection of the game.
+- GXQ is expected to remain completely open-source, allowing its community to collaborate and aid in the perfection of the game.
 - The players will be able to vote on what content gets added into the game, while the coders will aid in the creation and perfection of those features
 - There will be no advertisements or microtransactions in-game. There will be random merchendise in the future.
-- Anyone is free to create their own derivative of TTA, with no strings attached. We will even provide toplists.
+- Anyone is free to create their own derivative of GXQ, with no strings attached. We will even provide toplists.
 - Compatibility is, and will continue to be our number one priority.
 - Cryptocurrency and direct donations will be a way for players to contribute to the game.
 
-Currently, TTA is available on the three major platforms: iOS, Android & PC. Though compatibility is questionable on older devices, there are still features implemented to ensure maximum performance is achieved.
+Currently, GXQ is available on the three major platforms: iOS, Android & PC. Though compatibility is questionable on older devices, there are still features implemented to ensure maximum performance is achieved.
 If you are interested in researching previous versions of the rewritten source, be sure to check out [Kaetram](https://github.com/udeva/Kaetram)
 
 ### So what exactly is new in this version?
@@ -44,7 +44,7 @@ Still, there are a couple things that have to be done:
 - More quests and achievements
 
 
-## Running Tap Tap Adventure
+## Running GXCQuest
 
 Running the server is fairly straightforward, for the most part. If you encounter any issues, make sure you use the alternative solution.
 

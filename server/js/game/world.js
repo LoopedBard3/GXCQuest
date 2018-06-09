@@ -131,7 +131,7 @@ module.exports = World = cls.Class.extend({
     loaded: function() {
         var self = this;
         /**
-         * Similar to TTA engine here, but it's loaded upon initialization
+         * Similar to GXQ engine here, but it's loaded upon initialization
          * rather than being called from elsewhere.
          */
 

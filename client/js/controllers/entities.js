@@ -61,7 +61,7 @@ define(['../renderer/grids', '../entity/objects/chest',
                         /**
                          * Here we will parse the different types of chests..
                          * We can go Dark Souls style and implement mimics
-                         * the proper way -ahem- TTA V1.0
+                         * the proper way -ahem- GXQ V1.0
                          */
 
                         var chest = new Chest(info.id, info.string);
