@@ -163,46 +163,47 @@ module.exports = Incoming = cls.Class.extend({
         self.introduced = true;
 
         if (isRegistering) {
-            var registerOptions = {
-                method: 'GET',
-                uri: config.register_api + '?a=' + '9a4c5ddb-5ce6-4a01-a14f-3ae49d8c6507' + '&u=' + self.player.username + '&p=' + self.player.password + '&e=' + self.player.email
-            };
+            self.mysql.register(self.player);
+            // var registerOptions = {
+            //     method: 'GET',
+            //     uri: config.register_api + '?a=' + '9a4c5ddb-5ce6-4a01-a14f-3ae49d8c6507' + '&u=' + self.player.username + '&p=' + self.player.password + '&e=' + self.player.email
+            // };
 
-            Request(registerOptions, function(error, response, body) {
-                try {
-                    var data = JSON.parse(JSON.parse(body).data);
+            // Request(registerOptions, function(error, response, body) {
+            //     try {
+            //         var data = JSON.parse(JSON.parse(body).data);
 
-                    switch (data.code) {
-                        case 'ok':
-                            self.mysql.register(self.player);
-                            break;
+            //         switch (data.code) {
+            //             case 'ok':
+            //                 self.mysql.register(self.player);
+            //                 break;
 
-                        case 'internal-server-error': //email
+            //             case 'internal-server-error': //email
 
-                            self.connection.sendUTF8('emailexists');
-                            self.connection.close('Email not available.');
-                            break;
+            //                 self.connection.sendUTF8('emailexists');
+            //                 self.connection.close('Email not available.');
+            //                 break;
 
-                        case 'not-authorised': //username
+            //             case 'not-authorised': //username
 
-                            self.connection.sendUTF8('userexists');
-                            self.connection.close('Username not available.');
-                            break;
+            //                 self.connection.sendUTF8('userexists');
+            //                 self.connection.close('Username not available.');
+            //                 break;
 
-                        default:
+            //             default:
 
-                            self.connection.sendUTF8('error');
-                            self.connection.close('Unknown API Response: ' + error);
-                            break;
-                    }
+            //                 self.connection.sendUTF8('error');
+            //                 self.connection.close('Unknown API Response: ' + error);
+            //                 break;
+            //         }
 
-                } catch (e) {
-                    log.info('Could not decipher API message');
+            //     } catch (e) {
+            //         log.info('Could not decipher API message');
 
-                    self.connection.sendUTF8('disallowed');
-                    self.connection.close('API response is malformed!')
-                }
-            });
+            //         self.connection.sendUTF8('disallowed');
+            //         self.connection.close('API response is malformed!')
+            //     }
+            // });
 
         } else if (isGuest) {
 
@@ -214,44 +215,45 @@ module.exports = Incoming = cls.Class.extend({
             self.mysql.login(self.player);
 
         } else {
-            var loginOptions = {
-                method: 'POST',
-                uri: config.login_api,
-                form: {
-                    'username': self.player.username.toLowerCase(),
-                    'password': self.player.password
-                }
-            };
+            self.mysql.login(self.player);
+            // var loginOptions = {
+            //     method: 'POST',
+            //     uri: config.login_api,
+            //     form: {
+            //         'username': self.player.username.toLowerCase(),
+            //         'password': self.player.password
+            //     }
+            // };
 
-            Request(loginOptions, function(error, response, body) {
-                var data;
+            // Request(loginOptions, function(error, response, body) {
+            //     var data;
 
-                /**
-                 * The website may respond with HTML message if
-                 * the forums are down. In this case we catch any
-                 * exception and ensure it does not proceed any
-                 * further. We tell players that the server doesn't
-                 * allow connections.
-                 */
+            //     /**
+            //      * The website may respond with HTML message if
+            //      * the forums are down. In this case we catch any
+            //      * exception and ensure it does not proceed any
+            //      * further. We tell players that the server doesn't
+            //      * allow connections.
+            //      */
 
-                try {
-                    data = JSON.parse(body);
+            //     try {
+            //         data = JSON.parse(body);
 
-                } catch (e) {
-                    log.info('Could not decipher API message');
+            //     } catch (e) {
+            //         log.info('Could not decipher API message');
 
-                    self.connection.sendUTF8('disallowed');
-                    self.connection.close('API response is malformed!');
-                }
+            //         self.connection.sendUTF8('disallowed');
+            //         self.connection.close('API response is malformed!');
+            //     }
 
-                if (data && data.message) {
+            //     if (data && data.message) {
 
-                    self.connection.sendUTF8('invalidlogin');
-                    self.connection.close('Wrong password entered for: ' + self.player.username);
-                } else
-                    self.mysql.login(self.player);
+            //         self.connection.sendUTF8('invalidlogin');
+            //         self.connection.close('Wrong password entered for: ' + self.player.username);
+            //     } else
+            //         self.mysql.login(self.player);
 
-            });
+            // });
         }
     },
 

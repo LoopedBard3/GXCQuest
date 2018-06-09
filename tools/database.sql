@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `ipbans` (
   `ip` varchar(64) NOT NULL,
   `ipban` int(64) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -42,7 +42,7 @@ CREATE TABLE `player_abilities` (
   `abilities` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `abilityLevels` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `shortcuts` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -54,7 +54,7 @@ CREATE TABLE `player_achievements` (
   `username` varchar(64) NOT NULL,
   `ids` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `progress` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -68,7 +68,7 @@ CREATE TABLE `player_bank` (
   `counts` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `abilities` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `abilityLevels` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -94,8 +94,10 @@ CREATE TABLE `player_data` (
   `mute` int(64) DEFAULT NULL,
   `membership` int(64) DEFAULT NULL,
   `lastLogin` int(64) DEFAULT NULL,
-  `guild` varchar(64) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `guild` varchar(64) DEFAULT NULL,
+  `lastWarp` varchar(64) DEFAULT NULL,
+  `guildName` varchar(64) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -110,7 +112,7 @@ CREATE TABLE `player_equipment` (
   `pendant` varchar(64) DEFAULT NULL,
   `ring` varchar(64) DEFAULT NULL,
   `boots` varchar(64) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -124,7 +126,7 @@ CREATE TABLE `player_inventory` (
   `counts` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `abilities` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `abilityLevels` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -136,7 +138,7 @@ CREATE TABLE `player_quests` (
   `username` varchar(64) NOT NULL,
   `ids` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `stages` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Indexes for dumped tables

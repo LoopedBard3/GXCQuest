@@ -63,7 +63,7 @@ module.exports = MySQL = cls.Class.extend({
                 return;
             }
 
-			self.creator.createTables();
+			      // self.creator.createTables();
             log.info('Successfully established connection to the MySQL database!');
             self.loader = new Loader(self);
         });
@@ -74,9 +74,9 @@ module.exports = MySQL = cls.Class.extend({
             self.connect(true, true);
         });
 
-        self.onSelected(function() {
-            self.creator.createTables();
-        });
+        // self.onSelected(function() {
+        //     self.creator.createTables();
+        // });
     },
 
     loadCreator: function() {
@@ -172,10 +172,7 @@ module.exports = MySQL = cls.Class.extend({
 
             log.info('[MySQL] Successfully created database.');
 
-            self.connection.query('USE ' + Config.mysqlDatabase, function(error, results, fields) {
-                if (self.selectDatabase_callback)
-                    self.selectDatabase_callback();
-            });
+            self.connection.query('USE ' + Config.mysqlDatabase);
         });
     },
 
@@ -203,8 +200,8 @@ module.exports = MySQL = cls.Class.extend({
         });
     },
 
-    onSelected: function(callback) {
-        this.selectDatabase_callback = callback;
-    }
+    // onSelected: function(callback) {
+    //     this.selectDatabase_callback = callback;
+    // }
 
 });
