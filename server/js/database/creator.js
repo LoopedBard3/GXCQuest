@@ -131,20 +131,20 @@ module.exports = Creator = cls.Class.extend({
         
     },
 
-    save: function(player) {
+    save: function(player, load = true) {
         var self = this,
-            queryKey = player.isNew ? 'INSERT INTO' : 'UPDATE IGNORE',
-            playerData = self.formatData(self.getPlayerData(player), 'data'),
-            equipmentData = self.formatData(self.getPlayerData(player), 'equipment');
-
+            queryKey = player.isNew ? 'INSERT INTO' : 'UPDATE IGNORE'
+            playerData = load ? self.getPlayerData(player) : player;
+            playerFormData = self.formatData(playerData, 'data'),
+            equipmentFormData = self.formatData(playerData, 'equipment');
 
         var handleError = function (error) {
             if (error)
                 log.error(error);
         };
 
-        self.mysql.connection.query(queryKey + ' `player_data` SET ?', playerData, handleError);
-        self.mysql.connection.query(queryKey + ' `player_equipment` SET ?', equipmentData, handleError);
+        self.mysql.connection.query(queryKey + ' `player_data` SET ?', playerFormData, handleError);
+        self.mysql.connection.query(queryKey + ' `player_equipment` SET ?', equipmentFormData, handleError);
         self.mysql.connection.query(queryKey + ' `player_inventory` SET ?', player.inventory.getArray(), handleError);
         self.mysql.connection.query(queryKey + ' `player_abilities` SET ?', player.abilities.getArray(), handleError);
         self.mysql.connection.query(queryKey + ' `player_bank` SET ?', player.bank.getArray(), handleError);
@@ -176,8 +176,12 @@ module.exports = Creator = cls.Class.extend({
                     membership: data.membership,
                     lastLogin: data.lastLogin,
                     guild: data.guild,
-                    lastWarp: data.lastWarp
+                    lastWarp: data.lastWarp,
+                    guildName: data.guildName
                 };
+                if (data.password) {
+                    formattedData.password = data.password;
+                }
                 break;
 
             case 'equipment':

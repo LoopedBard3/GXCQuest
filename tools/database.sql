@@ -78,6 +78,7 @@ CREATE TABLE `player_bank` (
 
 CREATE TABLE `player_data` (
   `username` varchar(64) NOT NULL,
+  `password` varchar(64) NOT NULL,
   `email` varchar(64) DEFAULT NULL,
   `x` int(11) DEFAULT NULL,
   `y` int(11) DEFAULT NULL,
