@@ -159,7 +159,6 @@ module.exports = Creator = cls.Class.extend({
             case 'data':
                 formattedData = {
                     username: data.username,
-                    email: data.email,
                     x: data.x,
                     y: data.y,
                     experience: data.experience,
@@ -179,9 +178,8 @@ module.exports = Creator = cls.Class.extend({
                     lastWarp: data.lastWarp,
                     guildName: data.guildName
                 };
-                if (data.password) {
-                    formattedData.password = data.password;
-                }
+                if (data.email) formattedData.email = data.email;
+                if (data.password) formattedData.password = data.password;
                 break;
 
             case 'equipment':
@@ -204,7 +202,7 @@ module.exports = Creator = cls.Class.extend({
     getPlayerData: function(player) {
         return {
             username: player.username,
-            email: player.email ? player.email : 'null',
+            email: player.email,
             x: player.x ? player.x : -1,
             y: player.y ? player.y : -1,
             kind: player.kind ? player.kind : 0,
@@ -226,7 +224,8 @@ module.exports = Creator = cls.Class.extend({
             weapon: [player.weapon ? player.weapon.getId() : -1, player.weapon ? player.weapon.getCount() : 0, player.weapon ? player.weapon.getAbility() : 0, player.weapon ? player.weapon.getAbilityLevel() : 0],
             pendant: [player.pendant ? player.pendant.getId() : -1, player.pendant ? player.pendant.getCount() : 0, player.pendant ? player.pendant.getAbility() : 0, player.pendant ? player.pendant.getAbilityLevel() : 0],
             ring: [player.ring ? player.ring.getId() : -1, player.ring ? player.ring.getCount() : 0, player.ring ? player.ring.getAbility() : 0, player.ring ? player.ring.getAbilityLevel() : 0],
-            boots: [player.boots ? player.boots.getId() : -1, player.boots ? player.boots.getCount() : 0, player.boots ? player.boots.getAbility() : 0, player.boots ? player.boots.getAbilityLevel() : 0]
+            boots: [player.boots ? player.boots.getId() : -1, player.boots ? player.boots.getCount() : 0, player.boots ? player.boots.getAbility() : 0, player.boots ? player.boots.getAbilityLevel() : 0],
+            guildName: player.guild && player.guild.name ? player.guild.name : null;
         }
     }
 
