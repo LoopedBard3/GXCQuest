@@ -214,6 +214,7 @@ define(['jquery'], function($) {
             window.gxcLoginHander = function (account, password, email) {
                 self.walletWindow.close();
                 self.player = { account, password, email };
+                console.log(self.player);
                 self.game.connect();
             }
         },
@@ -326,21 +327,21 @@ define(['jquery'], function($) {
 
                 case 'loadCharacter':
 
-                    var nameInput = $('#loginNameInput'),
-                        passwordInput = $('#loginPasswordInput');
+                    // var nameInput = $('#loginNameInput'),
+                    //     passwordInput = $('#loginPasswordInput');
 
-                    if (self.loginFields.length === 0)
-                        self.loginFields = [nameInput, passwordInput];
+                    // if (self.loginFields.length === 0)
+                    //     self.loginFields = [nameInput, passwordInput];
 
-                    if (!nameInput.val() && !self.isGuest()) {
-                        self.sendError(nameInput, 'Please enter a username.');
-                        return false;
-                    }
+                    // if (!nameInput.val() && !self.isGuest()) {
+                    //     self.sendError(nameInput, 'Please enter a username.');
+                    //     return false;
+                    // }
 
-                    if (!passwordInput.val() && !self.isGuest()) {
-                        self.sendError(passwordInput, 'Please enter a password.');
-                        return false;
-                    }
+                    // if (!passwordInput.val() && !self.isGuest()) {
+                    //     self.sendError(passwordInput, 'Please enter a password.');
+                    //     return false;
+                    // }
 
                     break;
 
