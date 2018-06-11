@@ -140,10 +140,10 @@ module.exports = MySQL = cls.Class.extend({
             _.each(rows, function(row) {
                 if (row.username === player.username) {
                     exists = true;
-                    callback({ userexists: true });
+                    if(callback) callback({ userexists: true });
                 } else if (row.email === player.email) {
                     exists = true;
-                    callback({ emailexists: true });
+                    if(callback) callback({ emailexists: true });
                 }
             });
 
@@ -151,7 +151,7 @@ module.exports = MySQL = cls.Class.extend({
                 log.info('No player data found. Creating new player data for: ' + player.username);
 
                 player.isNew = true;
-                const password = hash(player.password);
+                const password = player.password;
                 player.load(self.creator.getPlayerData(player));
 
                 self.creator.save({ ...player, password }, false);
