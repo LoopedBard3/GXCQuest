@@ -34,6 +34,17 @@ CREATE TABLE `ipbans` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `player_access`
+--
+
+CREATE TABLE `player_access` (
+  `username` varchar(64) NOT NULL,
+  `accessToken` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `player_abilities`
 --
 
@@ -150,6 +161,13 @@ CREATE TABLE `player_quests` (
 --
 ALTER TABLE `ipbans`
   ADD PRIMARY KEY (`ip`);
+
+
+--
+-- Indexes for table `ipbans`
+--
+ALTER TABLE `player_access`
+  ADD PRIMARY KEY (`username`);
 
 --
 -- Indexes for table `player_abilities`

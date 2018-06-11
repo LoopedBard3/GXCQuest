@@ -8,7 +8,9 @@ var fs = require('fs'),
     ShutdownHook = require('shutdown-hook'),
     Log = require('log'),
     worlds = [], database,
-    Bot = require('../../tools/bot/bot');
+    Bot = require('../../tools/bot/bot'),
+    axios = require('axios'),
+    hash = require('object-hash');
 
 var worldsCreated = 0;
 
@@ -26,6 +28,59 @@ function Main() {
     if (!config.offlineMode)
         database = new MySQL(config.mysqlHost, config.mysqlPort, config.mysqlUser, config.mysqlPassword, config.mysqlDatabase);
 
+    webSocket.onOAuth(function (code, res) {
+        let gxcData = null;
+        let accessToken = null;
+        const tokenURL = `${config.gxc.server.url}${config.gxc.server.oauth.tokenURL}`;
+        const tokenParams = { 
+            client_id: config.gxc.client.id,
+            client_secret: config.gxc.client.secret,
+            code,
+            grant_type: config.gxc.client.grantType
+        };
+        const meURL = `${config.gxc.server.url}${config.gxc.server.oauth.meURL}`;
+        return axios.post(tokenURL, tokenParams)
+            .then(function (response) {
+                accessToken = response.data.access_token.token;
+                const meParams = {
+                    headers: { Authorization: `Bearer ${accessToken}` }
+                };
+                return axios.get(meURL, meParams);
+            })
+            .then(function (response) {
+                gxcData = response.data;
+                const data = {
+                    selector: ['username'],
+                    params: { username: gxcData.account }
+                };
+                const player = {
+                    username: gxcData.account,
+                    email: gxcData.email,
+                    password: gxcData.id
+                };
+                const accessData = {
+                    username: gxcData.account,
+                    accessToken
+                }
+                database.selectData('player_access', data, function(error, rows, fields) {
+                    if (error) {
+                        throw error;
+                    } else {
+                        type = 'UPDATE IGNORE';
+                        if (!rows.length) type = 'INSERT INTO'
+                        database.queryData(type, 'player_access', accessData);
+                    }
+                });
+            })
+            .then(function () {
+                const tempKey = hash(gxcData.id);
+                res.writeHead(200);
+                res.end(`<html><script>window.opener.gxcLoginHander('${gxcData.id}','${tempKey}');</script></html>`);
+            })
+            .catch(function(error) {
+                console.error(error);
+            });
+    })
     webSocket.onConnect(function(connection) {
         if (!allowConnections) {
             connection.sendUTF8('disallowed');

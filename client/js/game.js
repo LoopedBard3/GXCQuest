@@ -228,21 +228,24 @@ define(['./renderer/renderer', './utils/storage',
                 } else if (self.app.isGuest()) {
                     self.socket.send(Packets.Intro, [Packets.IntroOpcode.Guest, 'n', 'n', 'n'])
                 } else {
-                    var loginInfo = self.app.loginFields,
-                        name = loginInfo[0].val(),
-                        pass = loginInfo[1].val();
+                    // var loginInfo = self.app.loginFields,
+                    //     name = loginInfo[0].val(),
+                    //     pass = loginInfo[1].val();
+                    var account = self.app.player.account,
+                        password = self.app.player.password,
+                        email = self.app.player.email;
 
-                    self.socket.send(Packets.Intro, [Packets.IntroOpcode.Login, name, pass]);
+                    self.socket.send(Packets.Intro, [Packets.IntroOpcode.Login, account, password, email]);
 
-                    if (self.hasRemember()) {
-                        self.storage.data.player.username = name;
-                        self.storage.data.player.password = pass;
-                    } else {
-                        self.storage.data.player.username = '';
-                        self.storage.data.player.password = '';
-                    }
+                    // if (self.hasRemember()) {
+                    //     self.storage.data.player.username = name;
+                    //     self.storage.data.player.password = pass;
+                    // } else {
+                    //     self.storage.data.player.username = '';
+                    //     self.storage.data.player.password = '';
+                    // }
 
-                    self.storage.save();
+                    // self.storage.save();
                 }
             });
 
