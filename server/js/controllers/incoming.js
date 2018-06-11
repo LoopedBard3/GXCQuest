@@ -127,9 +127,13 @@ module.exports = Incoming = cls.Class.extend({
             username = message.shift().toLowerCase(),
             password = message.shift(),
             isRegistering = loginType === Packets.IntroOpcode.Register,
-            isGuest = loginType === Packets.IntroOpcode.Guest,
             email = isRegistering ? message.shift() : '';
 
+        self.intro(username, password, email, isRegistering)
+    },
+
+    intro: function(username, password, email, isRegistering) {
+        var self = this;
         self.player.username = (username || '').substr(0, 32).trim();
         self.player.password = password.substr(0, 32);
         self.player.email = email.substr(0, 128);
@@ -161,114 +165,27 @@ module.exports = Incoming = cls.Class.extend({
 
         self.introduced = true;
 
-        if (isRegistering) {
-            self.mysql.register(self.player, function(result) {
-                if (result.userexists) {
-                    self.connection.sendUTF8('userexists');
-                    self.connection.close('Username not available.');
-                } else if (result.emailexists) {
-                    self.connection.sendUTF8('emailexists');
-                    self.connection.close('Email not available.');
-                }
-            });
-            
-            // var registerOptions = {
-            //     method: 'GET',
-            //     uri: config.register_api + '?a=' + '9a4c5ddb-5ce6-4a01-a14f-3ae49d8c6507' + '&u=' + self.player.username + '&p=' + self.player.password + '&e=' + self.player.email
-            // };
-
-            // Request(registerOptions, function(error, response, body) {
-            //     try {
-            //         var data = JSON.parse(JSON.parse(body).data);
-
-            //         switch (data.code) {
-            //             case 'ok':
-            //                 self.mysql.register(self.player);
-            //                 break;
-
-            //             case 'internal-server-error': //email
-
-            //                 self.connection.sendUTF8('emailexists');
-            //                 self.connection.close('Email not available.');
-            //                 break;
-
-            //             case 'not-authorised': //username
-
-            //                 self.connection.sendUTF8('userexists');
-            //                 self.connection.close('Username not available.');
-            //                 break;
-
-            //             default:
-
-            //                 self.connection.sendUTF8('error');
-            //                 self.connection.close('Unknown API Response: ' + error);
-            //                 break;
-            //         }
-
-            //     } catch (e) {
-            //         log.info('Could not decipher API message');
-
-            //         self.connection.sendUTF8('disallowed');
-            //         self.connection.close('API response is malformed!')
-            //     }
-            // });
-        // } else if (isGuest) {
-
-        //     self.player.username = 'Guest' + Utils.randomInt(0, 2000000);
-        //     self.player.password = null;
-        //     self.player.email = nulel;
-        //     self.player.isGuest = true;
-
-        //     self.mysql.login(self.player);
-        } else {
-            self.mysql.login(self.player, function(result) {
-                if (result.notfounduser) {
-                    self.connection.sendUTF8('invalidlogin');
-                    self.connection.close('Not Found User: ' + self.player.username);
-                } else if (result.wrongpassword) {
-                    self.connection.sendUTF8('invalidlogin');
-                    self.connection.close('Wrong password entered for: ' + self.player.username);
-                }
-            });
-            // var loginOptions = {
-            //     method: 'POST',
-            //     uri: config.login_api,
-            //     form: {
-            //         'username': self.player.username.toLowerCase(),
-            //         'password': self.player.password
-            //     }
-            // };
-
-            // Request(loginOptions, function(error, response, body) {
-            //     var data;
-
-            //     /**
-            //      * The website may respond with HTML message if
-            //      * the forums are down. In this case we catch any
-            //      * exception and ensure it does not proceed any
-            //      * further. We tell players that the server doesn't
-            //      * allow connections.
-            //      */
-
-            //     try {
-            //         data = JSON.parse(body);
-
-            //     } catch (e) {
-            //         log.info('Could not decipher API message');
-
-            //         self.connection.sendUTF8('disallowed');
-            //         self.connection.close('API response is malformed!');
-            //     }
-
-            //     if (data && data.message) {
-
-            //         self.connection.sendUTF8('invalidlogin');
-            //         self.connection.close('Wrong password entered for: ' + self.player.username);
-            //     } else
-            //         self.mysql.login(self.player);
-
-            // });
-        }
+        // if (isRegistering) {
+        //     self.mysql.register(self.player, function(result) {
+        //         if (result.userexists) {
+        //             self.connection.sendUTF8('userexists');
+        //             self.connection.close('Username not available.');
+        //         } else if (result.emailexists) {
+        //             self.connection.sendUTF8('emailexists');
+        //             self.connection.close('Email not available.');
+        //         }
+        //     });
+        // } else {
+        self.mysql.login(self.player, function(result) {
+            if (result.notfounduser) {
+                self.connection.sendUTF8('invalidlogin');
+                self.connection.close('Not Found User: ' + self.player.username);
+            } else if (result.wrongpassword) {
+                self.connection.sendUTF8('invalidlogin');
+                self.connection.close('Wrong password entered for: ' + self.player.username);
+            }
+        });
+        // }
     },
 
     handleReady: function(message) {

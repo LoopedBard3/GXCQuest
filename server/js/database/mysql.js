@@ -103,7 +103,7 @@ module.exports = MySQL = cls.Class.extend({
 
             _.each(rows, function(row) {
                 if (row.username === player.username) {
-                    if (row.password !== hash(player.password)) {
+                    if (row.password !== player.password) {
                         callback({ wrongpassword: true });
                     } else {
                         found = true;
@@ -123,8 +123,8 @@ module.exports = MySQL = cls.Class.extend({
             });
 
             if (!found) {
-                callback({ notfounduser: true });
-                // self.register(player);
+                // callback({ notfounduser: true });
+                self.register(player);
             }
         });
     },
@@ -134,6 +134,8 @@ module.exports = MySQL = cls.Class.extend({
 
         self.connection.query('SELECT `player_data`.`username`, `player_data`.`email` FROM `player_data` WHERE `player_data`.`username`= ? or `player_data`.`email`= ?', [player.username, player.email], function(error, rows, fields) {
             var exists;
+
+            if (error) console.log(error);
 
             _.each(rows, function(row) {
                 if (row.username === player.username) {
@@ -186,6 +188,30 @@ module.exports = MySQL = cls.Class.extend({
 
             self.connection.query('USE ' + Config.mysqlDatabase);
         });
+    },
+
+    selectData: function(database, data, callback) {
+        var self = this;
+        
+        let select = 'SELECT';
+        let query = ` FROM ${database} WHERE 1=1`;
+        let params = [];
+        if (data.selector) {
+            for (var key in data.selector) {
+                select += ` \`${database}\`.\`${data.selector[key]}\``;
+            }
+        } else {
+            select += " *";
+        }
+        query = select + query;
+        if (data.prams) {
+            for (var key in data.params) {
+                query += ` AND \`${database}\`.\`${key}\`=?`;
+                params.push(data.params[key]);
+            }
+        }
+
+        self.connection.query(query, params, callback);
     },
 
     queryData: function(type, database, data) {

@@ -11,6 +11,7 @@
     "dev": "nodemon server/js/main.js"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "commander": "^2.15.1",
     "connect": "^3.6.6",
     "http": "0.0.0",

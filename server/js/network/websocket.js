@@ -5,8 +5,10 @@ var Socket = require('./socket'),
     connect = require('connect'),
     serve = require('serve-static'),
     http = require('http'),
+    _ = require('underscore'),
     SocketIO = require('socket.io'),
     Utils = require('../util/utils'),
+    querystring = require('querystring'),
     WebSocket = {};
 
 module.exports = WebSocket;
@@ -29,6 +31,11 @@ WebSocket.Server = Socket.extend({
 
         var app = connect();
         app.use(serve('client', {'index': ['index.html']}), null);
+
+        app.use('/oauth_callback', function (request, response, next) {
+            const params = querystring.parse(request._parsedOriginalUrl.query);
+            self.oauthCallback(params.code, response);
+        });
 
         self.httpServer = http.createServer(app).listen(port, host, function serverEverythingListening() {
             log.notice('Server is now listening on: ' + port);
@@ -68,8 +75,11 @@ WebSocket.Server = Socket.extend({
 
     onConnect: function(callback) {
         this.connectionCallback = callback;
-    }
+    },
 
+    onOAuth: function(callback) {
+        this.oauthCallback = callback;
+    }
 });
 
 WebSocket.Connection = Connection.extend({
