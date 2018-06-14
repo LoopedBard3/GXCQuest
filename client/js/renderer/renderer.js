@@ -141,36 +141,39 @@ define(['jquery', './camera', './tile',
 
             self.checkDevice();
 
-            if (!self.resizeTimeout)
+            if (!self.resizeTimeout) 
                 self.resizeTimeout = setTimeout(function() {
-
-                    self.scale = self.getScale();
-                    self.drawingScale = self.getDrawingScale();
-
-                    if (self.camera)
-                        self.camera.update();
-
-                    self.updateAnimatedTiles();
-
-                    self.loadSizes();
-
-                    if (self.entities)
-                        self.entities.update();
-
-                    if (self.map)
-                        self.map.updateTileset();
-
-                    if (self.camera)
-                        self.camera.centreOn(self.game.player);
-
-                    if (self.game.interface)
-                        self.game.interface.resize();
-
-                    self.renderedFrame[0] = -1;
-
-                    self.stopRendering = false;
-                    self.resizeTimeout = null;
+                    self._resize(self)
                 }, 500);
+        },
+
+        _resize: function(self) {
+            self.scale = self.getScale();
+            self.drawingScale = self.getDrawingScale();
+
+            if (self.camera)
+                self.camera.update();
+
+            self.updateAnimatedTiles();
+
+            self.loadSizes();
+
+            if (self.entities)
+                self.entities.update();
+
+            if (self.map)
+                self.map.updateTileset();
+
+            if (self.camera)
+                self.camera.centreOn(self.game.player);
+
+            if (self.game.interface)
+                self.game.interface.resize();
+
+            self.renderedFrame[0] = -1;
+
+            self.stopRendering = false;
+            self.resizeTimeout = null;
         },
 
         render: function() {

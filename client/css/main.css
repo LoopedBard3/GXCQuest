@@ -25,7 +25,7 @@ canvas {
     image-rendering:optimizeSpeed;
 }
 
-#background, #textCanvas, #foreground, #cursor {
+#canvas, #background, #entities, #textCanvas, #foreground, #cursor {
     margin: 0;
     padding: 0;
 }
@@ -270,7 +270,7 @@ footer div {
 }
 
 #container {
-    top: 48%;
+    top: 50%;
     left: 50%;
 }
 
@@ -291,20 +291,20 @@ footer div {
 
     #border {
         position: absolute;
-        width: 1470px;
-        height: 780px;
+        width: calc(100% - 30px);
+        height: calc(100% - 30px);
         left: 50%;
-        top: 0;
-        margin-left: -735px;
+        top: 50%;
         border: 0;
         padding: 15px;
         background: url('../img/3/border.png') no-repeat 0 0;
+        transform: translate(-50%, -50%);
     }
 
     #container {
         width: 1470px;
         height: 798px;
-        margin: -378px auto auto -735px;
+        transform: translate(-50%, -50%);
         position: absolute;
     }
 
@@ -426,20 +426,20 @@ footer div {
 
     #border {
         position: absolute;
-        width: 980px;
-        height: 520px;
+        width: calc(100% - 20px);
+        height: calc(100% - 20px);
         left: 50%;
-        top: 0;
-        margin-left: -490px;
+        top: 50%;
         border: 0;
         padding: 10px;
         background: url('../img/2/border.png') no-repeat 0 0;
+        transform: translate(-50%, -50%);
     }
 
     #container {
         width: 980px;
         height: 532px;
-        margin: -252px auto auto -490px;
+        transform: translate(-50%, -50%);
         position: absolute;
     }
 
@@ -558,20 +558,20 @@ footer div {
 
     #border {
         position: absolute;
-        width: 490px;
-        height: 260px;
+        width: calc(100% - 10px);
+        height: calc(100% - 10px);
         left: 50%;
-        top: 0;
-        margin-left: -245px;
+        top: 50%;
         border: 0;
         padding: 5px;
         background: url('../img/1/border.png') no-repeat 0 0;
+        transform: translate(-50%, -50%);
     }
 
     #container {
         width: 490px;
         height: 266px;
-        margin: -126px auto auto -245px;
+        transform: translate(-50%, -50%);
         position: absolute;
     }
 

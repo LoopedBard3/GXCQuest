@@ -239,8 +239,6 @@ define(['jquery'], function($) {
                 '-moz-transform': 'scale(' + zoomFactor + ')'
             });
 
-            self.border.css('top', 0);
-
             self.zoomFactor = zoomFactor;
         },
 
