@@ -25,7 +25,6 @@ define(['jquery', './container/container'], function($, Container) {
         },
 
         buy: function(shopItem) {
-            console.log(shopItem);
             var self = this;
             var count = 1;
             self.game.socket.send(Packets.Shop, [Packets.ShopOpcode.Buy, shopItem.shopId, shopItem.item.id, count]);
