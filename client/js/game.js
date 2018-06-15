@@ -1108,7 +1108,6 @@ define(['./renderer/renderer', './utils/storage',
                         break;
 
                     case Packets.ShopOpcode.Refresh:
-
                         if (self.interface.shop.isShopOpen(info.id))
                             self.interface.shop.update(info);
 

@@ -12,6 +12,10 @@ Shops.getItems = function(id) {
     return Shops.Ids[id].items;
 };
 
+Shops.getPrices = function(id) {
+    return Shops.Ids[id].prices;
+};
+
 Shops.getItemCount = function(id) {
     return Shops.getItems(id).length;
 };

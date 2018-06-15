@@ -748,7 +748,7 @@ module.exports = Incoming = cls.Class.extend({
 
                 log.info('Received Buy: ' + buyId + ' ' + amount);
 
-                //self.world.shops.buy(self.player, shopId, buyId, amount);
+                self.world.shops.buy(self.player, shopId, buyId, amount);
 
                 break;
         }

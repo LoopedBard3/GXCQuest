@@ -2,7 +2,7 @@ define(['jquery', './container/container'], function($, Container) {
 
     return Class.extend({
 
-        init: function(game, intrface) {
+        init: function(game, interface) {
             var self = this;
 
             self.game = game;
@@ -12,7 +12,7 @@ define(['jquery', './container/container'], function($, Container) {
             self.inventory = $('#shopInventorySlots');
 
             self.player = game.player;
-            self.interface = intrface;
+            self.interface = interface;
 
             self.container = null;
             self.data = null;
@@ -24,11 +24,11 @@ define(['jquery', './container/container'], function($, Container) {
 
         },
 
-        buy: function(event) {
-            var self = this,
-                id = event.currentTarget.id.substring(11);
-
-            self.game.socket.send(Packets.Shop, [Packets.ShopOpcode.Buy, id, 1, 1]);
+        buy: function(shopItem) {
+            console.log(shopItem);
+            var self = this;
+            var count = 1;
+            self.game.socket.send(Packets.Shop, [Packets.ShopOpcode.Buy, shopItem.shopId, shopItem.item.id, count]);
         },
 
         sell: function() {
@@ -58,7 +58,7 @@ define(['jquery', './container/container'], function($, Container) {
 
             self.reset();
 
-            self.container = new Container(data.strings.length);
+            self.container = new Container(data.items.length);
 
             //Update the global data to current revision
             self.data = data;
@@ -69,53 +69,66 @@ define(['jquery', './container/container'], function($, Container) {
         load: function() {
             var self = this;
 
-            for (var i = 0; i < self.container.size; i++) {
-                var shopItem = $('<div id="shopItem' + i + '" class="shopItem"></div>'),
-                    string = self.data.strings[i],
-                    name = self.data.names[i],
-                    count = self.data.counts[i],
-                    itemImage, itemCount, itemName, itemBuy;
+            var shopId = self.data.id,
+                items = self.data.items;
 
-                if (!string || !name || !count)
+            for (var i = 0; i < self.container.size; i++) {
+                var $shopItem = $('<div id="shopItem' + i + '" class="shopItem"></div>'),
+                    item = items[i],
+                    itemId = items[i].id,
+                    itemString = items[i].string,
+                    itemName = items[i].string,
+                    itemCount = items[i].count,
+                    itemPrice = items[i].price,
+                    $itemImage, $itemCount, $itemPrice, $itemName, $itemBuy;
+
+                if (!itemString || !itemName || !itemCount || !itemPrice)
                     continue;
 
-                itemImage = $('<div id="shopItemImage' + i + '" class="shopItemImage"></div>');
-                itemCount = $('<div id="shopItemCount' + i + '" class="shopItemCount"></div>');
-                itemName = $('<div id="shopItemName' + i + '" class="shopItemName"></div>');
-                itemBuy = $('<div id="shopItemBuy' + i + '" class="shopItemBuy"></div>');
+                $itemImage = $('<div class="shopItemImage"></div>');
+                $itemCount = $('<div class="shopItemCount"></div>');
+                $itemPrice = $('<div class="shopItemPrice"></div>');
+                $itemName = $('<div class="shopItemName"></div>');
+                $itemBuy  = $('<div class="shopItemBuy"></div>').attr('index', i);
 
-                itemImage.css('background-image', self.container.getImageFormat(self.getScale(), string));
-                itemCount.html(count);
-                itemName.html(name);
-                itemBuy.html('Purchase');
+                $itemImage.css('background-image', self.container.getImageFormat(self.getScale(), itemString));
+                $itemCount.html(itemCount);
+                $itemPrice.html(itemPrice);
+                $itemName.html(itemName);
+                $itemBuy.html('Purchase');
 
                 self.container.setSlot(i, {
-                    string: string,
-                    count: count
+                    id: itemId,
+                    string: itemString,
+                    count: itemCount,
+                    price: itemPrice
                 });
 
                 // Bind the itemBuy to the local buy function.
-                itemBuy.click(function(event) {
-                    self.buy(event);
+                $itemBuy.click(function() {
+                    var index = $(this).attr('index');
+                    // 자산 비교
+                    // 수량 확인
+                    self.buy({ shopId, item: items[index] });
                 });
 
-                var listItem = $('<li></li>');
+                var $listItem = $('<li></li>');
 
-                shopItem.append(itemImage, itemCount, itemName, itemBuy);
+                $shopItem.append($itemImage, $itemCount, $itemPrice, $itemName, $itemBuy);
 
-                listItem.append(shopItem);
+                $listItem.append($shopItem);
 
-                self.getShopList().append(listItem);
+                self.getShopList().append($listItem);
             }
 
             var inventoryItems = self.interface.bank.getInventoryList(),
                 inventorySize = self.interface.inventory.getSize();
 
             for (var j = 0; j < inventorySize; j++) {
-                var item = $(inventoryItems[j]).clone(),
-                    slot = item.find('#bankInventorySlot' + j);
+                var $item = $(inventoryItems[j]).clone(),
+                    $slot = $item.find('#bankInventorySlot' + j);
 
-                self.getInventoryList().append(slot);
+                self.getInventoryList().append($slot);
             }
         },
 

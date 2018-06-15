@@ -78,11 +78,11 @@ module.exports = Shops = cls.Class.extend({
             count = stock;
 
         player.inventory.remove(currency, cost);
-        player.inventory.add(itemId, count);
+        player.inventory.add({ id: itemId, count }, count);
 
         ShopData.decrement(shopId, itemId, count);
 
-        self.refresh();
+        self.refresh(shopId);
     },
 
     refresh: function(shopId) {
@@ -101,22 +101,22 @@ module.exports = Shops = cls.Class.extend({
         if (!ShopData.isShopNPC(id))
             return;
 
-        var items = ShopData.getItems(id),
-            strings = [],
-            names = [];
+        var itemIds = ShopData.getItems(id),
+            itemPrices = ShopData.getPrices(id),
+            itemCounts = ShopData.getCount(id),
+            items = [];
 
-        for (var i = 0; i < items.length; i++) {
-            strings.push(Items.idToString(items[i]));
-            names.push(Items.idToName(items[i]));
+        for (var i = 0; i < itemIds.length; i++) {
+            var item = {
+                id: itemIds[i],
+                string: Items.idToString(itemIds[i]),
+                name: Items.idToName(itemIds[i]),
+                count: itemCounts[i],
+                price: itemPrices[i]
+            };
+            items.push(item);
         }
 
-        return {
-            id: id,
-            strings: strings,
-            names: names,
-            counts: ShopData.getCount(id)
-        }
+        return { id, items };
     }
-
-
 });
