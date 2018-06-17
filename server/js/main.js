@@ -60,15 +60,16 @@ function Main() {
                 };
                 const accessData = {
                     username: gxcData.account,
-                    accessToken
+                    accessToken,
+                    accessTime: new Date()
                 }
-                database.selectData('player_access', data, function(error, rows, fields) {
+                database.selectData('player_wallet', data, function(error, rows, fields) {
                     if (error) {
                         throw error;
                     } else {
                         type = 'UPDATE IGNORE';
                         if (!rows.length) type = 'INSERT INTO'
-                        database.queryData(type, 'player_access', accessData);
+                        database.queryData(type, 'player_wallet', accessData);
                     }
                 });
             })

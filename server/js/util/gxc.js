@@ -1,7 +1,7 @@
 var config = require('../../config.json'),
     axios = require('axios');
 
-module.export = GXC = {
+module.exports = GXC = {
     getBalance: function(account, callback, error_callback) {
         return axios.get(`${config.gxc.server.url}${config.gxc.server.balance.url}${account}`)
             .then(function (response) {
