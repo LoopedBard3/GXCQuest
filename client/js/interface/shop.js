@@ -32,8 +32,8 @@ define(['jquery', './container/container'], function($, Container) {
 
         sell: function() {
             var self = this;
-
-
+            var count = 1;
+            self.game.socket.send(Packets.Shop, [Packets.ShopOpcode.Sell, shopItem.shopId, shopItem.item.id, count]);
         },
 
         /**
@@ -72,7 +72,7 @@ define(['jquery', './container/container'], function($, Container) {
                 items = self.data.items;
 
             for (var i = 0; i < self.container.size; i++) {
-                var $shopItem = $('<div id="shopItem' + i + '" class="shopItem"></div>'),
+                var $shopItem = $('<div class="shopItem row"></div>'),
                     item = items[i],
                     itemId = items[i].id,
                     itemString = items[i].string,
@@ -84,17 +84,18 @@ define(['jquery', './container/container'], function($, Container) {
                 if (!itemString || !itemName || !itemCount || !itemPrice)
                     continue;
 
-                $itemImage = $('<div class="shopItemImage"></div>');
-                $itemCount = $('<div class="shopItemCount"></div>');
-                $itemPrice = $('<div class="shopItemPrice"></div>');
-                $itemName = $('<div class="shopItemName"></div>');
-                $itemBuy  = $('<div class="shopItemBuy"></div>').attr('index', i);
+                $itemImage = $('<div class="shopItemImage col-1 my-auto"></div>');
+                $itemCount = $('<div class="shopItemCount col-2 my-auto"></div>');
+                $itemPrice = $('<div class="shopItemPrice col-2 my-auto"></div>');
+                $itemName = $('<div class="shopItemName col-5 my-auto"></div>');
+                $itemBuy  = $('<div class="shopItemBuy col-2 my-auto"></div>');
+                $buyButton = $('<button class="btn btn-sm btn-success">Buy</button>').attr('index', i);
+                $itemBuy.append($buyButton);
 
                 $itemImage.css('background-image', self.container.getImageFormat(self.getScale(), itemString));
                 $itemCount.html(itemCount);
                 $itemPrice.html(itemPrice);
                 $itemName.html(itemName);
-                $itemBuy.html('Purchase');
 
                 self.container.setSlot(i, {
                     id: itemId,
@@ -104,16 +105,16 @@ define(['jquery', './container/container'], function($, Container) {
                 });
 
                 // Bind the itemBuy to the local buy function.
-                $itemBuy.click(function() {
+                $buyButton.click(function() {
                     var index = $(this).attr('index');
                     // 자산 비교
                     // 수량 확인
                     self.buy({ shopId, item: items[index] });
                 });
 
-                var $listItem = $('<li></li>');
+                var $listItem = $('<li class="px-4"></li>');
 
-                $shopItem.append($itemImage, $itemCount, $itemPrice, $itemName, $itemBuy);
+                $shopItem.append($itemImage, $itemName, $itemCount, $itemPrice, $itemBuy);
 
                 $listItem.append($shopItem);
 

@@ -485,51 +485,32 @@
 }
 
 .shopItem {
-    display: inline-flex;
-    width: 98%;
-    height: 5%;
-    border: 3px solid rgba(255, 255, 0, 0.3);
-    border-radius: 10px;
+    border-bottom: 3px solid rgba(255, 255, 0, 0.3);
 }
 
 .shopItemImage {
     width: 32px;
     height: 32px;
     border: 2px solid rgba(0, 0, 255, 0.3);
+    background-color: white;
     transform: scale(0.9);
     border-radius: 100%;
 }
 
 .shopItemName {
-    position: absolute;
-    padding-top: 4%;
-    left: 20%;
     font-size: 12px;
 }
 
 .shopItemCount {
-    position: absolute;
-    float: left;
-    padding-top: 4%;
-    left: 55%;
     font-size: 12px;
 }
 
-.shopItemBuy {
-    position: relative;
-    float: left;
-    border: 2px solid rgba(0, 255, 0, 0.3);
-    -webkit-border-radius: 30%;
-    -moz-border-radius: 30%;
-    border-radius: 30%;
-    padding-top: 4%;
-    left: 65%;
+.shopItemPrice {
     font-size: 12px;
 }
 
-.shopItemBuy:hover {
-    color: white;
-    cursor: pointer;
+.shopItemBuy button {
+    font-size: 12px;
 }
 
 @media only screen and (min-width: 1501px) {
@@ -1074,7 +1055,7 @@
 
     #shopInventoryContainer {
         width: 387px;
-        height: 365px;
+        height: 465px;
         background: url("../img/3/containers.png") 0 0;;
     }
 
@@ -1086,7 +1067,11 @@
         font-size: 16px;
     }
 
-    .shopItemBuy {
+    .shopItemPrice {
+        font-size: 16px;
+    }
+
+    .shopItemBuy button {
         font-size: 16px;
     }
 
@@ -2308,7 +2293,6 @@
     }
 
     .shopItem {
-        width: 97%;
         border: 1.5px solid rgba(255, 255, 0, 0.3);
         border-radius: 7px;
     }
@@ -2317,6 +2301,7 @@
         width: 16px;
         height: 16px;
         border: 1px solid rgba(0, 0, 255, 0.3);
+        background-color: white;
         -webkit-background-size: 600%;
         background-size: 600%;
     }
@@ -2328,13 +2313,12 @@
     .shopItemCount {
         font-size: 6px;
     }
+    
+    .shopItemPrice {
+        font-size: 6px;
+    }
 
-    .shopItemBuy {
-        position: relative;
-        float: left;
-        border: 1px solid rgba(0, 255, 0, 0.3);
-        padding-top: 4%;
-        left: 65%;
+    .shopItemBuy button {
         font-size: 6px;
     }
 
