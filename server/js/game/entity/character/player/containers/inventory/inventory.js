@@ -37,6 +37,9 @@ module.exports = Inventory = Container.extend({
             return false;
         }
 
+        if(Items.isCryptoCurrency(item.id)) {
+            // set wallet
+        }
         var slot = self._super(item.id, count, item.ability, item.abilityLevel);
 
         if (!slot)
@@ -58,6 +61,10 @@ module.exports = Inventory = Container.extend({
         if (!index)
             index = self.getIndex(id);
 
+        if(Items.isCryptoCurrency(item.id)) {
+            // set wallet
+        }
+                
         if (!self._super(index, id, count))
             return;
 

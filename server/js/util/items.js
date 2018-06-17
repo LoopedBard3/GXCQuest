@@ -163,6 +163,13 @@ Items.isStackable = function(id) {
     return false;
 };
 
+Items.isCryptoCurrency = function (id) {
+    if (id in Items.Ids)
+        return Items.Ids[id].cryptocurrency;
+
+    return false;
+};
+
 Items.isEdible = function(id) {
     if (id in Items.Ids)
         return Items.Ids[id].edible;
