@@ -72,8 +72,7 @@ define(['jquery', './container/container'], function($, Container) {
                 items = self.data.items;
 
             for (var i = 0; i < self.container.size; i++) {
-                var $shopItem = $('<div class="shopItem row"></div>'),
-                    item = items[i],
+                var item = items[i],
                     itemId = items[i].id,
                     itemString = items[i].string,
                     itemName = items[i].string,
@@ -87,8 +86,8 @@ define(['jquery', './container/container'], function($, Container) {
                 $itemImage = $('<div class="shopItemImage col-1 my-auto"></div>');
                 $itemCount = $('<div class="shopItemCount col-2 my-auto"></div>');
                 $itemPrice = $('<div class="shopItemPrice col-2 my-auto"></div>');
-                $itemName = $('<div class="shopItemName col-5 my-auto"></div>');
-                $itemBuy  = $('<div class="shopItemBuy col-2 my-auto"></div>');
+                $itemName = $('<div class="shopItemName col-4 my-auto"></div>');
+                $itemBuy  = $('<div class="shopItemBuy col-3 my-auto"></div>');
                 $buyButton = $('<button class="btn btn-sm btn-success">Buy</button>').attr('index', i);
                 $itemBuy.append($buyButton);
 
@@ -112,11 +111,9 @@ define(['jquery', './container/container'], function($, Container) {
                     self.buy({ shopId, item: items[index] });
                 });
 
-                var $listItem = $('<li class="px-4"></li>');
+                var $listItem = $('<li class="shopItem row"></li>');
 
-                $shopItem.append($itemImage, $itemName, $itemCount, $itemPrice, $itemBuy);
-
-                $listItem.append($shopItem);
+                $listItem.append($itemImage, $itemName, $itemCount, $itemPrice, $itemBuy);
 
                 self.getShopList().append($listItem);
             }

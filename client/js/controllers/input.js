@@ -90,28 +90,28 @@ define(['jquery', '../entity/animation', './chat', './overlay'], function($, Ani
                         case Modules.Keys.W:
                         case Modules.Keys.Up:
 
-                            self.getPlayer().moveUp = true;
+                            player.moveUp = true;
 
                             break;
 
                         case Modules.Keys.A:
                         case Modules.Keys.Left:
 
-                            self.getPlayer().moveLeft = true;
+                            player.moveLeft = true;
 
                             break;
 
                         case Modules.Keys.S:
                         case Modules.Keys.Down:
 
-                            self.getPlayer().moveDown = true;
+                            player.moveDown = true;
 
                             break;
 
                         case Modules.Keys.D:
                         case Modules.Keys.Right:
 
-                            self.getPlayer().moveRight = true;
+                            player.moveRight = true;
 
                             break;
 
@@ -120,7 +120,44 @@ define(['jquery', '../entity/animation', './chat', './overlay'], function($, Ani
                             self.chatHandler.toggle();
 
                             break;
-                            
+
+                        case Modules.Keys.Space:
+                            // player.attacking = true;
+                            player.performAction(player.orientation, Modules.Actions.Attack);
+                            break;
+
+                        case Modules.Keys.I:
+                            if (self.game.interface.inventory.isVisible()) {
+                                self.game.interface.inventory.hide();
+                            } else {
+                                self.game.interface.inventory.display();
+                            }
+                            break;
+
+                        case Modules.Keys.M:
+                            if (self.game.interface.warp.isVisible()) {
+                                self.game.interface.warp.hide();
+                            } else {
+                                self.game.interface.warp.display();
+                            }
+                            break;
+                        case Modules.Keys.P:
+                            if (self.game.interface.profile.isVisible()) {
+                                self.game.interface.profile.hide();
+                            } else {
+                                self.game.interface.profile.display();
+                            }
+                            break;
+                        case Modules.Keys.Esc:
+                            if (self.game.interface.profile.settings.isVisible()) {
+                                self.game.interface.profile.settings.hide();
+                            } else {
+                                self.game.interface.profile.settings.display();
+                            }
+                            break;
+                        case Modules.Keys.Shift:
+                            self.getPlayer().running = true;
+                            break;
                     }
 
                     break;
@@ -160,6 +197,9 @@ define(['jquery', '../entity/animation', './chat', './overlay'], function($, Ani
                 case Modules.Keys.Right:
                     player.moveRight = false;
                     break;
+                case Modules.Keys.Shift:
+                    player.running = false;
+                    break;
             }
 
             player.disableAction = false;
@@ -169,8 +209,9 @@ define(['jquery', '../entity/animation', './chat', './overlay'], function($, Ani
             var self = this,
                 player = self.getPlayer();
 
-            if (!player.hasPath())
+            if (!player.hasPath()) {
                 self.click(position);
+            }                
         },
 
         click: function(position) {
@@ -221,9 +262,9 @@ define(['jquery', '../entity/animation', './chat', './overlay'], function($, Ani
                 }
 
                 player.disableAction = true;
-            } else
+            } else {
                 player.removeTarget();
-
+            }
 
             self.getActions().hidePlayerActions();
 

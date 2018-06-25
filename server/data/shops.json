@@ -7,7 +7,7 @@
     "currency": 202,
     "stockDuration": 60000
   },
-  "1": {
+  "2": {
     "npcId": 45,
     "items": [10, 15],
     "count": [100, 100],
