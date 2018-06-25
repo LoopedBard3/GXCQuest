@@ -183,6 +183,12 @@ module.exports = Incoming = cls.Class.extend({
             } else if (result.wrongpassword) {
                 self.connection.sendUTF8('invalidlogin');
                 self.connection.close('Wrong password entered for: ' + self.player.username);
+            } else if (result.userexists) {
+                self.connection.sendUTF8('userexists');
+                self.connection.close('Username not available.');
+            } else if (result.emailexists) {
+                self.connection.sendUTF8('emailexists');
+                self.connection.close('Email not available.');
             }
         });
         // }
@@ -204,6 +210,7 @@ module.exports = Incoming = cls.Class.extend({
         self.player.loadInventory();
         self.player.loadBank();
         self.player.loadQuests();
+        self.player.loadWallet();
 
         self.player.handler.detectMusic();
 
@@ -748,7 +755,7 @@ module.exports = Incoming = cls.Class.extend({
 
                 log.info('Received Buy: ' + buyId + ' ' + amount);
 
-                //self.world.shops.buy(self.player, shopId, buyId, amount);
+                self.world.shops.buy(self.player, shopId, buyId, amount);
 
                 break;
         }

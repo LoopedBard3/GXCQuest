@@ -16,6 +16,7 @@ var Character = require('../character'),
     Modules = require('../../../../util/modules'),
     Handler = require('./handler'),
     Quests = require('../../../../controllers/quests'),
+    Wallet = require('../../../../controllers/wallet'),
     Inventory = require('./containers/inventory/inventory'),
     Abilities = require('./ability/abilities'),
     Bank = require('./containers/bank/bank'),
@@ -62,6 +63,7 @@ module.exports = Player = Character.extend({
         self.inventory = new Inventory(self, 20);
         self.bank = new Bank(self, 56);
         self.quests = new Quests(self);
+        self.wallet = new Wallet(self);
         self.abilities = new Abilities(self);
         self.enchant = new Enchant(self);
         self.trade = new Trade(self);
@@ -131,6 +133,14 @@ module.exports = Player = Character.extend({
 
             self.inventory.load(ids, counts, skills, skillLevels);
             self.inventory.check();
+        });
+    },
+
+    loadWallet: function() {
+        var self = this;
+
+        self.mysql.loader.getWallet(self, function(accessToken, gqtToken) {
+            self.wallet.load(accessToken, gqtToken);
         });
     },
 

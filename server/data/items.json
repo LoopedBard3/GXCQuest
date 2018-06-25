@@ -1426,7 +1426,8 @@
     "id":202,
     "type":"object",
     "name":"Gold",
-    "stackable": 1
+    "stackable": 1,
+    "cryptocurrency": 1
   },
   
   "MountSeaDragon": {

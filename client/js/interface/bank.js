@@ -231,9 +231,15 @@ define(['jquery', './container/container'], function($, Container) {
                 return;
 
             var slot = item.find('#bankInventorySlot' + info.index);
+            var itemCount = slot.find('#inventoryItemCount' + info.index).text();
+            itemCount = itemCount ? parseInt(itemCount) : 0;
 
-            slot.find('#inventoryImage' + info.index).css('background-image', '');
-            slot.find('#inventoryItemCount' + info.index).text('');
+            if (itemCount - info.count > 0) {
+                slot.find('#inventoryItemCount' + info.index).text(itemCount - info.count);
+            } else {
+                slot.find('#inventoryImage' + info.index).css('background-image', '');
+                slot.find('#inventoryItemCount' + info.index).text('');
+            }
         },
 
         display: function() {

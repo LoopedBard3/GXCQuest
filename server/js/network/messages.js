@@ -232,6 +232,19 @@ Messages.Inventory = Message.extend({
 
 });
 
+Messages.Wallet = Message.extend({
+
+    init: function(opcode, data) {
+        this.opcode = opcode;
+        this.data = data;
+    },
+
+    serialize: function() {
+        return [Packets.Wallet, this.opcode, this.data];
+    }
+
+});
+
 Messages.Bank = Message.extend({
 
     init: function(opcode, data) {

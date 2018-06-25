@@ -114,6 +114,10 @@ define(function() {
                 self.socket.send(Packets.Movement, [Packets.MovementOpcode.Step, self.player.gridX, self.player.gridY]);
             });
 
+            self.player.onOrientate(function(orientation) {
+                self.socket.send(Packets.Movement, [Packets.MovementOpcode.Orientate, orientation]);
+            });
+
             self.player.onSecondStep(function() {
                 self.renderer.updateAnimatedTiles();
             });

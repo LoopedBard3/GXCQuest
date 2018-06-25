@@ -70,10 +70,12 @@
 
 #inventory ul li {
     float: left;
+    box-sizing: content-box;
 }
 
 .itemSlot {
     background-color: rgba(0, 0, 0, 0.5);
+    box-sizing: content-box;
 }
 
 .itemCount {
@@ -262,25 +264,26 @@
 
 #bankContainer {
     float: right;
+    position: relative;
 }
 
 #bankInventoryContainer, #enchantContainer {
     float: left;
+    position: relative;
 }
 
 #bankSlots {
     position: absolute;
-    top: 9%;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .inventorySlots {
     position: absolute;
-    top: 13%;
-    left: 14%;
-}
-
-#enchantInventorySlots {
-    left: 13%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .bankSlot {
@@ -337,6 +340,7 @@
     position: absolute;
     left: 92%;
     top: -3%;
+    z-index: 10;
 }
 
 .ok {
@@ -485,51 +489,32 @@
 }
 
 .shopItem {
-    display: inline-flex;
-    width: 98%;
-    height: 5%;
-    border: 3px solid rgba(255, 255, 0, 0.3);
-    border-radius: 10px;
+    border-bottom: 3px solid rgba(255, 255, 0, 0.3);
 }
 
 .shopItemImage {
     width: 32px;
     height: 32px;
     border: 2px solid rgba(0, 0, 255, 0.3);
+    background-color: white;
     transform: scale(0.9);
     border-radius: 100%;
 }
 
 .shopItemName {
-    position: absolute;
-    padding-top: 4%;
-    left: 20%;
     font-size: 12px;
 }
 
 .shopItemCount {
-    position: absolute;
-    float: left;
-    padding-top: 4%;
-    left: 55%;
     font-size: 12px;
 }
 
-.shopItemBuy {
-    position: relative;
-    float: left;
-    border: 2px solid rgba(0, 255, 0, 0.3);
-    -webkit-border-radius: 30%;
-    -moz-border-radius: 30%;
-    border-radius: 30%;
-    padding-top: 4%;
-    left: 65%;
+.shopItemPrice {
     font-size: 12px;
 }
 
-.shopItemBuy:hover {
-    color: white;
-    cursor: pointer;
+.shopItemBuy button {
+    font-size: 12px;
 }
 
 @media only screen and (min-width: 1501px) {
@@ -642,9 +627,8 @@
     .itemSlot {
         width: 48px;
         height: 48px;
-        margin-left: 3px;
+        margin-left: 2px;
         margin-top: 3px;
-        margin-bottom: 21px;
         -webkit-border-radius: 9px;
         -moz-border-radius: 9px;
         border-radius: 9px;
@@ -665,7 +649,6 @@
         font-size: 18px;
         text-align: center;
         margin-left: 3px;
-        margin-top: -21px;
     }
 
     #actionContainer {
@@ -922,7 +905,6 @@
     #bankSlots {
         width: 432px;
         height: 360px;
-        left: 429px;
     }
 
     #bankInventoryContainer, #enchantContainer {
@@ -1074,8 +1056,8 @@
 
     #shopInventoryContainer {
         width: 387px;
-        height: 365px;
-        background: url("../img/3/containers.png") 0 0;;
+        height: 380px;
+        background: url("../img/3/bank.png") 0 0;;
     }
 
     .shopItemName {
@@ -1086,7 +1068,11 @@
         font-size: 16px;
     }
 
-    .shopItemBuy {
+    .shopItemPrice {
+        font-size: 16px;
+    }
+
+    .shopItemBuy button {
         font-size: 16px;
     }
 
@@ -1243,9 +1229,8 @@
     .itemSlot {
         width: 32px;
         height: 32px;
-        margin-left: 2px;
+        margin-left: 1px;
         margin-top: 2px;
-        margin-bottom: 14px;
         -webkit-border-radius: 3px;
         -moz-border-radius: 3px;
         border-radius: 3px;
@@ -1266,7 +1251,6 @@
         font-size: 12px;
         text-align: center;
         margin-left: 2px;
-        margin-top: -14px;
     }
 
     #actionContainer {
@@ -1529,7 +1513,6 @@
     #bankSlots {
         width: 288px;
         height: 240px;
-        left: 286px;
     }
 
     #bankInventoryContainer, #enchantContainer {
@@ -1697,8 +1680,8 @@
 
     #shopInventoryContainer {
         width: 258px;
-        height: 310px;
-        background: url("../img/2/containers.png") 0 0;;
+        height: 254px;
+        background: url("../img/2/bank.png") 0 0;;
     }
 
 }
@@ -1858,9 +1841,8 @@
     .itemSlot {
         width: 16px;
         height: 16px;
-        margin-left: 1px;
+        margin-left: 0px;
         margin-top: 1px;
-        margin-bottom: 7px;
         -webkit-border-radius: 3px;
         -moz-border-radius: 3px;
         border-radius: 3px;
@@ -1881,7 +1863,6 @@
         font-size: 6px;
         text-align: center;
         margin-left: 1px;
-        margin-top: -7px;
     }
 
     #actionContainer {
@@ -2154,7 +2135,6 @@
     #bankSlots {
         width: 144px;
         height: 120px;
-        left: 143px;
     }
 
     #bankInventoryContainer, #enchantContainer {
@@ -2298,8 +2278,8 @@
 
     #shopInventoryContainer {
         width: 129px;
-        height: 155px;
-        background: url("../img/1/containers.png") 0 0;;
+        height: 127px;
+        background: url("../img/1/bank.png") 0 0;;
     }
 
     #shopContainer ul li {
@@ -2308,7 +2288,6 @@
     }
 
     .shopItem {
-        width: 97%;
         border: 1.5px solid rgba(255, 255, 0, 0.3);
         border-radius: 7px;
     }
@@ -2317,6 +2296,7 @@
         width: 16px;
         height: 16px;
         border: 1px solid rgba(0, 0, 255, 0.3);
+        background-color: white;
         -webkit-background-size: 600%;
         background-size: 600%;
     }
@@ -2328,13 +2308,12 @@
     .shopItemCount {
         font-size: 6px;
     }
+    
+    .shopItemPrice {
+        font-size: 6px;
+    }
 
-    .shopItemBuy {
-        position: relative;
-        float: left;
-        border: 1px solid rgba(0, 255, 0, 0.3);
-        padding-top: 4%;
-        left: 65%;
+    .shopItemBuy button {
         font-size: 6px;
     }
 

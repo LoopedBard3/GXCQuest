@@ -37,9 +37,11 @@ CREATE TABLE `ipbans` (
 -- Table structure for table `player_access`
 --
 
-CREATE TABLE `player_access` (
+CREATE TABLE `player_wallet` (
   `username` varchar(64) NOT NULL,
-  `accessToken` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
+  `accessToken` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `accessTime` DATETIME DEFAULT now() NOT NULL,
+  `gqtToken` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -164,9 +166,9 @@ ALTER TABLE `ipbans`
 
 
 --
--- Indexes for table `ipbans`
+-- Indexes for table `player_wallet`
 --
-ALTER TABLE `player_access`
+ALTER TABLE `player_wallet`
   ADD PRIMARY KEY (`username`);
 
 --

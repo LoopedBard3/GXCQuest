@@ -323,17 +323,32 @@ define(['../entity', '../../utils/transition', '../animation'], function(Entity,
             var self = this,
                 step = self.step;
 
-            if (self.path[step][0] < self.path[step - 1][0])
+            if (self.path[step][0] < self.path[step - 1][0]) {
                 self.performAction(Modules.Orientation.Left, Modules.Actions.Walk);
-
-            if (self.path[step][0] > self.path[step - 1][0])
+            } else if (self.path[step][0] > self.path[step - 1][0]) {
                 self.performAction(Modules.Orientation.Right, Modules.Actions.Walk);
-
-            if (self.path[step][1] < self.path[step - 1][1])
+            } else if (self.path[step][1] < self.path[step - 1][1]) {
                 self.performAction(Modules.Orientation.Up, Modules.Actions.Walk);
-
-            if (self.path[step][1] > self.path[step - 1][1])
+            } else if (self.path[step][1] > self.path[step - 1][1]) {
                 self.performAction(Modules.Orientation.Down, Modules.Actions.Walk);
+            }
+        },
+        
+        updateOrientation: function() {
+            var self = this;
+            if (self.moveLeft && self.orientation !== Modules.Orientation.Left) {
+                self.performAction(Modules.Orientation.Left, Modules.Actions.Orientate);
+                self.orientateCallback(Modules.Orientation.Left);
+            } else if (self.moveRight && self.orientation !== Modules.Orientation.Right) {
+                self.performAction(Modules.Orientation.Right, Modules.Actions.Orientate);
+                self.orientateCallback(Modules.Orientation.Right);
+            } else if (self.moveUp && self.orientation !== Modules.Orientation.Up) {
+                self.performAction(Modules.Orientation.Up, Modules.Actions.Orientate);
+                self.orientateCallback(Modules.Orientation.Up);
+            } else if (self.moveDown && self.orientation !== Modules.Orientation.Down) {
+                self.performAction(Modules.Orientation.Down, Modules.Actions.Orientate);
+                self.orientateCallback(Modules.Orientation.Down);
+            }
         },
 
         followPath: function(path) {
@@ -345,8 +360,10 @@ define(['../entity', '../../utils/transition', '../animation'], function(Entity,
              * dimension
              */
 
-            if (!path || path.length < 2)
+            if (!path || path.length < 2) {
+                self.updateOrientation();
                 return;
+            }
 
             self.path = path;
             self.step = 0;
@@ -597,6 +614,10 @@ define(['../entity', '../../utils/transition', '../animation'], function(Entity,
 
         onStep: function(callback) {
             this.stepCallback = callback;
+        },
+
+        onOrientate: function(callback) {
+            this.orientateCallback = callback;
         },
 
         onSecondStep: function(callback) {

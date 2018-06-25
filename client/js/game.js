@@ -404,7 +404,7 @@ define(['./renderer/renderer', './utils/storage',
                         break;
 
 
-                        case Packets.MovementOpcode.Orientate:
+                    case Packets.MovementOpcode.Orientate:
                             var player = info.shift(),
                                 orientation = info.shift(),
                                 entity = self.entities.get(player);
@@ -638,7 +638,7 @@ define(['./renderer/renderer', './utils/storage',
             });
 
             self.messages.onPoints(function(data) {
-                log.info(data);
+                log.debug(data);
 
                 var entity = self.entities.get(data.id);
 
@@ -1091,27 +1091,16 @@ define(['./renderer/renderer', './utils/storage',
 
                 switch (opcode) {
                     case Packets.ShopOpcode.Open:
-
-                        log.info(info);
-
                         self.interface.shop.open(shopData.id);
                         self.interface.shop.update(shopData);
-
                         break;
-
                     case Packets.ShopOpcode.Buy:
-
                         break;
-
                     case Packets.ShopOpcode.Sell:
-
                         break;
-
                     case Packets.ShopOpcode.Refresh:
-
                         if (self.interface.shop.isShopOpen(info.id))
                             self.interface.shop.update(info);
-
                         break;
                 }
 
@@ -1119,6 +1108,14 @@ define(['./renderer/renderer', './utils/storage',
 
             self.messages.onMinigame(function(opcode, info) {
                 log.info('Lorem Ipsum.');
+            });
+
+            self.messages.onWallet(function(opcode, info) {
+                switch (opcode) {
+                    case Packets.WalletOpcode.Set:
+                        self.interface.wallet.update(info);
+                        break;
+                }
             });
 
         },
