@@ -6,5 +6,13 @@
     "prices": [10, 20],
     "currency": 202,
     "stockDuration": 60000
+  },
+  "1": {
+    "npcId": 45,
+    "items": [10, 15],
+    "count": [100, 100],
+    "prices": [10, 20],
+    "currency": 202,
+    "stockDuration": 60000
   }
 }

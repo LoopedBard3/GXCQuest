@@ -214,7 +214,6 @@ define(['jquery'], function($) {
             window.gxcLoginHander = function (account, password, email) {
                 self.walletWindow.close();
                 self.player = { account, password, email };
-                console.log(self.player);
                 self.game.connect();
             }
         },

@@ -223,5 +223,10 @@
   "Bluestoremannpc": {
     "id": 44,
     "name": "Clerk"
+  },
+
+  "Gxman": {
+    "id": 45,
+    "name": "GXMan"
   }
 }
