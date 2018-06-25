@@ -124,7 +124,7 @@ module.exports = MySQL = cls.Class.extend({
 
             if (!found) {
                 // callback({ notfounduser: true });
-                self.register(player);
+                self.register(player, callback);
             }
         });
     },

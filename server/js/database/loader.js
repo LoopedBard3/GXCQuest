@@ -24,6 +24,20 @@ module.exports = Loader = cls.Class.extend({
         });
     },
 
+    getWallet: function(player, callback) {
+        var self = this;
+
+        self.mysql.connection.query('SELECT * FROM `player_wallet` WHERE `player_wallet`.`username`=?', [player.username], function(error, rows, fields) {
+            var info = rows.shift();
+
+            if (info.username !== player.username)
+                log.info('Mismatch whilst retrieving wallet data for: ' + player.username);
+
+            callback(info.accessToken, info.gqtToken);
+
+        });
+    },
+
     getBank: function(player, callback) {
         var self = this;
 

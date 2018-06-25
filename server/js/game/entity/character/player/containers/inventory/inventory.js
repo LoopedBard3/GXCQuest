@@ -5,7 +5,8 @@ var Container = require('../container'),
     Packets = require('../../../../../../network/packets'),
     Constants = require('./constants'),
     _ = require('underscore'),
-    Items = require('../../../../../../util/items');
+    Items = require('../../../../../../util/items'),
+    GXC = require('../../../../../../util/gxc');
 
 module.exports = Inventory = Container.extend({
 
@@ -37,13 +38,51 @@ module.exports = Inventory = Container.extend({
             return false;
         }
 
-        if(Items.isCryptoCurrency(item.id)) {
-            // set wallet
-        }
         var slot = self._super(item.id, count, item.ability, item.abilityLevel);
-
+        
         if (!slot)
             return false;
+
+        if(Items.isCryptoCurrency(item.id)) {
+            var error_callback = function(e) {
+            console.log(e);
+            };
+
+            GXC.getBalance(self.owner.username, function(response) {
+                if (response.data && response.data.success) {
+                    let balance = response.data.balance;
+                    console.log(response.data);
+                    GXC.generateToken(self.owner.username, count, function(response) {
+                        console.log(response.data);
+                        if (response.data && response.data.success && response.data.transaction) {
+                            const quantity = response.data.transaction.quantity;
+                            if (quantity === count) {
+                                balance += quantity;
+                                var type = 'UPDATE IGNORE';
+                                var updateDate = {
+                                    username: self.owner.username,
+                                    gqtToken: balance
+                                }
+                                self.owner.mysql.queryData(type, 'player_wallet', updateDate);
+                                self.owner.send(new Messages.Wallet(Packets.WalletOpcode.Set, [balance]));
+                                
+                                self.processAdd(item, slot);
+                            }
+                        }
+                    }, error_callback);
+                } else {
+                    error_callback(response);
+                }
+            }, error_callback);
+        } else {
+            self.processAdd(item, slot);
+        }
+
+        return true;
+    },
+
+    processAdd: function(item, slot) {
+        var self = this;
 
         self.owner.send(new Messages.Inventory(Packets.InventoryOpcode.Add, slot));
 
@@ -51,8 +90,6 @@ module.exports = Inventory = Container.extend({
 
         if (item.instance)
             self.owner.world.removeItem(item);
-
-        return true;
     },
 
     remove: function(id, count, index) {
@@ -61,12 +98,56 @@ module.exports = Inventory = Container.extend({
         if (!index)
             index = self.getIndex(id);
 
-        if(Items.isCryptoCurrency(item.id)) {
-            // set wallet
+        var processRemove = function() {
+            if (!self._super(index, id, count))
+            return;
+
+            self.owner.send(new Messages.Inventory(Packets.InventoryOpcode.Remove, {
+                index: parseInt(index),
+                count: count
+            }));
+
+            self.owner.save();
         }
-                
+
         if (!self._super(index, id, count))
             return;
+
+        if(Items.isCryptoCurrency(id)) {
+            var error_callback = function(e) {
+                console.log(e);
+            };
+
+            GXC.getBalance(self.owner.username, function(response) {
+                if (response.data && response.data.success) {
+                    let balance = response.data.balance;
+                    GXC.consumeToken(self.owner.wallet.accessToken, count, function(response) {
+                        if (response.data && response.data.success && response.data.transaction) {
+                            const quantity = response.data.transaction;
+                            if (quantity === count) {
+                                balance -= quantity;
+                                var type = 'UPDATE IGNORE';
+                                var updateDate = {
+                                    username: self.owner.username,
+                                    gqtToken: balance
+                                }
+                                self.owner.mysql.queryData(type, 'player_wallet', updateDate);
+                                self.owner.send(new Messages.Wallet(Packets.WalletOpcode.Set, [balance]));
+                                processRemove(index, count);
+                            }
+                        }
+                    }, error_callback);
+                } else {
+                    error_callback(response);
+                }
+            }, error_callback);
+        } else {
+            processRemove(index, count);
+        }
+    },
+
+    processRemove: function(index, count) {
+        var self = this;
 
         self.owner.send(new Messages.Inventory(Packets.InventoryOpcode.Remove, {
             index: parseInt(index),

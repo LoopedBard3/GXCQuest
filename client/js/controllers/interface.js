@@ -2,8 +2,8 @@
 
 define(['jquery', '../interface/inventory',
         '../interface/profile/profile', '../interface/actions',
-        '../interface/bank', '../interface/enchant', '../interface/warp', '../interface/shop'],
-    function($, Inventory, Profile, Actions, Bank, Enchant, Warp, Shop) {
+        '../interface/bank', '../interface/enchant', '../interface/warp', '../interface/shop', '../interface/wallet'],
+    function($, Inventory, Profile, Actions, Bank, Enchant, Warp, Shop, Wallet) {
 
     return Class.extend({
 
@@ -23,11 +23,13 @@ define(['jquery', '../interface/inventory',
             self.actions = null;
             self.enchant = null;
             self.shop = null;
+            self.wallet = null;
 
             self.loadNotifications();
             self.loadActions();
             self.loadWarp();
             self.loadShop();
+            self.loadWallet();
 
             self.done.click(function() {
                 self.hideNotify();
@@ -115,6 +117,13 @@ define(['jquery', '../interface/inventory',
 
             if (!self.shop)
                 self.shop = new Shop(self.game, self);
+        },
+
+        loadWallet: function() {
+            var self = this;
+
+            if (!self.wallet)
+                self.wallet = new Wallet(self.game, self);
         },
 
         loadNotifications: function() {
