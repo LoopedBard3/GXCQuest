@@ -541,8 +541,14 @@ define(['./renderer/renderer', './utils/storage',
                     attacker = self.entities.get(data.shift()),
                     target = self.entities.get(data.shift());
 
-                if (!target || !attacker)
+                if (!target) {
+                    if (attacker) {
+                        attacker.performAction(attacker.orientation, Modules.Actions.Attack);
+                        self.audio.play(Modules.AudioTypes.SFX, 'hit' + Math.floor(Math.random() * 2 + 1));
+                        attacker.attacking = false;
+                    }
                     return;
+                }
 
                 switch (opcode) {
                     case Packets.CombatOpcode.Initiate:

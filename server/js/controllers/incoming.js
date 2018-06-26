@@ -437,10 +437,12 @@ module.exports = Incoming = cls.Class.extend({
 
                 var target = self.world.getEntityByInstance(instance);
 
-                if (!target || target.dead || !self.canAttack(self.player, target))
-                    return;
-
-                self.world.pushToAdjacentGroups(target.group, new Messages.Combat(Packets.CombatOpcode.Initiate, self.player.instance, target.instance));
+                if (!target || target.dead || !self.canAttack(self.player, target)) {
+                    var playerTarget = self.world.getEntityByInstance(self.player.instance);
+                    self.world.pushToAdjacentGroups(playerTarget.group, new Messages.Combat(Packets.CombatOpcode.Initiate, self.player.instance, null));
+                } else {
+                    self.world.pushToAdjacentGroups(target.group, new Messages.Combat(Packets.CombatOpcode.Initiate, self.player.instance, target.instance)); 
+                }
 
                 break;
 

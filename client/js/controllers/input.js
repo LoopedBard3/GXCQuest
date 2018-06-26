@@ -122,8 +122,33 @@ define(['jquery', '../entity/animation', './chat', './overlay'], function($, Ani
                             break;
 
                         case Modules.Keys.Space:
-                            // player.attacking = true;
-                            player.performAction(player.orientation, Modules.Actions.Attack);
+                            if (!self.attacking) {
+                                let x = player.getX();
+                                let y = player.getY();
+                                switch (player.orientation) {
+                                    case Modules.Orientation.Up:
+                                        y--;
+                                        break;
+                                    case Modules.Orientation.Down:
+                                        y++;
+                                        break;
+                                    case Modules.Orientation.Left:
+                                        x--;
+                                        break;
+                                    case Modules.Orientation.Right:
+                                        x++;
+                                        break;               
+                                }
+                                var target = self.game.getEntityAt(x, y, false);
+                                if (target) {
+                                    target = self.isAttackable(target) ? target : null
+                                }
+                                self.attacking = true;
+                                self.game.socket.send(Packets.Target, [Packets.TargetOpcode.Attack, target ? target.id : null]);
+                                setTimeout(function() {
+                                    self.attacking = false;
+                                }, player.attackAnimationSpeed * 15);
+                            }
                             break;
 
                         case Modules.Keys.I:
@@ -210,8 +235,44 @@ define(['jquery', '../entity/animation', './chat', './overlay'], function($, Ani
                 player = self.getPlayer();
 
             if (!player.hasPath()) {
-                self.click(position);
+                self.move(position);
             }                
+        },
+
+        move: function(position) {
+            var self = this,
+            player = self.getPlayer();
+
+            if (player.stunned)
+                return;
+
+            self.setPassiveTarget();
+
+            if (self.renderer.mobile && self.chatHandler.input.is(':visible') && self.chatHandler.input.val() === '')
+                self.chatHandler.hideInput();
+
+            if ((self.game.zoning && self.game.zoning.direction))
+                return;
+
+            var entity = self.game.getEntityAt(position.x, position.y, (position.x === player.gridX && position.y === player.gridY));
+
+            if (entity && !player.disableAction) {
+                if (self.isTargetable(entity)) {
+                    player.updateOrientation();
+                    return;
+                }
+                player.disableAction = true;
+            }
+
+            self.getActions().hidePlayerActions();
+
+            player.go(position.x, position.y);
+
+            if (self.game.interface)
+                self.game.interface.hideAll();
+
+            if (!self.game.audio.song && Detect.isSafari())
+                self.game.audio.update();
         },
 
         click: function(position) {
