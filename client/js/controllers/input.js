@@ -181,7 +181,8 @@ define(['jquery', '../entity/animation', './chat', './overlay'], function($, Ani
                             }
                             break;
                         case Modules.Keys.Shift:
-                            self.getPlayer().running = true;
+                            player.running = true;
+                            player.movementSpeed = 60;
                             break;
                     }
 
@@ -224,6 +225,7 @@ define(['jquery', '../entity/animation', './chat', './overlay'], function($, Ani
                     break;
                 case Modules.Keys.Shift:
                     player.running = false;
+                    player.movementSpeed = 120;
                     break;
             }
 
