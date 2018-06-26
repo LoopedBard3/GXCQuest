@@ -4,10 +4,11 @@ define(['jquery', './pages/state', './pages/ability', './pages/settings', './pag
 
     return Class.extend({
 
-        init: function(game) {
+        init: function(game, interface) {
             var self = this;
 
             self.game = game;
+            self.interface = interface;
 
             self.body = $('#profileDialog');
             self.button = $('#profileButton');
@@ -63,7 +64,7 @@ define(['jquery', './pages/state', './pages/ability', './pages/settings', './pag
             self.state = new State(self.game);
             self.ability = new Ability(self.game);
             self.settings = new Settings(self.game);
-            self.quests = new Quest(self.game);
+            self.quests = new Quest(self.game, self.interface);
 
             self.pages.push(self.state, self.quests, self.ability);
 

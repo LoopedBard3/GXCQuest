@@ -1,7 +1,8 @@
 var Quest = require('../quest'),
     Messages = require('../../../../../../network/messages'),
     Packets = require('../../../../../../network/packets'),
-    Utils = require('../../../../../../util/utils');
+    Utils = require('../../../../../../util/utils'),
+    Items = require('../../../../../../util/items');
 
 module.exports = Introduction = Quest.extend({
 
@@ -103,15 +104,16 @@ module.exports = Introduction = Quest.extend({
         switch (type) {
             case 'talk':
 
-                if (self.stage === 4)
+                if (self.stage === 4) {
+                    var itemId = 248;
                     self.player.inventory.add({
-                        id: 248,
+                        id: itemId,
                         count: 1,
                         ability: -1,
                         abilityLevel: -1
                     });
-
-
+                    self.player.notify(`You got ${Items.idToName(itemId)}`);
+                }
                 break;
         }
 

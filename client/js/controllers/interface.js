@@ -88,7 +88,7 @@ define(['jquery', '../interface/inventory',
             var self = this;
 
             if (!self.profile)
-                self.profile = new Profile(self.game);
+                self.profile = new Profile(self.game, self);
         },
 
         loadActions: function() {
@@ -137,7 +137,6 @@ define(['jquery', '../interface/inventory',
              */
 
             ok.click(function() {
-
                 self.hideNotify();
             });
 
@@ -196,7 +195,7 @@ define(['jquery', '../interface/inventory',
             self.fade.css('display', 'block');
             self.message.css('display', 'block');
 
-            self.message.text(message);
+            self.message.html(message);
         },
 
         displayConfirm: function(message) {

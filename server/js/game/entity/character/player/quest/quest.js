@@ -1,7 +1,8 @@
 var cls = require('../../../../../lib/class'),
     Messages = require('../../../../../network/messages'),
     Packets = require('../../../../../network/packets'),
-    Utils = require('../../../../../util/utils');
+    Utils = require('../../../../../util/utils'),
+    Items = require('../../../../../util/items');
 
 module.exports = Quest = cls.Class.extend({
 
@@ -25,9 +26,10 @@ module.exports = Quest = cls.Class.extend({
             var item = self.getItemReward();
 
             if (item) {
-                if (self.hasInventorySpace(item.id, item.count))
-                    self.player.inventory.add(item.id, item.count);
-                else {
+                if (self.hasInventorySpace(item.id, item.count)) {
+                    self.player.inventory.add({ id: item.id, count: item.count });
+                    self.player.notify(`You got ${item.count > 1 ? item.count+' ':''}${Items.idToName(item.id)}`);
+                } else {
                     self.player.notify('You do not have enough space in your inventory.');
                     self.player.notify('Please make room prior to finishing the quest.');
 
@@ -42,6 +44,7 @@ module.exports = Quest = cls.Class.extend({
             id: self.id,
             isQuest: true
         }));
+        self.player.notify(`You have completed the '${self.name}' Quest`);
     },
 
     isFinished: function() {
@@ -188,6 +191,7 @@ module.exports = Quest = cls.Class.extend({
             id: this.getId(),
             name: this.getName(),
             description: this.getDescription(),
+            reward: this.getItemReward(),
             stage: this.getStage(),
             finished: this.isFinished()
         };

@@ -123,6 +123,13 @@ Modules = {
         Entity: 0,
         Position: 1,
         Relative: 2
+    },
+
+    RewardType: {
+        Item: 0,
+        Experience: 1,
+        ItemAndExperience: 2,
+        Skill: 3
     }
 
 };

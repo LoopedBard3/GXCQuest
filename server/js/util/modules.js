@@ -74,7 +74,8 @@ var Modules = {
         Rewards: {
             Item: 0,
             Experience: 1,
-            Skill: 2
+            ItemAndExperience: 2,
+            Skill: 3
         }
     },
 

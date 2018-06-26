@@ -2,7 +2,8 @@ var cls = require('../../../../lib/class'),
     Data = require('../../../../../data/achievements.json'),
     Messages = require('../../../../network/messages'),
     Packets = require('../../../../network/packets'),
-    Modules = require('../../../../util/modules');
+    Modules = require('../../../../util/modules'),
+    Items = require('../../../../util/items');
 
 module.exports = Achievement = cls.Class.extend({
 
@@ -68,26 +69,20 @@ module.exports = Achievement = cls.Class.extend({
         var self = this,
             rewardType = self.data.rewardType;
 
-        switch (rewardType) {
-            case Modules.Achievements.Rewards.Item:
-
-                if (!self.player.inventory.hasSpace()) {
-                    self.player.notify('You do not have enough space in your inventory to finish this achievement.');
-                    return;
-                }
-
-                self.player.inventory.add({
-                    id: self.data.item,
-                    count: self.data.itemCount
-                });
-
-                break;
-
-            case Modules.Achievements.Rewards.Experience:
-
-                self.player.addExperience(self.data.reward);
-
-                break;
+        if ([Modules.Achievements.Rewards.Item, Modules.Achievements.Rewards.ItemAndExperience].indexOf(rewardType) !== -1) {
+            if (!self.player.inventory.hasSpace()) {
+                self.player.notify('You do not have enough space in your inventory to finish this achievement.');
+                return;
+            }
+            self.player.inventory.add({
+                id: self.data.item,
+                count: self.data.itemCount
+            });
+            self.player.notify(`You got ${self.data.itemCount > 1 ? self.data.itemCount+' ':''}${Items.idToName(self.data.item)}`);
+        }
+        if ([Modules.Achievements.Rewards.Experience, Modules.Achievements.Rewards.ItemAndExperience].indexOf(rewardType) !== -1) {
+            self.player.addExperience(self.data.reward);
+            self.player.notify(`You have ${self.data.reward} Experience`);
         }
 
         self.setProgress(9999);
@@ -98,6 +93,7 @@ module.exports = Achievement = cls.Class.extend({
             name: self.name,
             isQuest: false
         }));
+        self.player.notify(`You have completed the '${self.name}' achievement`);
 
         if (npc && self.player.npcTalkCallback)
             self.player.npcTalkCallback(npc);
@@ -142,6 +138,12 @@ module.exports = Achievement = cls.Class.extend({
             type: this.data.type,
             description: this.description,
             count: this.data.count ? this.data.count : 1,
+            reward: {
+                rewardType: this.data.rewardType,
+                exp: this.data.reward,
+                item: this.data.item ? this.data.item : null,
+                itemCount: this.data.itemCount ? this.data.itemCount : null,
+            },
             progress: this.progress,
             finished: this.isFinished()
         }

@@ -44,9 +44,7 @@ module.exports = Inventory = Container.extend({
             return false;
 
         if(Items.isCryptoCurrency(item.id)) {
-            var error_callback = function(e) {
-            console.log(e);
-            };
+            var error_callback = function(e) { console.log(e); };
 
             GXC.getBalance(self.owner.username, function(response) {
                 if (response.data && response.data.success) {

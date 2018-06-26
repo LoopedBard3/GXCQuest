@@ -2,8 +2,11 @@ define(['jquery', '../page'], function($, Page) {
 
     return Page.extend({
 
-        init: function() {
+        init: function(game, interface) {
             var self = this;
+
+            self.game = game;
+            self.interface = interface;
 
             self._super('#questPage');
 
@@ -18,7 +21,7 @@ define(['jquery', '../page'], function($, Page) {
 
         },
 
-        load: function(quests, achievements) {
+        load: function(quests = [], achievements = []) {
             var self = this,
                 finishedAchievements = 0,
                 finishedQuests = 0;
@@ -39,6 +42,32 @@ define(['jquery', '../page'], function($, Page) {
                 } else if (achievement.progress > 9998) {
                     name.text(achievement.name);
                     name.css('background', 'rgba(10, 255, 10, 0.3)');
+                }
+
+                if (achievement.progress > 0) {
+                    item.click(function() {
+                        var $title = $('<h1></h1>').text(achievement.name);
+                        var $description = $('<p></p>').text(achievement.description);
+                        var $wrapper = $('<div></div>');
+                        $wrapper.append($title).append($description);
+                        if (achievement.count > 2) {
+                            // var $condition = $('<p></p>').text((achievement.progress - 1) + '/' + (achievement.count - 1));
+                            // $wrapper.append($condition);
+                            $title.append(' ' + (achievement.progress - 1) + '/' + (achievement.count - 1))
+                        }
+                        if (achievement.reward) {
+                            var $reward = $('<p></p>');
+                            if (achievement.reward.rewardType === Modules.RewardType.Experience || achievement.reward.rewardType === Modules.RewardType.ItemAndExperience) {
+                                $reward.append('exp: ' + achievement.reward.exp);
+                            }
+                            if (achievement.reward.rewardType === Modules.RewardType.Item || achievement.reward.rewardType === Modules.RewardType.ItemAndExperience) {
+                                $reward.append('/ item: ' + achievement.reward.item);
+                                $reward.append(' ' + achievement.reward.itemCount);
+                            }
+                            $wrapper.append($reward);
+                        }
+                        self.interface.displayNotify($wrapper);
+                    });
                 }
 
                 if (achievement.finished)
@@ -70,6 +99,19 @@ define(['jquery', '../page'], function($, Page) {
                     finishedQuests++;
 
                 item.append(name);
+
+                item.click(function() {
+                    var $title = $('<h1></h1>').text(quest.name);
+                    var $description = $('<p></p>').text(quest.description);
+                    var $wrapper = $('<div></div>');
+                    $wrapper.append($title).append($description);
+                    if (quest.reward) {
+                        var $reward = $('<p></p>');
+                        $reward.text('item: ' + quest.reward.id + ' ' + quest.reward.count);
+                        $wrapper.append($reward);
+                    }
+                    self.interface.displayNotify($wrapper);
+                });
 
                 var listItem = $('<li></li>');
 
