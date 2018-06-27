@@ -1,4 +1,4 @@
-# GXCQuest
+# GameXRogue
 
 GameXRogue (GXR) is a massively multi-player online open-source project based on Little Workshop's 2012 demonstration for HTML5 WebSockets - BrowserQuest (BQ).
 
