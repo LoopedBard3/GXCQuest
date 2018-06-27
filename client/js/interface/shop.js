@@ -84,7 +84,7 @@ define(['jquery', './container/container'], function($, Container) {
                     continue;
 
                 $itemImage = $('<div class="shopItemImage col-1 my-auto"></div>');
-                $itemCount = $('<div class="shopItemCount col-2 my-auto"></div>');
+                // $itemCount = $('<div class="shopItemCount col-2 my-auto"></div>');
                 $itemPrice = $('<div class="shopItemPrice col-2 my-auto"></div>');
                 $itemName = $('<div class="shopItemName col-4 my-auto"></div>');
                 $itemBuy  = $('<div class="shopItemBuy col-3 my-auto"></div>');
@@ -92,7 +92,7 @@ define(['jquery', './container/container'], function($, Container) {
                 $itemBuy.append($buyButton);
 
                 $itemImage.css('background-image', self.container.getImageFormat(self.getScale(), itemString));
-                $itemCount.html(itemCount);
+                // $itemCount.html(itemCount);
                 $itemPrice.html(itemPrice);
                 $itemName.html(itemName);
 
@@ -113,7 +113,8 @@ define(['jquery', './container/container'], function($, Container) {
 
                 var $listItem = $('<li class="shopItem row"></li>');
 
-                $listItem.append($itemImage, $itemName, $itemCount, $itemPrice, $itemBuy);
+                // $listItem.append($itemImage, $itemName, $itemCount, $itemPrice, $itemBuy);
+                $listItem.append($itemImage, $itemName, $itemPrice, $itemBuy);
 
                 self.getShopList().append($listItem);
             }

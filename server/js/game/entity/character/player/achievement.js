@@ -38,13 +38,7 @@ module.exports = Achievement = cls.Class.extend({
 
         self.update();
 
-        self.player.send(new Messages.Quest(Packets.QuestOpcode.Progress, {
-            id: self.id,
-            name: self.name,
-            progress: self.progress - 1,
-            count: self.data.count,
-            isQuest: false
-        }))
+        self.player.send(new Messages.Quest(Packets.QuestOpcode.Progress, self.getInfo()));
     },
 
     converse: function(npc) {
@@ -142,10 +136,12 @@ module.exports = Achievement = cls.Class.extend({
                 rewardType: this.data.rewardType,
                 exp: this.data.reward,
                 item: this.data.item ? this.data.item : null,
+                itemName: this.data.item ? Items.idToString(this.data.item) : null,
                 itemCount: this.data.itemCount ? this.data.itemCount : null,
             },
             progress: this.progress,
-            finished: this.isFinished()
+            finished: this.isFinished(),
+            isQuest: false
         }
     }
 

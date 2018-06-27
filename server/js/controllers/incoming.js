@@ -724,10 +724,16 @@ module.exports = Incoming = cls.Class.extend({
 
         switch (type) {
             case 'profile':
-
                 if (self.player.profileToggleCallback)
                     self.player.profileToggleCallback(isOpen);
-
+                break;
+            case 'inventory':
+                if (self.player.inventoryToggleCallback)
+                    self.player.inventoryToggleCallback(isOpen);
+                break;
+            case 'token':
+                if (self.player.tokenToggleCallback)
+                    self.player.tokenToggleCallback(isOpen);
                 break;
         }
     },

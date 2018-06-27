@@ -191,6 +191,7 @@ body {
     top: 60%;
     left: 50%;
     transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.2);
 }
 
 #chat p {
@@ -200,7 +201,10 @@ body {
 #chatLog {
     width: 100%;
     height: 100%;
-    margin-top: -44%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 15px;
     overflow-y: hidden;
 }
 
@@ -448,7 +452,7 @@ html [type="button"],
     }
 
     #chatLog {
-        font-size: 15px;
+        font-size: 24px;
     }
 
     #talk {
@@ -681,7 +685,7 @@ html [type="button"],
     }
 
     #chatLog {
-        font-size: 15px;
+        font-size: 18px;
     }
 
     #talk {
@@ -913,7 +917,7 @@ html [type="button"],
     }
 
     #chatLog {
-        font-size: 10px;
+        font-size: 14px;
     }
 
     #talk {

@@ -71,9 +71,9 @@ module.exports = Mob = Character.extend({
                 if (random >= min && random < percent) {
                     var count = 1;
 
-                    if (drop === 'gold')
+                    if (drop === 'gold' || drop === 'gqt')
                         count = Utils.randomInt(1, self.level * (Math.floor(Math.pow(2, self.level / 7) / (self.level / 4))));
-
+                        
                     return {
                         id: Items.stringToId(drop),
                         count: count

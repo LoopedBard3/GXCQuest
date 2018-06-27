@@ -64,25 +64,35 @@ module.exports = Shops = cls.Class.extend({
             return;
         }
 
-        if (!player.inventory.contains(currency, cost)) {
-            player.notify('You do not have enough money to purchase this.');
-            return;
-        }
-
         if (!player.inventory.hasSpace()) {
             player.notify('You do not have enough space in your inventory.');
             return;
         }
-
+    
         if (count > stock)
             count = stock;
 
-        player.inventory.remove(currency, cost);
-        player.inventory.add({ id: itemId, count }, count);
-
-        ShopData.decrement(shopId, itemId, count);
-
-        self.refresh(shopId);
+        if (Items.isCryptoCurrency(currency)) {
+            player.inventory.remove(currency, cost, undefined, function () {
+                player.inventory.add({ id: itemId, count }, count);
+    
+                ShopData.decrement(shopId, itemId, count);
+        
+                self.refresh(shopId);
+            });
+        } else {
+            if (!player.inventory.contains(currency, cost)) {
+                player.notify('You do not have enough money to purchase this.');
+                return;
+            }
+    
+            player.inventory.remove(currency, cost);
+            player.inventory.add({ id: itemId, count }, count);
+    
+            ShopData.decrement(shopId, itemId, count);
+    
+            self.refresh(shopId);
+        }
     },
 
     refresh: function(shopId) {

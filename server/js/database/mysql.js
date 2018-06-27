@@ -196,15 +196,17 @@ module.exports = MySQL = cls.Class.extend({
         let select = 'SELECT';
         let query = ` FROM ${database} WHERE 1=1`;
         let params = [];
+        let selector = '';
         if (data.selector) {
             for (var key in data.selector) {
-                select += ` \`${database}\`.\`${data.selector[key]}\``;
+                selector += `, \`${database}\`.\`${data.selector[key]}\``;
             }
+            select += selector.slice(1);
         } else {
             select += " *";
         }
         query = select + query;
-        if (data.prams) {
+        if (data.params) {
             for (var key in data.params) {
                 query += ` AND \`${database}\`.\`${key}\`=?`;
                 params.push(data.params[key]);

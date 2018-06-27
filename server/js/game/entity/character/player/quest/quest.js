@@ -179,7 +179,11 @@ module.exports = Quest = cls.Class.extend({
     },
 
     getItemReward: function() {
-        return this.hasItemReward() ? this.data.itemReward : null;
+        if (this.hasItemReward()) {
+            this.data.itemReward.name = Items.idToString(this.data.itemReward.id);
+            return this.data.itemReward;
+        }
+        return null;
     },
 
     hasInventorySpace: function(id, count) {
@@ -193,7 +197,8 @@ module.exports = Quest = cls.Class.extend({
             description: this.getDescription(),
             reward: this.getItemReward(),
             stage: this.getStage(),
-            finished: this.isFinished()
+            finished: this.isFinished(),
+            isQuest: true
         };
     }
 

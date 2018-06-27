@@ -1426,8 +1426,7 @@
     "id":202,
     "type":"object",
     "name":"Gold",
-    "stackable": 1,
-    "cryptocurrency": 1
+    "stackable": 1
   },
   
   "MountSeaDragon": {
@@ -1819,7 +1818,14 @@
     "id": 259,
     "type": "armor",
     "name": "Pickle Armour"
-  }
+  },
 
+  "GQT": {
+    "id": 999,
+    "type": "object",
+    "name": "GQT",
+    "stackable": 1,
+    "cryptocurrency": 1
+  }
 }
 

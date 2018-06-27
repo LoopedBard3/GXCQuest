@@ -10,7 +10,8 @@ var fs = require('fs'),
     worlds = [], database,
     Bot = require('../../tools/bot/bot'),
     axios = require('axios'),
-    hash = require('object-hash');
+    hash = require('object-hash'),
+    GXC = require('./util/gxc');
 
 var worldsCreated = 0;
 
@@ -50,7 +51,7 @@ function Main() {
             .then(function (response) {
                 gxcData = response.data;
                 const data = {
-                    selector: ['username'],
+                    selector: ['username', 'gqtToken'],
                     params: { username: gxcData.account }
                 };
                 const player = {
@@ -62,16 +63,26 @@ function Main() {
                     username: gxcData.account,
                     accessToken,
                     accessTime: new Date()
-                }
-                database.selectData('player_wallet', data, function(error, rows, fields) {
-                    if (error) {
-                        throw error;
-                    } else {
-                        type = 'UPDATE IGNORE';
-                        if (!rows.length) type = 'INSERT INTO'
-                        database.queryData(type, 'player_wallet', accessData);
-                    }
-                });
+                };
+                GXC.getBalance(gxcData.account, function (response) {
+                    database.selectData('player_wallet', data, function(error, rows, fields) {
+                        if (error) {
+                            throw error;
+                        } else {
+                            const balance = response.data.balance;
+                            accessData.gqtToken = balance;
+                            var type = 'INSERT INTO';
+                            if (rows.length > 0) {
+                                type = 'UPDATE IGNORE';
+                                var info = rows.shift();
+                                if (balance !== info.gqtToken) {
+                                    console.error('balance not matching to wallet');
+                                }
+                            }
+                            database.queryData(type, 'player_wallet', accessData);
+                        }
+                    });
+                })
             })
             .then(function () {
                 const tempKey = hash(gxcData.id);

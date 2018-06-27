@@ -1,9 +1,4 @@
 {
-  "King": {
-    "id": 45,
-    "name": "King"
-  },
-
   "VillageGirl": {
     "name": "Village Girl",
     "id": 1,
@@ -225,8 +220,13 @@
     "name": "Clerk"
   },
 
-  "Gxman": {
+  "King": {
     "id": 45,
+    "name": "King"
+  },
+
+  "Gxman": {
+    "id": 46,
     "name": "GXMan"
   }
 }

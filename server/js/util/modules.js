@@ -80,7 +80,9 @@ var Modules = {
     },
 
     Quests: {
-        Introduction: 0
+        Introduction: 0,
+        BulkySituation: 1,
+        FindGxMan: 4,
     },
 
     Languages: {

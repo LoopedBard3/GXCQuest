@@ -50,7 +50,55 @@
 
   "3": {
     "id": 3,
-    "name": "Dodgey Dodge",
-    "description": ""
-  }
+    "name": "Do you want to 100 Game-Token?",
+    "description": "Slay 100 rats.",
+    "type": 0,
+    "count": 100,
+    "npc": 12,
+    "mob": 128,
+    "item": 999,
+    "itemCount": 100,
+    "rewardType": 2,
+    "reward": 1000,
+    "text": [
+      "Do you know GXC?", "This is very very popular BlockChain Project",
+      "kill 100 Rats~!", "100 Game-Token is very useful. "
+    ]
+  },
+
+  "4": {
+    "id": 4,
+    "name": "I hate goblin realy.",
+    "description": "Slay 50 goblin.",
+    "type": 0,
+    "count": 50,
+    "npc": 1,
+    "mob": 4,
+    "item": 999,
+    "itemCount": 20,
+    "rewardType": 2,
+    "reward": 400,
+    "text": [
+      "I hate goblin.", "because, The Goblin is very ugly.",
+      "kill 50 goblin~!", "I Have 20 GameToken."
+    ]
+  },
+
+  "5": {
+    "id": 5,
+    "name": "Kill Hermit Crab",
+    "description": "Kill Hermit Crab",
+    "type": 0,
+    "count": 1,
+    "npc": 12,
+    "mob": 42,
+    "item": 999,
+    "itemCount": 200,
+    "rewardType": 2,
+    "reward": 2000,
+    "text": [
+      "Hi. Do you know Hermit Crab?", "He is strong monster.",
+      "He lives underGround.", "Find him. and Kill him."
+    ]
+  } 
 }

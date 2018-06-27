@@ -935,6 +935,14 @@ module.exports = Player = Character.extend({
         this.profileToggleCallback = callback;
     },
 
+    onInventory: function(callback) {
+        this.inventoryToggleCallback = callback;
+    },
+
+    onToken: function(callback) {
+        this.tokenToggleCallback = callback;
+    },
+
     onReady: function(callback) {
         this.readyCallback = callback;
     }

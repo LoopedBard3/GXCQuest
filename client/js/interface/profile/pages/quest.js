@@ -30,7 +30,7 @@ define(['jquery', '../page'], function($, Page) {
                 var item = self.getItem(false, achievement.id),
                     name = self.getName(false, achievement.id);
 
-                name.text('????????');
+                name.text('(?) ' + achievement.name);
 
                 name.css('background', 'rgba(255, 10, 10, 0.3)');
 
@@ -44,31 +44,31 @@ define(['jquery', '../page'], function($, Page) {
                     name.css('background', 'rgba(10, 255, 10, 0.3)');
                 }
 
-                if (achievement.progress > 0) {
-                    item.click(function() {
-                        var $title = $('<h1></h1>').text(achievement.name);
-                        var $description = $('<p></p>').text(achievement.description);
-                        var $wrapper = $('<div></div>');
-                        $wrapper.append($title).append($description);
-                        if (achievement.count > 2) {
-                            // var $condition = $('<p></p>').text((achievement.progress - 1) + '/' + (achievement.count - 1));
-                            // $wrapper.append($condition);
-                            $title.append(' ' + (achievement.progress - 1) + '/' + (achievement.count - 1))
+                item.click(function() {                
+                    var $title = $('<h1 class="name"></h1>').text(achievement.name);
+                    var $description = $('<p class="description"></p>').text(achievement.description);
+                    var $wrapper = $('<div></div>');
+                    $wrapper.append($title).append($description);
+                    if (achievement.count > 2) {
+                        $title.append(' ' + (achievement.progress - 1) + '/' + (achievement.count - 1))
+                    }
+                    if (achievement.reward) {
+                        var $reward = $('<div class="reward"></div>');
+                        if (achievement.reward.rewardType === Modules.RewardType.Experience || achievement.reward.rewardType === Modules.RewardType.ItemAndExperience) {
+                            $reward.append(achievement.reward.exp + 'exp');
                         }
-                        if (achievement.reward) {
-                            var $reward = $('<p></p>');
-                            if (achievement.reward.rewardType === Modules.RewardType.Experience || achievement.reward.rewardType === Modules.RewardType.ItemAndExperience) {
-                                $reward.append('exp: ' + achievement.reward.exp);
+                        if (achievement.reward.rewardType === Modules.RewardType.Item || achievement.reward.rewardType === Modules.RewardType.ItemAndExperience) {
+                            var $itemImage = $('<span class="itemImage"></span>');
+                            $itemImage.css('background-image', self.getImageFormat(self.getScale(), achievement.reward.itemName));
+                            $reward.append($itemImage);
+                            if(achievement.reward.itemCount > 1) {
+                                $reward.append(achievement.reward.itemCount);
                             }
-                            if (achievement.reward.rewardType === Modules.RewardType.Item || achievement.reward.rewardType === Modules.RewardType.ItemAndExperience) {
-                                $reward.append('/ item: ' + achievement.reward.item);
-                                $reward.append(' ' + achievement.reward.itemCount);
-                            }
-                            $wrapper.append($reward);
                         }
-                        self.interface.displayNotify($wrapper);
-                    });
-                }
+                        $wrapper.append($reward);
+                    }
+                    self.interface.displayNotify($wrapper);
+                });
 
                 if (achievement.finished)
                     finishedAchievements++;
@@ -101,13 +101,18 @@ define(['jquery', '../page'], function($, Page) {
                 item.append(name);
 
                 item.click(function() {
-                    var $title = $('<h1></h1>').text(quest.name);
-                    var $description = $('<p></p>').text(quest.description);
+                    var $title = $('<h1 class="name"></h1>').text(quest.name);
+                    var $description = $('<p class="description"></p>').text(quest.description);
                     var $wrapper = $('<div></div>');
                     $wrapper.append($title).append($description);
                     if (quest.reward) {
-                        var $reward = $('<p></p>');
-                        $reward.text('item: ' + quest.reward.id + ' ' + quest.reward.count);
+                        var $reward = $('<div class="reward"></div>');
+                        var $itemImage = $('<span class="itemImage"></span>');
+                        $itemImage.css('background-image', self.getImageFormat(self.getScale(), quest.reward.name));
+                        $reward.append($itemImage);
+                        if(quest.reward.count > 1) {
+                            $reward.append(quest.reward.count);
+                        }
                         $wrapper.append($reward);
                     }
                     self.interface.displayNotify($wrapper);
@@ -138,9 +143,51 @@ define(['jquery', '../page'], function($, Page) {
                 return;
 
             if (!info.isQuest && info.count > 2)
-                name.text(info.name + ' ' + info.progress + '/' + (info.count - 1));
+                name.text(info.name + ' ' + (info.progress - 1) + '/' + (info.count - 1));
 
             name.css('background', 'rgba(255, 255, 10, 0.4)');
+
+            item.off('click');
+            item.click(function() {
+                if (info.isQuest || info.progress > 0) {
+                    var $title = $('<h1 class="name"></h1>').text(info.name);
+                    var $description = $('<p class="description"></p>').text(info.description);
+                    var $wrapper = $('<div></div>');
+                    $wrapper.append($title).append($description);
+                    if (info.isQuest) {
+                        if (info.reward) {
+                            var $reward = $('<div class="reward"></div>');
+                            var $itemImage = $('<span class="itemImage"></span>');
+                            $itemImage.css('background-image', self.getImageFormat(self.getScale(), info.reward.name));
+                            $reward.append($itemImage);
+                            if(info.reward.count > 1) {
+                                $reward.append(info.reward.count);
+                            }
+                            $wrapper.append($reward);
+                        }
+                    } else {
+                        if (info.count > 2) {
+                            $title.append(' ' + (info.progress - 1) + '/' + (info.count - 1));
+                        }
+                        if (info.reward) {
+                            var $reward = $('<div class="reward"></div>');
+                            if (info.reward.rewardType === Modules.RewardType.Experience || info.reward.rewardType === Modules.RewardType.ItemAndExperience) {
+                                $reward.append(info.reward.exp + 'exp');
+                            }
+                            if (info.reward.rewardType === Modules.RewardType.Item || info.reward.rewardType === Modules.RewardType.ItemAndExperience) {
+                                var $itemImage = $('<span class="itemImage"></span>');
+                                $itemImage.css('background-image', self.getImageFormat(self.getScale(), info.reward.itemName));
+                                $reward.append($itemImage);
+                                if(info.reward.itemCount > 1) {
+                                    $reward.append(info.reward.itemCount);
+                                }
+                            }
+                            $wrapper.append($reward);
+                        }
+                    }
+                    self.interface.displayNotify($wrapper);
+                }
+            });
         },
 
         finish: function(info) {

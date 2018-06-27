@@ -74,8 +74,8 @@ module.exports = Handler = cls.Class.extend({
         self.player.onTalkToNPC(function(npc) {
 
             if (self.player.quests.isQuestNPC(npc)) {
+                self.player.quests.getQuestByNPC(npc);
                 self.player.quests.getQuestByNPC(npc).triggerTalk(npc);
-
                 return;
             }
 

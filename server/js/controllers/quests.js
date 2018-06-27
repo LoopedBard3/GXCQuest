@@ -1,6 +1,7 @@
 var cls = require('../lib/class'),
     Introduction = require('../game/entity/character/player/quest/misc/introduction'),
     BulkySituation = require('../game/entity/character/player/quest/misc/bulkysituation'),
+    FindGXMan = require('../game/entity/character/player/quest/misc/findGXMan'),
     QuestData = require('../../data/quests.json'),
     AchievementData = require('../../data/achievements.json'),
     Achievement = require('../game/entity/character/player/achievement'),
@@ -28,6 +29,8 @@ module.exports = Quests = cls.Class.extend({
                 self.quests[quest.id] = new Introduction(self.player, quest);
             else if (questCount === 1)
                 self.quests[quest.id] = new BulkySituation(self.player, quest);
+            else if (questCount === 4)
+                self.quests[quest.id] = new FindGXMan(self.player, quest);
 
             questCount++;
         });
@@ -42,8 +45,8 @@ module.exports = Quests = cls.Class.extend({
         var self = this;
 
         for (var id = 0; id < ids.length; id++)
-            if (!isNaN(parseInt(ids[id])) && self.quests[id])
-                self.quests[id].load(stages[id]);
+            if (!isNaN(parseInt(ids[id])) && self.quests[ids[id]])
+                self.quests[ids[id]].load(stages[id]);
     },
 
     updateAchievements: function(ids, progress) {
@@ -71,9 +74,10 @@ module.exports = Quests = cls.Class.extend({
             ids = '',
             stages = '';
 
+        var keys = Object.keys(self.quests);
         for (var id = 0; id < self.getQuestSize(); id++) {
-            ids += id + ' ';
-            stages += self.quests[id].stage + ' ';
+            ids += keys[id] + ' ';
+            stages += self.quests[keys[id]].stage + ' ';
         }
 
         return {

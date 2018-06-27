@@ -517,7 +517,41 @@
     font-size: 12px;
 }
 
+#message .description {
+    font-size: 12px;
+}
+#message .reward .itemImage{
+    display: inline-block;
+}
+
 @media only screen and (min-width: 1501px) {
+
+    #notify, #confirm {
+        width: 500px;
+        height: 140px;
+        background: url('../img/3/containers.png') -900px 0;
+    }
+    #message .reward .itemImage {
+        width: 45px;
+        height: 45px;
+    }
+    #exclamation {
+        background: url('../img/3/containers.png') -1003px -141px;
+    }
+    #question {
+        background: url('../img/3/containers.png') -1048px -141px;
+    }
+    #question, #exclamation {
+        position: relative;
+        width: 45px;
+        height: 48px;
+        display: block;
+    }
+    .ok, .done {
+        width: 42px;
+        height: 21px;
+        background: url('../img/3/containers.png') -2362px -141px;
+    }
 
     #wallet {
         margin-right: 15px;
@@ -549,7 +583,7 @@
         position: relative;
         width: 45px;
         height: 45px;
-        background: url('../img/3/item-gold.png') no-repeat;
+        background: url('../img/3/item-gqt.png') no-repeat;
     }
     #inventoryButton {
         position: relative;
@@ -1110,7 +1144,7 @@
         position: relative;
         width: 30px;
         height: 30px;
-        background: url('../img/2/item-gold.png') no-repeat;
+        background: url('../img/2/item-gqt.png') no-repeat;
     }
     #inventoryButton {
         position: relative;
@@ -1183,6 +1217,11 @@
         width: 333px;
         height: 94px;
         background: url('../img/2/containers.png') -601px 0;
+    }
+    
+    #message .reward .itemImage {
+        width: 30px;
+        height: 30px;
     }
 
     #question, #exclamation {
@@ -1718,7 +1757,7 @@
         position: relative;
         width: 30px;
         height: 30px;
-        background: url('../img/2/item-gold.png') no-repeat;
+        background: url('../img/2/item-gqt.png') no-repeat;
     }
     #inventoryButton {
         position: relative;

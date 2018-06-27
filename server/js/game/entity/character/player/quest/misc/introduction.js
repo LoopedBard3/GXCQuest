@@ -81,12 +81,14 @@ module.exports = Introduction = Quest.extend({
         });
 
         self.player.onProfile(function(isOpen) {
-
             if (isOpen)
                 self.progress('click');
-
         });
 
+        self.player.onInventory(function(isOpen) {
+            if (isOpen)
+                self.progress('click');
+        });
     },
 
     progress: function(type) {
@@ -125,11 +127,7 @@ module.exports = Introduction = Quest.extend({
         self.update();
         self.updatePointers();
 
-        self.player.send(new Messages.Quest(Packets.QuestOpcode.Progress, {
-            id: self.id,
-            stage: self.stage,
-            isQuest: true
-        }));
+        self.player.send(new Messages.Quest(Packets.QuestOpcode.Progress, self.getInfo()));
     },
 
     isFinished: function() {

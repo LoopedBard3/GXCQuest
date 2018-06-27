@@ -1360,6 +1360,19 @@
     "offsetY": -8
   },
   {
+    "id": "gxman",
+    "width": 24,
+    "height": 24,
+    "animations": {
+      "idle_down": {
+        "length": 2,
+        "row": 0
+      }
+    },
+    "offsetX": -4,
+    "offsetY": -8
+  },
+  {
     "id": "bluesword",
     "width": 48,
     "height": 48,
@@ -8131,6 +8144,19 @@
   },
   {
     "id": "item-gold",
+    "width": 16,
+    "height": 16,
+    "animations": {
+      "idle": {
+        "length": 6,
+        "row": 0
+      }
+    },
+    "offsetX": 0,
+    "offsetY": 0
+  },
+  {
+    "id": "item-gqt",
     "width": 16,
     "height": 16,
     "animations": {

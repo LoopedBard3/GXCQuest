@@ -7,7 +7,8 @@ define(['jquery'], function($) {
 
             self.game = game;
 
-            self.body = $('#wallet');
+            self.wallet = $('#wallet');
+            self.token = $('#token');
             self.tokenAmount = $('#tokenAmount');
 
             self.player = game.player;
@@ -17,6 +18,10 @@ define(['jquery'], function($) {
             self.data = {
                 tokenAmount: 0
             };
+
+            self.token.click(function(e) {
+                self.game.socket.send(Packets.Click, ['token', true]);
+            })
         },
 
         update: function(data) {

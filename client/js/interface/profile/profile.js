@@ -38,13 +38,11 @@ define(['jquery', './pages/state', './pages/ability', './pages/settings', './pag
                 } else {
                     self.show();
                     self.button.addClass('active');
+                    self.game.socket.send(Packets.Click, ['profile', self.button.hasClass('active')]);
                 }
 
                 if (!self.activePage.loaded)
                     self.activePage.load();
-
-                self.game.socket.send(Packets.Click, ['profile', self.button.hasClass('active')]);
-
             });
 
             self.next.click(function() {
