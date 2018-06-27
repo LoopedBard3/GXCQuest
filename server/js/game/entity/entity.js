@@ -126,12 +126,14 @@ module.exports = Entity = cls.Class.extend({
         var self = this,
             string = self.isMob() ? Mobs.idToString(self.id) : (self.isNPC() ? NPCs.idToString(self.id) : Items.idToString(self.id)),
             name = self.isMob() ? Mobs.idToName(self.id) : (self.isNPC() ? NPCs.idToName(self.id) : Items.idToName(self.id));
+            description = self.isItem() ? (Items.getData(string) || {}).description : null;
 
         return {
             type: self.type,
             id: self.instance,
             string: string,
             name: name,
+            description: description,
             x: self.x,
             y: self.y
         }

@@ -490,6 +490,7 @@
 
 .shopItem {
     border-bottom: 3px solid rgba(255, 255, 0, 0.3);
+    color: white;
 }
 
 .shopItemImage {
@@ -499,6 +500,7 @@
     background-color: white;
     transform: scale(0.9);
     border-radius: 100%;
+    background-size: cover;
 }
 
 .shopItemName {

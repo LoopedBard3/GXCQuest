@@ -86,8 +86,8 @@ define(['jquery', './container/container'], function($, Container) {
                 $itemImage = $('<div class="shopItemImage col-1 my-auto"></div>');
                 // $itemCount = $('<div class="shopItemCount col-2 my-auto"></div>');
                 $itemPrice = $('<div class="shopItemPrice col-2 my-auto"></div>');
-                $itemName = $('<div class="shopItemName col-4 my-auto"></div>');
-                $itemBuy  = $('<div class="shopItemBuy col-3 my-auto"></div>');
+                $itemName = $('<div class="shopItemName col-7 my-auto"></div>');
+                $itemBuy  = $('<div class="shopItemBuy col-2 my-auto"></div>');
                 $buyButton = $('<button class="btn btn-sm btn-success">Buy</button>').attr('index', i);
                 $itemBuy.append($buyButton);
 

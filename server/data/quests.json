@@ -82,18 +82,18 @@
     "stages": 4,
     "conversations": {
       "2": {
-        "0": ["Hoho! Heii", "Adventr, i ned hlp. Yu se.", "i lost me armur.",
-            "i wil giv u 200 gold if u find.", "its aboot ze siz of me body",
-            "and it made lether of."],
+        "0": ["How are you", "adventurer?, I need some help!", " I lost my armor.",
+            "I will give you 200 gold if you can find it for me.", "It’s about the size of my body.",
+            "And it is made of leather."],
 
-        "1": ["Plz, how progrs goin'?", "I ned lethr armur."],
+        "1": ["How is it going?", "I need a leather armor."],
 
-        "2": ["Hono, tht iz rong armur. But i take anyway.", "i ment tu sey chain meil, but srry.",
-              "plz, find armr mde of chein"],
+        "2": ["Oh no, that is the wrong armor. But I will take it anyway.", "I meant to say chain armor. Sorry.",
+            "Please find armor made of chain."],
 
-        "3": ["Plz, i weight. I weight fur me chein meil armr.", "Pls bring."],
+        "3": ["I will wait for my chain armor.", "Can you bring it?"],
 
-        "4": ["Dank u adventurer.", "U hav helpd alot."]
+        "4": ["Thank you adventurer.", "It’s very helpful."]
       }
     },
 

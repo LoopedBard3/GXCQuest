@@ -38,6 +38,7 @@ module.exports = Parser = cls.Class.extend({
                 key: key,
                 id: value.id,
                 name: value.name ? value.name : key,
+                description: value.description ? value.description : null,
                 drops: value.drops ? value.drops : null,
                 hitPoints: value.hitPoints ? value.hitPoints : 10,
                 armour: value.armour ? value.armour : 0,
@@ -76,6 +77,7 @@ module.exports = Parser = cls.Class.extend({
                 key: key,
                 id: value.id,
                 name: value.name ? value.name : key,
+                description: value.description ? value.description : null,
                 text: value.text ? value.text : null,
                 type: value.type ? value.type : null
             };
@@ -104,6 +106,7 @@ module.exports = Parser = cls.Class.extend({
                 ringLevel: value.ringLevel ? value.ringLevel : null,
                 bootsLevel: value.bootsLevel ? value.bootsLevel : null,
                 name: value.name ? value.name : key,
+                description: value.description ? value.description : null,
                 price: value.price ? value.price : 1,
                 storeCount: value.storeCount ? value.storeCount : 1,
                 stackable: value.stackable ? value.stackable : 0,
