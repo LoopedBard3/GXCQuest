@@ -106,7 +106,7 @@ define(function() {
                     break;
 
                 case 'maintenance':
-                    self.app.sendError(null, 'GXCQuest is currently under construction.');
+                    self.app.sendError(null, 'GameXRogue is currently under construction.');
                     break;
 
                 case 'userexists':

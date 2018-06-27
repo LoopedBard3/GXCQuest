@@ -1,6 +1,6 @@
 # GXCQuest
 
-GXCQuest (GXQ) is a massively multi-player online open-source project based on Little Workshop's 2012 demonstration for HTML5 WebSockets - BrowserQuest (BQ).
+GameXRogue (GXR) is a massively multi-player online open-source project based on Little Workshop's 2012 demonstration for HTML5 WebSockets - BrowserQuest (BQ).
 
 The entirety of the source has been rewritten from the ground up, this includes rendering, networking, sprite parsing, map loading, etc. The code remains true to its coding conventions and follows it thoroughly. Although, compared to its predecessor, the code is far more comprehensive and adaptable, it is, as all other repositories on this website, a work in progress. If your capabilities include following onset conventions, you are welcome to contribute!
 
@@ -44,7 +44,7 @@ Still, there are a couple things that have to be done:
 - More quests and achievements
 
 
-## Running GXCQuest
+## Running GameXRogue
 
 Running the server is fairly straightforward, for the most part. If you encounter any issues, make sure you use the alternative solution.
 
