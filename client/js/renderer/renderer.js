@@ -22,7 +22,7 @@ define(['jquery', './camera', './tile',
             self.cursorContext = cursor.getContext('2d');
 
             self.context.imageSmoothingEnabled = false;
-            self.backContext.imageSmoothingEnabled = false;
+            self.backContext.imaㅇgeSmoothingEnabled = false;
             self.foreContext.imageSmoothingEnabled = false;
             self.textContext.imageSmoothingEnabled = true;
             self.cursorContext.imageSmoothingEnabled = false;
@@ -453,7 +453,7 @@ define(['jquery', './camera', './tile',
 
             var barLength = 16,
                 healthX = entity.x * self.drawingScale - barLength / 2 + 8,
-                healthY = (entity.y - 9) * self.drawingScale,
+                healthY = (entity.y + 17) * self.drawingScale,
                 healthWidth = Math.round(entity.hitPoints / entity.maxHitPoints * barLength * self.drawingScale),
                 healthHeight = 2 * self.drawingScale;
 
@@ -494,15 +494,18 @@ define(['jquery', './camera', './tile',
             self.textContext.font = '14px AdvoCut';
 
             if (!entity.hasCounter) {
-
-                if (self.drawNames && entity !== 'player')
-                    self.drawText(entity.username, (entity.x + 8) * factor, (entity.y - (self.drawLevels ? 20 : 10)) * factor, true, colour, '#000');
+                if (self.drawNames)
+                    self.drawText(entity.username || entity.name, (entity.x + 8) * factor, (entity.y - (self.drawLevels && (entity.type !== 'npc' && entity.type !== 'item') ? 12 : (entity.type !== 'item' || entity.description ? 7 : 1))) * factor, true, colour, '#000');
 
                 if (self.drawLevels && (entity.type === 'mob' || entity.type === 'player'))
-                    self.drawText('Level ' + entity.level, (entity.x + 8) * factor, (entity.y - (entity.type === 'player' ? 12 : 10)) * factor, true, colour, '#000');
+                    self.drawText('Level ' + entity.level, (entity.x + 8) * factor, (entity.y - (entity.type === 'player' ? 7 : 7)) * factor, true, colour, '#000');
 
                 if (entity.type === 'item' && entity.count > 1)
                     self.drawText(entity.count, (entity.x + 8) * factor, (entity.y - 10) * factor, true, colour);
+
+                if (entity.type === 'item' && entity.description) {
+                    self.drawText(entity.description, (entity.x + 8) * factor, (entity.y - 1) * factor, true, colour, '#000');
+                }
 
             } else {
 

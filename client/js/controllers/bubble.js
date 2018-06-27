@@ -42,8 +42,8 @@ define(['jquery', '../renderer/bubbles/blob'], function($, Blob) {
                 tileSize = 16 * scale,
                 x = (entity.x - self.game.getCamera().x) * scale,
                 width = parseInt(bubble.element.css('width')) + 24,
-                offset = (width / 2) - (tileSize / 2),
-                offsetY = 10, y;
+                offset = (width / 2) - (tileSize / 2) - 6,
+                offsetY = -5, y;
 
             y = ((entity.y - self.game.getCamera().y) * scale) - (tileSize * 2) - offsetY;
 

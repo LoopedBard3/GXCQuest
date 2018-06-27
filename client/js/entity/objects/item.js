@@ -25,6 +25,10 @@ define(['../entity'], function(Entity) {
             this._super(name);
         },
 
+        setDescription: function(description) {
+            this._super(description);
+        },
+
         setAnimation: function(name, speed, count) {
             this._super(name, speed, count);
         },

@@ -202,6 +202,7 @@ define(['../renderer/grids', '../entity/objects/chest',
 
                 entity.setGridPosition(info.x, info.y);
                 entity.setName(info.name);
+                entity.setDescription(info.description);
 
                 entity.setSprite(sprite);
 

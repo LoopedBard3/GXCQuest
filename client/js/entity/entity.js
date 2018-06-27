@@ -16,6 +16,7 @@ define(['./entityhandler'], function(EntityHandler) {
             self.gridY = 0;
 
             self.name = '';
+            self.description = null;
 
             self.sprite = null;
             self.spriteFlipX = false;
@@ -95,6 +96,10 @@ define(['./entityhandler'], function(EntityHandler) {
 
         setName: function(name) {
             this.name = name;
+        },
+
+        setDescription: function(description) {
+            this.description = description;
         },
 
         setSprite: function(sprite) {

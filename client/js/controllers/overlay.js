@@ -32,11 +32,14 @@ define(['jquery'], function($) {
                 self.display();
 
             self.hovering = entity;
+            var name = entity.type === 'player' ? entity.username : entity.name;
+            if (entity.level) {
+                name += ` Lv.${entity.level}`;
+            }
 
-            self.name.html(entity.type === 'player' ? entity.username : entity.name);
+            self.name.html(name);
 
             if (self.hasHealth()) {
-
                 self.health.css({
                     'display': 'block',
                     'width': Math.ceil(entity.hitPoints / entity.maxHitPoints * 100) - 10 + '%'
@@ -45,15 +48,14 @@ define(['jquery'], function($) {
                 self.details.html(entity.hitPoints + ' / ' + entity.maxHitPoints);
 
             } else {
-
                 self.health.css('display', 'none');
                 self.details.html('');
-
+                if (entity.description) {
+                    self.details.html(entity.description);
+                }
             }
 
             self.onUpdate(function(entityId, hitPoints) {
-
-
                 if (self.hovering && self.hovering.id === entityId && self.hovering.type !== 'npc' && self.hovering.type !== 'item') {
                     if (hitPoints < 1)
                         self.hide();
@@ -61,7 +63,6 @@ define(['jquery'], function($) {
                         self.health.css('width', Math.ceil(hitPoints / self.hovering.maxHitPoints * 100) - 10 + '%');
                         self.details.html(hitPoints + ' / ' + self.hovering.maxHitPoints);
                     }
-
                 }
             });
 
