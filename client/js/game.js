@@ -552,11 +552,12 @@ define(['./renderer/renderer', './utils/storage',
 
                 switch (opcode) {
                     case Packets.CombatOpcode.Initiate:
-                        attacker.setTarget(target);
+                        if (attacker)
+                            attacker.setTarget(target);
+                        if (target)
+                            target.addAttacker(attacker);
 
-                        target.addAttacker(attacker);
-
-                        if (target.id === self.player.id || attacker.id === self.player.id)
+                        if (attacker && target && (target.id === self.player.id || attacker.id === self.player.id))
                             self.socket.send(Packets.Combat, [Packets.CombatOpcode.Initiate, attacker.id, target.id]);
 
                         break;
@@ -584,7 +585,7 @@ define(['./renderer/renderer', './utils/storage',
 
                             default:
 
-                                if (attacker.id === self.player.id && hit.damage > 0)
+                                if (attacker && attacker.id === self.player.id && hit.damage > 0)
                                     self.audio.play(Modules.AudioTypes.SFX, 'hit' + Math.floor(Math.random() * 2 + 1));
 
                                 break;
