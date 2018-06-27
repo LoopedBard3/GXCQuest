@@ -209,7 +209,7 @@ define(['jquery'], function($) {
             const left = (screen.availWidth - width) / 2;
             const top = (screen.availHeight - height) / 2;
             const config = self.config;
-            const redirectURI = `${config.protocol}://${config.ip}:${config.port}${config.gxc.client.oauthCallbackURL}`;
+            const redirectURI = `${config.protocol}://${config.ip}${config.port !== '' ? `:${config.port}`:''}${config.gxc.client.oauthCallbackURL}`;
             self.walletWindow = window.open(`${config.gxc.client.url}?response_type=code&client_id=${config.gxc.client.id}&redirect_uri=${redirectURI}`, Math.random(), `width=${width}, height=${height}, left=${left}, top=${top}`);
             window.gxcLoginHander = function (account, password, email) {
                 self.walletWindow.close();
