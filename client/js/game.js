@@ -566,7 +566,7 @@ define(['./renderer/renderer', './utils/storage',
                         var hit = data.shift(),
                             isPlayer = target.id === self.player.id;
 
-                        if (!hit.isAoE) {
+                        if (attacker && !hit.isAoE) {
                             attacker.lookAt(target);
                             attacker.performAction(attacker.orientation, Modules.Actions.Attack);
 
