@@ -83,15 +83,17 @@ define(['jquery', './container/container'], function($, Container) {
                 if (!itemString || !itemName || !itemCount || !itemPrice)
                     continue;
 
-                $itemImage = $('<div class="shopItemImage col-1 my-auto"></div>');
+                $itemImage = $('<div class="shopItemImageWrapper col-1 my-auto"></div>');
+                $image = $('<div class="shopItemImage"></div>');
                 // $itemCount = $('<div class="shopItemCount col-2 my-auto"></div>');
                 $itemPrice = $('<div class="shopItemPrice col-2 my-auto"></div>');
-                $itemName = $('<div class="shopItemName col-7 my-auto"></div>');
+                $itemName = $('<div class="shopItemName col-6 my-auto"></div>');
                 $itemBuy  = $('<div class="shopItemBuy col-2 my-auto"></div>');
                 $buyButton = $('<button class="btn btn-sm btn-success">Buy</button>').attr('index', i);
                 $itemBuy.append($buyButton);
 
-                $itemImage.css('background-image', self.container.getImageFormat(self.getScale(), itemString));
+                $image.css('background-image', self.container.getImageFormat(self.getScale(), itemString));
+                $itemImage.html($image);
                 // $itemCount.html(itemCount);
                 $itemPrice.html(itemPrice);
                 $itemName.html(itemName);
@@ -111,7 +113,7 @@ define(['jquery', './container/container'], function($, Container) {
                     self.buy({ shopId, item: items[index] });
                 });
 
-                var $listItem = $('<li class="shopItem row"></li>');
+                var $listItem = $('<li class="shopItem row justify-content-center"></li>');
 
                 // $listItem.append($itemImage, $itemName, $itemCount, $itemPrice, $itemBuy);
                 $listItem.append($itemImage, $itemName, $itemPrice, $itemBuy);

@@ -485,23 +485,29 @@
     left: 8%;
 }
 
-#shopContainer ul li {
-    padding-bottom: 5px;
+.shopItem {
+    border-bottom: 1px solid rgba(255, 255, 0, 0.5);
+    color: white;
+    padding: 7px 0;
 }
 
-.shopItem {
-    border-bottom: 3px solid rgba(255, 255, 0, 0.3);
-    color: white;
+.shopItemImageWrapper {
+    padding: 1px;
+    margin: 0 !important;
 }
 
 .shopItemImage {
     width: 32px;
     height: 32px;
-    border: 2px solid rgba(0, 0, 255, 0.3);
+    border: 1px solid rgba(0, 0, 255, 0.3);
     background-color: white;
     transform: scale(0.9);
     border-radius: 100%;
     background-size: cover;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .shopItemName {
@@ -518,8 +524,13 @@
 
 .shopItemBuy button {
     font-size: 12px;
+    padding: 0 .5rem;
+    display: block;
 }
 
+#message .name {
+    font-size: 14px;
+}
 #message .description {
     font-size: 12px;
 }
@@ -1657,7 +1668,7 @@
     }
 
     .questName {
-        font-size: 20px;
+        font-size: 16px;
         -webkit-border-radius: 8px;
         -moz-border-radius: 8px;
         border-radius: 8px;
@@ -1732,6 +1743,15 @@
         width: 340px;
         height: 336px;
         background: url("../img/2/containers.png") -258px -44px;;
+    }
+
+    #shop .shopItem {
+        padding: 3px 0;
+    }
+
+    #shop .shopItemImage {
+        width: 24px;
+        height: 24px;
     }
 
     #shopInventoryContainer {
@@ -2345,17 +2365,11 @@
         background: url("../img/1/bank.png") 0 0;;
     }
 
-    #shopContainer ul li {
-        padding-top: 1px;
-        padding-bottom: 1px;
+    #shop .shopItem {
+        padding: 0.5px 0;
     }
 
-    .shopItem {
-        border: 1.5px solid rgba(255, 255, 0, 0.3);
-        border-radius: 7px;
-    }
-
-    .shopItemImage {
+    #shop .shopItem .shopItemImage {
         width: 16px;
         height: 16px;
         border: 1px solid rgba(0, 0, 255, 0.3);
