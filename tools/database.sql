@@ -41,7 +41,8 @@ CREATE TABLE `player_wallet` (
   `username` varchar(64) NOT NULL,
   `accessToken` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `accessTime` DATETIME DEFAULT now() NOT NULL,
-  `gqtToken` int(11) DEFAULT 0
+  `gqtToken` int(11) DEFAULT 0,
+  `gold` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

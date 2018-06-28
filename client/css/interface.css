@@ -2,12 +2,13 @@
     position: absolute;
     right: 0;
     top: 0;
+    font-family: 'AdvoCut', sans-serif;
+    text-align: center;
+    color: rgba(255, 255, 255, 1);
 }
 
-#tokenAmount {
-    font-family: 'AdvoCut', sans-serif;
+#wallet li .amount {
     color: rgba(255, 255, 255, 1);
-    text-align: center;
 }
 
 #buttons {
@@ -581,12 +582,19 @@
         background: url('../img/3/maintwo.png') no-repeat -672px -942px;
     }
 
-    #token {
+    #wallet li .image {
         position: relative;
         width: 45px;
         height: 45px;
+    }
+    #wallet .gold .image {
+        background: url('../img/3/item-gold.png') no-repeat;
+    }
+
+    #wallet .token .image {
         background: url('../img/3/item-gqt.png') no-repeat;
     }
+
     #inventoryButton {
         position: relative;
         width: 42px;
@@ -1142,12 +1150,19 @@
         background: url('../img/2/maintwo.png') no-repeat -448px -628px;
     }
 
-    #token {
+    #wallet li .image {
         position: relative;
         width: 30px;
         height: 30px;
+    }
+    #wallet .gold .image {
+        background: url('../img/2/item-gold.png') no-repeat;
+    }
+
+    #wallet .token .image {
         background: url('../img/2/item-gqt.png') no-repeat;
     }
+
     #inventoryButton {
         position: relative;
         width: 28px;
@@ -1755,12 +1770,19 @@
         background: url('../img/2/maintwo.png') no-repeat -448px -628px;
     }
 
-    #token {
+    #wallet li .image {
         position: relative;
         width: 30px;
         height: 30px;
+    }
+    #wallet .gold .image {
+        background: url('../img/2/item-gold.png') no-repeat;
+    }
+
+    #wallet .token .image {
         background: url('../img/2/item-gqt.png') no-repeat;
     }
+
     #inventoryButton {
         position: relative;
         width: 28px;

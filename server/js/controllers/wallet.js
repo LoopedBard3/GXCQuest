@@ -11,14 +11,22 @@ module.exports = Wallet = cls.Class.extend({
         var self = this;
 
         self.player = player;
+        self.accessToken = '';
+        self.gqtToken = 0;
+        self.gold = 0;
     },
 
-    load: function(accessToken, gqtToken) {
+    load: function(accessToken, gqtToken, gold) {
         var self = this;
 
         self.accessToken = accessToken;
         self.gqtToken = gqtToken;
+        self.gqtToken = gold;
+        
+        var tokenData = { type: 'token', amount: gqtToken };
+        var goldData = { type: 'gold', amount: gold };
 
-        self.player.send(new Messages.Wallet(Packets.WalletOpcode.Set, [self.gqtToken]));
+        self.player.send(new Messages.Wallet(Packets.WalletOpcode.Set, tokenData));
+        self.player.send(new Messages.Wallet(Packets.WalletOpcode.Set, goldData));
     },
 });

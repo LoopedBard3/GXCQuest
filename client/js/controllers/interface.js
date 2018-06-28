@@ -17,6 +17,7 @@ define(['jquery', '../interface/inventory',
             self.message = $('#message');
             self.fade = $('#notifFade');
             self.done = $('#notifyDone');
+            self.guide = $('#guide');
 
             self.inventory = null;
             self.profile = null;
@@ -34,6 +35,11 @@ define(['jquery', '../interface/inventory',
             self.done.click(function() {
                 self.hideNotify();
             });
+
+            self.guide.click(function() {
+                self.guide.css('opacity', 0);
+                self.guide.css('display', 'none');
+            })
         },
 
         resize: function() {

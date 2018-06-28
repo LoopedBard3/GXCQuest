@@ -72,7 +72,7 @@ module.exports = Shops = cls.Class.extend({
         if (count > stock)
             count = stock;
 
-        if (Items.isCryptoCurrency(currency)) {
+        if (Items.isCurrency(currency)) {
             player.inventory.remove(currency, cost, undefined, function () {
                 player.inventory.add({ id: itemId, count }, count);
     

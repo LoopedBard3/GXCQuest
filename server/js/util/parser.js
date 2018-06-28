@@ -110,6 +110,7 @@ module.exports = Parser = cls.Class.extend({
                 price: value.price ? value.price : 1,
                 storeCount: value.storeCount ? value.storeCount : 1,
                 stackable: value.stackable ? value.stackable : 0,
+                currency: value.currency ? value.currency : 0,
                 cryptocurrency: value.cryptocurrency ? value.cryptocurrency : 0,
                 edible: value.edible ? value.edible : 0,
                 healsHealth: value.healsHealth ? value.healsHealth : 0,

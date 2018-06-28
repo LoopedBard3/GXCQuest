@@ -1621,7 +1621,8 @@
       "id":202,
       "type":"object",
       "name":"Gold",
-      "stackable": 1
+      "stackable": 1,
+      "currency": 1
     },
     
     "MountSeaDragon": {
@@ -2063,6 +2064,7 @@
       "type": "object",
       "name": "GQT",
       "stackable": 1,
+      "currency": 1,
       "cryptocurrency": 1
     }
   }

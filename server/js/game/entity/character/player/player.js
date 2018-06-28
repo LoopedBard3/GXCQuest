@@ -139,8 +139,8 @@ module.exports = Player = Character.extend({
     loadWallet: function() {
         var self = this;
 
-        self.mysql.loader.getWallet(self, function(accessToken, gqtToken) {
-            self.wallet.load(accessToken, gqtToken);
+        self.mysql.loader.getWallet(self, function(accessToken, gqtToken, gold) {
+            self.wallet.load(accessToken, gqtToken, gold);
         });
     },
 

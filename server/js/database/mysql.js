@@ -216,14 +216,15 @@ module.exports = MySQL = cls.Class.extend({
         self.connection.query(query, params, callback);
     },
 
-    queryData: function(type, database, data) {
+    queryData: function(type, database, data, callback) {
         var self = this;
 
-        self.connection.query(type + ' ' + database + ' SET ?', data, function(error) {
+        self.connection.query(type + ' ' + database + ' SET ?', data, function(error, rows, fields) {
             if (error)
                 throw error;
-
+            
             log.info('Successfully updated ' + database);
+            if (callback) callback(error, rows, fields);
         });
     },
 

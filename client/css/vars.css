@@ -326,13 +326,18 @@ html [type="button"],
 }
 
 #about p {
-    width: 50%;
-    margin-left: 10%;
-    margin-top: 5%;
+    width: 75%;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
 }
 
 #close-about {
-    margin-top: 20%;
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 @media only screen and (min-width: 1501px) {
