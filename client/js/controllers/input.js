@@ -122,6 +122,8 @@ define(['jquery', '../entity/animation', './chat', './overlay'], function($, Ani
                             break;
 
                         case Modules.Keys.Space:
+                            if (player.stunned)
+                                return;
                             if (!self.attacking) {
                                 let x = player.getX();
                                 let y = player.getY();
@@ -140,7 +142,7 @@ define(['jquery', '../entity/animation', './chat', './overlay'], function($, Ani
                                         break;               
                                 }
                                 var target = self.game.getEntityAt(x, y, false);
-                                if (target) {
+                                if (target && !player.disableAction) {
                                     target = self.isAttackable(target) ? target : null
                                 }
                                 self.attacking = true;
@@ -314,10 +316,10 @@ define(['jquery', '../entity/animation', './chat', './overlay'], function($, Ani
                 if (entity.gridX === player.gridX && entity.gridY === player.gridY)
                     self.game.socket.send(Packets.Target, [Packets.TargetOpcode.Attack, entity.id]);
 
-                /*if (entity.type === 'player') {
+                if (!self.isAttackable(entity)) {
                     self.getActions().showPlayerActions(entity, self.mouse.x, self.mouse.y);
                     return;
-                }*/
+                }
 
                 if (self.isTargetable(entity)) {
                     player.follow(entity);
@@ -490,7 +492,7 @@ define(['jquery', '../entity/animation', './chat', './overlay'], function($, Ani
         },
 
         isTargetable: function(entity) {
-            return this.isAttackable(entity) || entity.type === 'npc' || entity.type === 'chest';
+            return this.isAttackable(entity) || entity.type === 'npc' || entity.type === 'chest' || entity.type === 'player';
         },
 
         isAttackable: function(entity) {

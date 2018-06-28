@@ -213,6 +213,7 @@ module.exports = Incoming = cls.Class.extend({
         self.player.loadWallet();
 
         self.player.handler.detectMusic();
+        self.player.handler.detectPVP(self.player.x, self.player.y, true);
 
         if (self.player.readyCallback)
             self.player.readyCallback();

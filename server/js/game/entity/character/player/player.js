@@ -434,20 +434,18 @@ module.exports = Player = Character.extend({
         self.world.cleanCombat(self);
     },
 
-    updatePVP: function(pvp) {
+    updatePVP: function(pvp, force = false) {
         var self = this;
 
-        /**
-         * No need to update if the state is the same
-         */
+        if(!force) {
+            if (self.pvp === pvp)
+                return;
 
-        if (self.pvp === pvp)
-            return;
-
-        if (self.pvp && !pvp)
-            self.notify('You are no longer in a PvP zone!');
-        else
-            self.notify('You have entered a PvP zone!');
+            if (self.pvp && !pvp)
+                self.notify('You are no longer in a PvP zone!');
+            else
+                self.notify('You have entered a PvP zone!');
+        }
 
         self.pvp = pvp;
 

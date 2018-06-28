@@ -141,11 +141,11 @@ module.exports = Handler = cls.Class.extend({
             self.player.updateMusic(musicArea.id);
     },
 
-    detectPVP: function(x, y) {
+    detectPVP: function(x, y, force = false) {
         var self = this,
             pvpArea = _.find(self.world.getPVPAreas(), function(area) { return area.contains(x, y); });
 
-        self.player.updatePVP(!!pvpArea);
+        self.player.updatePVP(!!pvpArea, force);
     }
 
 });
