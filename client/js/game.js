@@ -379,6 +379,9 @@ define(['./renderer/renderer', './utils/storage',
                         if (!followee || !follower)
                             return;
 
+                        if (followee.type === 'player' && follower.type === 'player')
+                            return;
+
                         follower.follow(followee);
 
                         break;

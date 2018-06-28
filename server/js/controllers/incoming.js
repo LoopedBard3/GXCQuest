@@ -474,7 +474,7 @@ module.exports = Incoming = cls.Class.extend({
                     attacker.combat.forceAttack();
                 else {
 
-                    attacker.combat.start();
+                    // attacker.combat.start();
 
                     attacker.combat.attack(target);
 

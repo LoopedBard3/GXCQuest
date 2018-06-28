@@ -79,11 +79,15 @@ define(['jquery', '../entity/animation', './chat', './overlay'], function($, Ani
 
             switch(inputType) {
                 case Modules.InputType.Key:
-
                     if (self.chatHandler.isActive()) {
                         self.chatHandler.key(data);
                         return;
                     }
+
+                    if (player.stunned)
+                        return;
+
+                    self.setPassiveTarget();
 
                     switch(data) {
 
@@ -122,8 +126,6 @@ define(['jquery', '../entity/animation', './chat', './overlay'], function($, Ani
                             break;
 
                         case Modules.Keys.Space:
-                            if (player.stunned)
-                                return;
                             if (!self.attacking) {
                                 let x = player.getX();
                                 let y = player.getY();
@@ -143,6 +145,8 @@ define(['jquery', '../entity/animation', './chat', './overlay'], function($, Ani
                                 }
                                 var target = self.game.getEntityAt(x, y, false);
                                 if (target && !player.disableAction) {
+                                    self.setAttackTarget();
+                                    // player.setTarget(target);
                                     target = self.isAttackable(target) ? target : null
                                 }
                                 self.attacking = true;

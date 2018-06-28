@@ -107,8 +107,8 @@ define(function() {
 
                 self.player.forEachAttacker(function(attacker) {
                     
-                    if (!attacker.stunned)
-                        attacker.follow(self.player);
+                    // if (!attacker.stunned)
+                        // attacker.follow(self.player);
                 });
 
                 self.socket.send(Packets.Movement, [Packets.MovementOpcode.Step, self.player.gridX, self.player.gridY]);
@@ -130,7 +130,7 @@ define(function() {
                 if (self.camera.centered)
                     self.camera.centreOn(self.player);
 
-                if (self.player.hasTarget())
+                if (self.player.hasTarget() && self.player.target !== 'player')
                     self.player.follow(self.player.target);
 
             });

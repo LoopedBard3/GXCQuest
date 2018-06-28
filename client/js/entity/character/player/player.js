@@ -105,6 +105,8 @@ define(['../character', './equipment/armour', './equipment/weapon',
         },
 
         follow: function(character) {
+            if (self.type === 'player' && character.type === 'player')
+                return;
             this._super(character);
         },
 

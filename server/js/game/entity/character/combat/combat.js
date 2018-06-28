@@ -404,6 +404,8 @@ module.exports = Combat = cls.Class.extend({
     },
 
     follow: function(character, target) {
+        if (character.isPlayer() && target.isPlayer())
+            return;
         this.world.pushBroadcast(new Messages.Movement(Packets.MovementOpcode.Follow, [character.instance, target.instance, character.isRanged(), character.attackRange]));
     },
 
@@ -414,7 +416,7 @@ module.exports = Combat = cls.Class.extend({
     sendFollow: function() {
         var self = this;
 
-        if (!self.character.hasTarget() || self.character.target.isDead())
+        if (!self.character.hasTarget() || self.character.target.isDead() || self.character.target.isPlayer())
             return;
 
         var ignores = [self.character.instance, self.character.target.instance];

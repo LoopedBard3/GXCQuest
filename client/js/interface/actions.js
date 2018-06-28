@@ -14,7 +14,7 @@ define(['jquery'], function($) {
             self.dropInput = $('#dropCount');
 
             self.pBody = $('#pActions');
-            self.follow = $('#follow');
+            // self.follow = $('#follow');
             self.trade = $('#tradeAction');
 
             self.activeClass = null;
@@ -106,11 +106,11 @@ define(['jquery'], function($) {
                 'top': mouseY + (self.pBody.height() / 2) + 'px'
             });
 
-            self.follow.click(function() {
-                self.getPlayer().follow(player);
+            // self.follow.click(function() {
+            //     self.getPlayer().follow(player);
 
-                self.hidePlayerActions();
-            });
+            //     self.hidePlayerActions();
+            // });
 
             self.trade.click(function() {
                 self.getGame().tradeWith(player);
