@@ -149,8 +149,8 @@ module.exports = Inventory = Container.extend({
                                     if (quantity === count) {
                                         balance -= quantity;
                                         var type = 'UPDATE IGNORE';
-                                        var updateDate = { username: self.owner.username, gqtToken: balance };
-                                        self.owner.mysql.queryData(type, 'player_wallet', updateDate);
+                                        var updateData = { username: self.owner.username, gqtToken: balance };
+                                        self.owner.mysql.queryData(type, 'player_wallet', updateData);
                                         var data = { type: 'token', amount: balance };
                                         self.owner.send(new Messages.Wallet(Packets.WalletOpcode.Set, data));
                                         if (callback) callback();

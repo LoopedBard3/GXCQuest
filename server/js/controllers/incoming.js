@@ -213,10 +213,13 @@ module.exports = Incoming = cls.Class.extend({
         self.player.loadWallet();
 
         self.player.handler.detectMusic();
-        self.player.handler.detectPVP(self.player.x, self.player.y, true);
-        // self.player.handler.checkAttendance();
 
+        self.player.send(new Messages.Notification(Packets.NotificationOpcode.Text, 'Player Count Command: /players'));
+        self.player.send(new Messages.Notification(Packets.NotificationOpcode.Text, 'Global Chat Command: /global [text]'));
         self.player.send(new Messages.Notification(Packets.NotificationOpcode.Text, 'There are currently ' + self.world.getPopulation() + ' online.'));
+
+        self.player.handler.detectPVP(self.player.x, self.player.y, true);
+        self.player.handler.checkAttendance();
 
         if (self.player.readyCallback)
             self.player.readyCallback();

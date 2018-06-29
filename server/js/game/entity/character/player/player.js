@@ -468,12 +468,43 @@ module.exports = Player = Character.extend({
                 username: self.username
             }
         };
-        self.mysql.selectData('attendance', data, function (error, rows, fields) {
-        })
-        var start = new Date(Attendance.start);
+        var type = "UPDATE IGNORE";
+        var count = 0;
         var now = new Date();
+        now.setHours(0, 0, 0, 0);
+        var isValid = false;
+        self.mysql.selectData('player_attendance', data, function (error, rows, fields) {
+            if (rows.length <= 0) {
+                type = "INSERT INTO";
+                count = 0;
+                isValid = true;
+            } else {
+                var info = rows.shift();
+                count = info.count;
+                var updateString = new Date(info.updateDate);
+                updateString.setHours(0, 0, 0, 0);
+                isValid = now.toISOString() !== updateString.toISOString();
+            }
 
-        self.send(new Messages.Attendance(self.instance, []));
+            if (isValid) {
+                count++;
+                var reward = Attendance.items[count - 1];
+                var item = {
+                    id: reward.item,
+                    count: reward.amount,
+                }
+                self.inventory.add(item);
+
+                var data = {
+                    username: self.username,
+                    count,
+                    updateDate: now
+                };
+                self.mysql.queryData(type, 'player_attendance', data);
+            }
+
+            self.send(new Messages.Attendance(Packets.AttendanceOpcode.Set, count));
+        });
     },
 
     revertPoints: function() {

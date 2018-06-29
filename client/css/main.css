@@ -299,6 +299,19 @@ footer div {
     margin-left: 1.5%;
     margin-right: 1.5%;    
 }
+
+#attendance .big-stamp {
+    width: 20%;
+    height: 35%;
+    background-image: url('../img/3/stamp.png');
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: absolute;
+    right: 6%;
+    top: 30%;
+}
+
 #attendance .attendance-ok {
     width: 25%;
     height: 20%;

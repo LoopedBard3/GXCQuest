@@ -59,6 +59,7 @@ define(function() {
             self.messages[Packets.Shop] = self.receiveShop;
             self.messages[Packets.Minigame] = self.receiveMinigame;
             self.messages[Packets.Wallet] = self.receiveWallet;
+            self.messages[Packets.Attendance] = self.receiveAttendance;
 
         },
 
@@ -447,8 +448,17 @@ define(function() {
                 opcode = data.shift(),
                 info = data.shift();
 
-            if (self.minigameCallback)
+            if (self.walletCallback)
                 self.walletCallback(opcode, info);
+        },
+
+        receiveAttendance: function(data) {
+            var self = this,
+                opcode = data.shift(),
+                info = data.shift();
+
+            if (self.attendanceCallback)
+                self.attendanceCallback(opcode, info);
         },
 
         /**
@@ -597,6 +607,10 @@ define(function() {
 
         onWallet: function(callback) {
             this.walletCallback = callback;
+        },
+
+        onAttendance: function(callback) {
+            this.attendanceCallback = callback;
         }
 
     });

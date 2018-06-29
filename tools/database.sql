@@ -31,10 +31,23 @@ CREATE TABLE `ipbans` (
   `ipban` int(64) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `player_access`
+-- Table structure for table `player_wallet`
+--
+CREATE TABLE `player_attendance` (
+  `username` varchar(64) NOT NULL,
+  `count` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `updateDate` DATE DEFAULT now() NOT NULL,
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `player_wallet`
 --
 
 CREATE TABLE `player_wallet` (
@@ -165,6 +178,11 @@ CREATE TABLE `player_quests` (
 ALTER TABLE `ipbans`
   ADD PRIMARY KEY (`ip`);
 
+--
+-- Indexes for table `player_wallet`
+--
+ALTER TABLE `player_attendance`
+  ADD PRIMARY KEY (`username`);
 
 --
 -- Indexes for table `player_wallet`

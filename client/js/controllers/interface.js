@@ -2,8 +2,10 @@
 
 define(['jquery', '../interface/inventory',
         '../interface/profile/profile', '../interface/actions',
-        '../interface/bank', '../interface/enchant', '../interface/warp', '../interface/shop', '../interface/wallet'],
-    function($, Inventory, Profile, Actions, Bank, Enchant, Warp, Shop, Wallet) {
+        '../interface/bank', '../interface/enchant',
+        '../interface/warp', '../interface/shop',
+        '../interface/wallet', '../interface/attendance'],
+    function($, Inventory, Profile, Actions, Bank, Enchant, Warp, Shop, Wallet, Attendance) {
 
     return Class.extend({
 
@@ -18,7 +20,6 @@ define(['jquery', '../interface/inventory',
             self.fade = $('#notifFade');
             self.done = $('#notifyDone');
             self.guide = $('#guide');
-            self.attendance = $('#attendance');
 
             self.inventory = null;
             self.profile = null;
@@ -32,6 +33,7 @@ define(['jquery', '../interface/inventory',
             self.loadWarp();
             self.loadShop();
             self.loadWallet();
+            self.loadAttendance();
 
             self.done.click(function() {
                 self.hideNotify();
@@ -40,12 +42,7 @@ define(['jquery', '../interface/inventory',
             self.guide.click(function() {
                 self.guide.css('opacity', 0);
                 self.guide.css('display', 'none');
-            })
-
-            self.attendance.find('.attendance-ok').click(function() {
-                self.attendance.css('opacity', 0);
-                self.attendance.css('display', 'none');
-            })
+            });
         },
 
         resize: function() {
@@ -136,6 +133,13 @@ define(['jquery', '../interface/inventory',
 
             if (!self.wallet)
                 self.wallet = new Wallet(self.game, self);
+        },
+
+        loadAttendance: function() {
+            var self = this;
+
+            if(!self.attendance)
+                self.attendance = new Attendance(self.game, self);
         },
 
         loadNotifications: function() {

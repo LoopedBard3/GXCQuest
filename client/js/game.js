@@ -1128,6 +1128,13 @@ define(['./renderer/renderer', './utils/storage',
                 }
             });
 
+            self.messages.onAttendance(function(opcode, info) {
+                switch (opcode) {
+                    case Packets.AttendanceOpcode.Set:
+                        self.interface.attendance.update(info);
+                }
+            });
+
         },
 
         postLoad: function() {
