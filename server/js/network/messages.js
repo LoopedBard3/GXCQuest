@@ -461,3 +461,16 @@ Messages.Minigame = Message.extend({
     }
 
 });
+
+Messages.Attendance = Message.extend({
+
+    init: function(opcode, info) {
+        this.opcode = opcode;
+        this.info = info;
+    },
+
+    serialize: function() {
+        return [Packets.Attendance, this.opcode, this.info];
+    }
+
+});

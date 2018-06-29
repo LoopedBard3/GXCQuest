@@ -265,6 +265,49 @@ footer div {
     font-family: 'AdvoCut', sans-serif
 }
 
+#attendance {
+    width: 70%;
+    height: 70%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    opacity: 1;
+    transform: translate(-50%, -50%);
+    transition: 0.5s opacity linear;
+    background-image: url('../img/3/pass_ac.png');
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    font-family: 'AdvoCut', sans-serif
+}
+
+#attendance .stamps {
+    position: absolute;
+    width: 68%;
+    height: 65%;
+    top: 24%;
+    left: 4.5%;
+}
+#attendance .stamps .stamp {
+    width: 13.5%;
+    height: 24%;
+    background-image: url('../img/3/stamp.png');
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    float: left;
+    margin-left: 1.5%;
+    margin-right: 1.5%;    
+}
+#attendance .attendance-ok {
+    width: 25%;
+    height: 20%;
+    position: absolute;
+    right: 3%;
+    bottom: 11%;
+    cursor: pointer;
+}
+
 #guide .row {
     margin-top: 5%;
 }

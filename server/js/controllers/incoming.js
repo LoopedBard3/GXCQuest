@@ -214,6 +214,9 @@ module.exports = Incoming = cls.Class.extend({
 
         self.player.handler.detectMusic();
         self.player.handler.detectPVP(self.player.x, self.player.y, true);
+        // self.player.handler.checkAttendance();
+
+        self.player.send(new Messages.Notification(Packets.NotificationOpcode.Text, 'There are currently ' + self.world.getPopulation() + ' online.'));
 
         if (self.player.readyCallback)
             self.player.readyCallback();

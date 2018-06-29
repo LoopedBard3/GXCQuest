@@ -320,7 +320,7 @@ define(['jquery', '../entity/animation', './chat', './overlay'], function($, Ani
                 if (entity.gridX === player.gridX && entity.gridY === player.gridY)
                     self.game.socket.send(Packets.Target, [Packets.TargetOpcode.Attack, entity.id]);
 
-                if (!self.isAttackable(entity)) {
+                if (!self.isAttackable(entity) && entity.type !== 'npc') {
                     self.getActions().showPlayerActions(entity, self.mouse.x, self.mouse.y);
                     return;
                 }

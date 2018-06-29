@@ -26,7 +26,8 @@ var Character = require('../character'),
     Hit = require('../combat/hit'),
     Trade = require('./trade'),
     Warp = require('./warp'),
-    Guild = require('./guild')
+    Guild = require('./guild'),
+    Attendance = require('../../../../../data/attendance.json')
 
 module.exports = Player = Character.extend({
 
@@ -458,6 +459,21 @@ module.exports = Player = Character.extend({
         self.currentSong = song;
 
         self.send(new Messages.Audio(song));
+    },
+
+    updateAttendance: function() {
+        var self = this;
+        var data = {
+            params: {
+                username: self.username
+            }
+        };
+        self.mysql.selectData('attendance', data, function (error, rows, fields) {
+        })
+        var start = new Date(Attendance.start);
+        var now = new Date();
+
+        self.send(new Messages.Attendance(self.instance, []));
     },
 
     revertPoints: function() {

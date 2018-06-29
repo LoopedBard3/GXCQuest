@@ -42,7 +42,8 @@ var Packets = {
     Warp: 40,
     Shop: 41,
     Minigame: 42,
-    Wallet: 43
+    Wallet: 43,
+    Attendance: 44
 };
 
 Packets.IntroOpcode = {
@@ -181,6 +182,10 @@ Packets.WalletOpcode = {
     Set: 0,
     Add: 1,
     Remove: 2
+};
+
+Packets.AttendanceOpcode = {
+    Set: 0
 };
 
 module.exports = Packets;

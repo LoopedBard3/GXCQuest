@@ -81,11 +81,7 @@ module.exports = BulkySituation = Quest.extend({
 
         self.stage++;
 
-        self.player.send(new Messages.Quest(Packets.QuestOpcode.Progress, {
-            id: self.id,
-            stage: self.stage,
-            isQuest: true
-        }));
+        self.player.send(new Messages.Quest(Packets.QuestOpcode.Progress, self.getInfo()));
     },
 
     finish: function() {

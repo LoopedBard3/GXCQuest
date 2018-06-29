@@ -146,6 +146,10 @@ module.exports = Handler = cls.Class.extend({
             pvpArea = _.find(self.world.getPVPAreas(), function(area) { return area.contains(x, y); });
 
         self.player.updatePVP(!!pvpArea, force);
-    }
+    },
 
+    checkAttendance: function() {
+        var self = this;
+        self.player.updateAttendance();
+    }
 });

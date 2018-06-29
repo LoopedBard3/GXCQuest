@@ -18,6 +18,7 @@ define(['jquery', '../interface/inventory',
             self.fade = $('#notifFade');
             self.done = $('#notifyDone');
             self.guide = $('#guide');
+            self.attendance = $('#attendance');
 
             self.inventory = null;
             self.profile = null;
@@ -39,6 +40,11 @@ define(['jquery', '../interface/inventory',
             self.guide.click(function() {
                 self.guide.css('opacity', 0);
                 self.guide.css('display', 'none');
+            })
+
+            self.attendance.find('.attendance-ok').click(function() {
+                self.attendance.css('opacity', 0);
+                self.attendance.css('display', 'none');
             })
         },
 
