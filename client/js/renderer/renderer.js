@@ -494,7 +494,7 @@ define(['jquery', './camera', './tile',
             self.textContext.font = '14px AdvoCut';
 
             if (!entity.hasCounter) {
-                if (self.drawNames)
+                if (self.drawNames && entity.type !== 'chest')
                     self.drawText(entity.username || entity.name, (entity.x + 8) * factor, (entity.y - (self.drawLevels && (entity.type !== 'npc' && entity.type !== 'item') ? 12 : (entity.type !== 'item' || entity.description ? 7 : 1))) * factor, true, colour, '#000');
 
                 if (self.drawLevels && (entity.type === 'mob' || entity.type === 'player'))
