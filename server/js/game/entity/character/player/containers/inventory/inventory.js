@@ -66,17 +66,19 @@ module.exports = Inventory = Container.extend({
                     params: { username: self.owner.username }
                 };
                 self.owner.mysql.selectData('player_wallet', selectData, function(error, rows, fields) {
+                    var type = 'INSERT INTO';
+                    var balance = 0;
                     if (rows.length > 0) {
-                        var type = 'UPDATE IGNORE';
+                        type = 'UPDATE IGNORE';
                         var info = rows.shift();
-                        var balance = info.gold;
-                        balance += count;
-                        var updateData = { username: self.owner.username, gold: balance };
-                        self.owner.mysql.queryData(type, 'player_wallet', updateData);
-                        var data = { type: 'gold', amount: balance };
-                        self.owner.send(new Messages.Wallet(Packets.WalletOpcode.Set, data));
-                        if (item.instance) self.owner.world.removeItem(item);
+                        balance = info.gold;
                     }
+                    balance += count;
+                    var updateData = { username: self.owner.username, gold: balance };
+                    self.owner.mysql.queryData(type, 'player_wallet', updateData);
+                    var data = { type: 'gold', amount: balance };
+                    self.owner.send(new Messages.Wallet(Packets.WalletOpcode.Set, data));
+                    if (item.instance) self.owner.world.removeItem(item);
                 });
             }
         } else {
@@ -129,8 +131,8 @@ module.exports = Inventory = Container.extend({
         }
 
         if(Items.isCurrency(id)) {
-            var error_callback = function(e) {
-                self.owner.notify('Server Error');
+            var error_callback = function(e, message) {
+                self.owner.notify(message ? message : 'Server Error');
                 console.log(e);
             };
             if(Items.isCryptoCurrency(id)) {
@@ -142,6 +144,11 @@ module.exports = Inventory = Container.extend({
                             self.owner.notify('You do not have enough money to purchase this.');
                             return;
                         } else {
+                            if (balance < count) {
+                                const error_mesage = 'Lack of Balance';
+                                error_callback(new Error(error_mesage), error_mesage);
+                                return;
+                            }
                             GXC.consumeToken(self.owner.wallet.accessToken, count, function(response) {
                                 console.log(response);
                                 if (response.data && response.data.success && response.data.transaction) {
@@ -168,17 +175,24 @@ module.exports = Inventory = Container.extend({
                     params: { username: self.owner.username }
                 };
                 self.owner.mysql.selectData('player_wallet', selectData, function(error, rows, fields) {
+                    var type = 'INSERT INTO';
+                    var balance = 0;
                     if (rows.length > 0) {
-                        var type = 'UPDATE IGNORE';
+                        type = 'UPDATE IGNORE';
                         var info = rows.shift();
-                        var balance = info.gold;
-                        balance -= count;
-                        var updateData = { username: self.owner.username, gold: balance };
-                        self.owner.mysql.queryData(type, 'player_wallet', updateData);
-                        var data = { type: 'gold', amount: balance };
-                        self.owner.send(new Messages.Wallet(Packets.WalletOpcode.Set, data));
-                        if (callback) callback();
+                        balance = info.gold;
                     }
+                    if (balance < count) {
+                        const error_mesage = 'Lack of Balance';
+                        error_callback(new Error(error_mesage), error_mesage);
+                        return;
+                    }
+                    balance -= count;
+                    var updateData = { username: self.owner.username, gold: balance };
+                    self.owner.mysql.queryData(type, 'player_wallet', updateData);
+                    var data = { type: 'gold', amount: balance };
+                    self.owner.send(new Messages.Wallet(Packets.WalletOpcode.Set, data));
+                    if (callback) callback();
                 });
             }
         } else {
