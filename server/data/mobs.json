@@ -17,7 +17,7 @@
   },
 
   "Bat": {
-    "name": "Batterfly",
+    "name": "Bat",
     "id": 1,
     "drops": {"flask": 500},
     "hitPoints": 20,

@@ -1,17 +1,17 @@
 {
   "0": {
     "id": 0,
-    "name": "Rat Infestation",
-    "description": "Slay 25 rats.",
+    "name": "Bat Infestation",
+    "description": "Slay 25 bats.",
     "type": 0,
     "count": 26,
     "npc": 2,
-    "mob": 128,
+    "mob": 1,
     "rewardType": 1,
     "reward": 115,
     "text": [
-      "Hono dear adventurer!", "Yiss, plz help.",
-      "Rets r al 'round here.", "Plz kill, I hav gift en return."
+      "Oh no, dear adventurer!", "Plz help.",
+      "Bat a round here.", "Plz kill, I have gift en return."
     ]
   },
 
@@ -53,7 +53,7 @@
     "name": "Do you want to 100 Game-Token?",
     "description": "Slay 100 rats.",
     "type": 0,
-    "count": 100,
+    "count": 101,
     "npc": 12,
     "mob": 128,
     "item": 999,
