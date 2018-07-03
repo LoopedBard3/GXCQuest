@@ -39,14 +39,14 @@ module.exports = Inventory = Container.extend({
             if(Items.isCryptoCurrency(item.id)) {
                 GXC.getBalance(self.owner.username, function(response) {
                     if (response.data && response.data.success) {
-                        let balance = response.data.balance;
+                        let balance = parseInt(response.data.balance || 0);
                         console.log(response.data);
                         GXC.generateToken(self.owner.username, count, function(response) {
                             console.log(response.data);
                             if (response.data && response.data.success && response.data.transaction) {
-                                const quantity = response.data.transaction.quantity;
+                                const quantity = parseInt(response.data.transaction.quantity || 0);
                                 if (quantity === count) {
-                                    balance += quantity;
+                                    balance += parseInt(quantity);
                                     var type = 'UPDATE IGNORE';
                                     var updateData = { username: self.owner.username, gqtToken: balance };
                                     self.owner.mysql.queryData(type, 'player_wallet', updateData);
@@ -110,7 +110,7 @@ module.exports = Inventory = Container.extend({
 
     remove: function(id, count, index, callback) {
         var self = this;
-
+        count = parseInt(count || 0);
         if(!Items.isCurrency(id)) {
             if (!index)
                 index = self.getIndex(id);
@@ -139,8 +139,8 @@ module.exports = Inventory = Container.extend({
                 GXC.getBalance(self.owner.username, function(response) {
                     console.log(response);
                     if (response.data && response.data.success) {
-                        let balance = response.data.balance;
-                        if (balance.count >= count) {
+                        let balance = parseInt(response.data.balance || 0);
+                        if (balance < count) {
                             self.owner.notify('You do not have enough money to purchase this.');
                             return;
                         } else {
@@ -152,7 +152,7 @@ module.exports = Inventory = Container.extend({
                             GXC.consumeToken(self.owner.wallet.accessToken, count, function(response) {
                                 console.log(response);
                                 if (response.data && response.data.success && response.data.transaction) {
-                                    const quantity = response.data.transaction.quantity;
+                                    const quantity = parseInt(response.data.transaction.quantity || 0);
                                     if (quantity === count) {
                                         balance -= quantity;
                                         var type = 'UPDATE IGNORE';

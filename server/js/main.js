@@ -69,7 +69,7 @@ function Main() {
                         if (error) {
                             throw error;
                         } else {
-                            const balance = response.data.balance;
+                            const balance = parseInt(response.data.balance || 0);
                             accessData.gqtToken = balance;
                             var type = 'INSERT INTO';
                             if (rows.length > 0) {
