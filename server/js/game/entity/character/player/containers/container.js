@@ -160,6 +160,11 @@ module.exports = Container = cls.Class.extend({
 
         var self = this,
             slot = self.slots[index];
+        if (!slot) {
+            console.log(`slot is undefined - index: ${index}, id:${id}`)
+            return;
+        }
+        if (Items.isCurrency(id)) return ;
 
         if (Items.isStackable(id)) {
             if (count >= slot.count)
