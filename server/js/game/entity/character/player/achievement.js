@@ -64,7 +64,7 @@ module.exports = Achievement = cls.Class.extend({
             rewardType = self.data.rewardType;
 
         if ([Modules.Achievements.Rewards.Item, Modules.Achievements.Rewards.ItemAndExperience].indexOf(rewardType) !== -1) {
-            if (!self.player.inventory.hasSpace()) {
+            if (!Items.isCurrency(self.data.item) && !self.player.inventory.hasSpace()) {
                 self.player.notify('You do not have enough space in your inventory to finish this achievement.');
                 return;
             }
