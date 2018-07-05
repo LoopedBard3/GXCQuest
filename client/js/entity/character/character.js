@@ -169,6 +169,9 @@ define(['../entity', '../../utils/transition', '../animation'], function(Entity,
 
             if (self.attackers.size === 0)
                 return false;
+            
+            if (!character)
+                return false;
 
             return character.instance in self.attackers;
         },

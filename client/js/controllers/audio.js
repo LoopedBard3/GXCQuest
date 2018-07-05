@@ -205,6 +205,8 @@ define(function() {
 
             song.fadingOut = setInterval(function() {
 
+                if (!song)
+                    return;
                 song.volume -= 0.08;
 
                 if (song.volume <= 0.08) {
