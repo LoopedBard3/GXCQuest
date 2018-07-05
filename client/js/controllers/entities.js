@@ -140,7 +140,9 @@ define(['../renderer/grids', '../entity/objects/chest',
 
                             self.game.info.create(Modules.Hits.Damage, [info.damage, self.isPlayer(target.id)], target.x, target.y);
 
-                            target.triggerHealthBar();
+                            if (target) {
+                                target.triggerHealthBar();
+                            }
 
                             self.unregisterPosition(projectile);
                             delete self.entities[projectile.getId()];

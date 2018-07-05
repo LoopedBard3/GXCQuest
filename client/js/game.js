@@ -596,8 +596,12 @@ define(['./renderer/renderer', './utils/storage',
 
                         self.info.create(hit.type, [hit.damage, isPlayer], target.x, target.y);
 
-                        attacker.triggerHealthBar();
-                        target.triggerHealthBar();
+                        if (attacker) {
+                            attacker.triggerHealthBar();
+                        }
+                        if (target) {
+                            target.triggerHealthBar();
+                        }
 
                         if (isPlayer && hit.damage > 0)
                             self.audio.play(Modules.AudioTypes.SFX, 'hurt');
