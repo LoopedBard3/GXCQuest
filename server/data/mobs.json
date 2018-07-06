@@ -1936,7 +1936,7 @@
   "PirateCaptain": {
     "name": "Pirate Captain",
     "id": 120,
-    "drops": {"scimitar": 100, "piratearcherarmor": 100, "bluepiratearmor": 100, "marblependant": 200, "gold": 500},
+    "drops": {"scimitar": 100, "piratearcherarmor": 100, "bluepiratearmor": 100, "marblependant": 200, "gold": 400, "watermelon": 100},
     "hitPoints": 1500,
     "armour": 5,
     "weapon": 10,
