@@ -588,7 +588,7 @@ define(['jquery', './camera', './tile',
                 if (x < 0 || y < 0)
                     return;
 
-                if (pathingGrid && pathingGrid[y][x] !== 0)
+                if (pathingGrid && pathingGrid[y] && pathingGrid[y][x] !== 0)
                     self.drawCellHighlight(x, y, 'rgba(50, 50, 255, 0.5)');
             });
         },
