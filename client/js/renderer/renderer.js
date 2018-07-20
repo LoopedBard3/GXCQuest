@@ -494,6 +494,9 @@ define(['jquery', './camera', './tile',
             self.textContext.font = '14px AdvoCut';
 
             if (!entity.hasCounter) {
+                if (entity.guild)
+                    self.drawText(entity.guild, (entity.x + 8) * factor, (entity.y - 15 ) * factor, true, colour, '#000');
+
                 if (self.drawNames && entity.type !== 'chest' && entity.type !== 'projectile')
                     self.drawText(entity.username || entity.name, (entity.x + 8) * factor, (entity.y - (self.drawLevels && (entity.type !== 'npc' && entity.type !== 'item') ? 12 : (entity.type !== 'item' || entity.description ? 7 : 1))) * factor, true, colour, '#000');
 
@@ -585,7 +588,7 @@ define(['jquery', './camera', './tile',
                 if (x < 0 || y < 0)
                     return;
 
-                if (pathingGrid[y][x] !== 0)
+                if (pathingGrid && pathingGrid[y][x] !== 0)
                     self.drawCellHighlight(x, y, 'rgba(50, 50, 255, 0.5)');
             });
         },
