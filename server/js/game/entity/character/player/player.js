@@ -815,11 +815,12 @@ module.exports = Player = Character.extend({
     },
 
     sendEquipment: function() {
-        var self = this,
-            info = [self.armour.getData(), self.weapon.getData(), self.pendant.getData(),
+        var self = this;
+        if (self.armour && self.weapon && self.pendant && self.ring && self.boots) {
+            var info = [self.armour.getData(), self.weapon.getData(), self.pendant.getData(),
                 self.ring.getData(), self.boots.getData()];
-
-        self.send(new Messages.Equipment(Packets.EquipmentOpcode.Batch, info));
+            self.send(new Messages.Equipment(Packets.EquipmentOpcode.Batch, info));
+        }
     },
 
     sendToSpawn: function() {
