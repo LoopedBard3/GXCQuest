@@ -2,7 +2,7 @@
   "Rat": {
     "name": "Rat",
     "id": 128,
-    "drops": null,
+    "drops": {"gold": 1000},
     "hitPoints": 1,
     "armour": 0,
     "weapon": 0,

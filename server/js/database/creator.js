@@ -29,6 +29,7 @@ module.exports = Creator = cls.Class.extend({
     },
 
     createTables: function() {
+        console.log('create tables..');
         var self = this;
 
         function handleError(tableName) {

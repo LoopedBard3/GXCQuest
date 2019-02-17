@@ -40,7 +40,7 @@ CREATE TABLE `ipbans` (
 CREATE TABLE `player_attendance` (
   `username` varchar(64) NOT NULL,
   `count` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `updateDate` DATE DEFAULT now() NOT NULL,
+  `updateDate` DATE DEFAULT '0000-00-00' NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -53,7 +53,7 @@ CREATE TABLE `player_attendance` (
 CREATE TABLE `player_wallet` (
   `username` varchar(64) NOT NULL,
   `accessToken` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `accessTime` DATETIME DEFAULT now() NOT NULL,
+  `accessTime` DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
   `gqtToken` int(11) DEFAULT 0,
   `gold` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

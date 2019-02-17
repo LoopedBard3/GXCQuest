@@ -20,8 +20,7 @@ define(['./packets', './messages'], function(Packets, Messages) {
 
         connect: function() {
             var self = this,
-                url = 'ws://' + self.config.ip + ':' + self.config.port;
-
+                url = self.config.socketHost;
             self.connection = null;
 
             self.connection = io(url, {
@@ -30,7 +29,7 @@ define(['./packets', './messages'], function(Packets, Messages) {
             });
 
             self.connection.on('connect_error', function() {
-                log.info('Failed to connect to: ' + self.config.ip);
+                log.info('Failed to connect to: ' + self.config.socketHost);
 
                 self.listening = false;
 

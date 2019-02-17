@@ -10,7 +10,8 @@ var cls = require('../lib/class'),
     sanitizer = require('sanitizer'),
     Commands = require('./commands'),
     Items = require('../util/items'),
-    Utils = require('../util/utils');
+    Utils = require('../util/utils'),
+    gxc = require('../util/gxc');
 
 module.exports = Incoming = cls.Class.extend({
 
@@ -122,30 +123,26 @@ module.exports = Incoming = cls.Class.extend({
     },
 
     handleIntro: function(message) {
+        console.log(message);
         var self = this,
-            loginType = message.shift(),
-            username = message.shift().toLowerCase(),
-            password = message.shift(),
-            isRegistering = loginType === Packets.IntroOpcode.Register,
-            email = isRegistering ? message.shift() : '';
+            gameLoginToken = message.shift(),
+            gxcAccountName = message.shift();
+            // loginType = message.shift(),
+            // username = message.shift().toLowerCase(),
+            // password = message.shift(),
+            // isRegistering = loginType === Packets.IntroOpcode.Register,
+            // email = isRegistering ? message.shift() : '';
 
-        self.intro(username, password, email, isRegistering)
+        self.intro(gxcAccountName, gameLoginToken);
     },
 
-    intro: function(username, password, email, isRegistering) {
+    intro: function(gxcAccountName, gameLoginToken) {
         var self = this;
-        self.player.username = (username || '').substr(0, 32).trim();
-        self.player.password = password.substr(0, 32);
-        self.player.email = email.substr(0, 128);
+        self.player.username = gxcAccountName.trim();
+        self.player.password = gxcAccountName.trim();
 
         if (self.introduced)
-            return;
-
-        if (self.world.playerInWorld(self.player.username)) {
-            self.connection.sendUTF8('loggedin');
-            self.connection.close('Player already logged in..');
-            return;
-        }
+            return;        
 
         if (config.overrideAuth) {
             self.mysql.login(self.player);
@@ -164,6 +161,71 @@ module.exports = Incoming = cls.Class.extend({
         }
 
         self.introduced = true;
+        gxc.loginVerify(gxcAccountName, gameLoginToken)
+        .then(function(res) {
+            if (self.world.playerInWorld(self.player.username)) {
+                self.connection.sendUTF8('loggedin');
+                self.connection.close('Player already logged in..');
+                return;
+            }
+            const symbol = 'GOLD';
+            return gxc.getBalance(self.player.username, 'GOLD')
+            .then(function (response) {
+                console.log(response.data);
+                const data = {
+                    selector: ['GOLD'],
+                    params: { username: self.player.username }
+                }
+                self.mysql.selectData('player_wallet', data, function(error, rows, fields) {
+                    if (error) throw error;
+                    const balance = parseInt(response.data.balance || 0);
+                    var type = 'INSERT INTO';
+                    if (rows.length > 0) {
+                        type = 'UPDATE IGNORE';
+                        var info = rows.shift();
+                        if (balance !== info.GOLD) {
+                            console.error('balance not matching to wallet');
+                        }
+                    }
+                    const accessData = {
+                        username: self.player.username,
+                        accessTime: new Date(),
+                        accessToken: 'accessToken',
+                        GOLD: balance,
+                    };
+                    self.mysql.queryData(type, 'player_wallet', accessData);
+                });
+            })
+            .catch(function(error) {
+                console.log('error at loading balance..');
+                console.error(error);
+                // console.error(error.response.data);
+            });
+        })
+        .then(function() {
+            self.mysql.login(self.player, function(result) {
+                if (result.notfounduser) {
+                    self.connection.sendUTF8('invalidlogin');
+                    self.connection.close('Not Found User: ' + self.player.username);
+                } else if (result.wrongpassword) {
+                    self.connection.sendUTF8('invalidlogin');
+                    self.connection.close('Wrong password entered for: ' + self.player.username);
+                } else if (result.userexists) {
+                    self.connection.sendUTF8('userexists');
+                    self.connection.close('Username not available.');
+                } else if (result.emailexists) {
+                    self.connection.sendUTF8('emailexists');
+                    self.connection.close('Email not available.');
+                }
+            });
+
+        }).catch(function(err) {
+            console.error(err);
+            self.connection.sendUTF8('loggedin');
+            self.connection.close('Error at fetching auth login.');
+        })
+
+ 
 
         // if (isRegistering) {
         //     self.mysql.register(self.player, function(result) {
@@ -176,21 +238,6 @@ module.exports = Incoming = cls.Class.extend({
         //         }
         //     });
         // } else {
-        self.mysql.login(self.player, function(result) {
-            if (result.notfounduser) {
-                self.connection.sendUTF8('invalidlogin');
-                self.connection.close('Not Found User: ' + self.player.username);
-            } else if (result.wrongpassword) {
-                self.connection.sendUTF8('invalidlogin');
-                self.connection.close('Wrong password entered for: ' + self.player.username);
-            } else if (result.userexists) {
-                self.connection.sendUTF8('userexists');
-                self.connection.close('Username not available.');
-            } else if (result.emailexists) {
-                self.connection.sendUTF8('emailexists');
-                self.connection.close('Email not available.');
-            }
-        });
         // }
     },
 

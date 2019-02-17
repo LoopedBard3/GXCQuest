@@ -12,9 +12,12 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
     "commander": "^2.15.1",
     "connect": "^3.6.6",
     "http": "0.0.0",
+    "humps": "^2.0.1",
+    "jsonwebtoken": "^8.4.0",
     "log": "^1.4.0",
     "memcache": "^0.3.0",
     "mysql": "^2.13.0",

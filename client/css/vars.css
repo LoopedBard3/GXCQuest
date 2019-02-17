@@ -221,7 +221,7 @@ body {
 }
 
 #login, #newCharacter {
-    top: 65%;
+    top: 45%;
 }
 
 #yes, #no {
@@ -474,7 +474,7 @@ html [type="button"],
         text-shadow: 2px 2px 0 #373737, 2px -2px 0 #373737, 0 2px 0 #373737, 2px 0 0 #373737, -2px 2px 0 #373737, -2px -2px 0 #373737, 0 -2px 0 #373737, 0 2px 0 #373737, -2px 0 0 #373737;
     }
 
-    #login, #newCharacter, #continue, #cancelButton, #play {
+    #newCharacter, #continue, #cancelButton, #play {
         position: absolute;
         width: 306px;
         height: 81px;
@@ -482,6 +482,7 @@ html [type="button"],
     }
 
     #login {
+        position: absolute;
         background-position: -309px 0;
     }
 
@@ -707,14 +708,18 @@ html [type="button"],
         text-shadow:2px 2px 0 #373737, 2px -2px 0 #373737, 0 2px 0 #373737, 2px 0 0 #373737, -2px 2px 0 #373737, -2px -2px 0 #373737, 0 -2px 0 #373737, 0 2px 0 #373737, -2px 0 0 #373737;
     }
 
-    #login, #newCharacter, #continue, #cancelButton, #play {
+    #newCharacter, #continue, #cancelButton, #play {
         position: absolute;
         width: 204px;
         height: 54px;
         background: url('../img/2/buttons.png');
     }
+    #login {
+        
+    }
 
     #login {
+        position: absolute;
         background-position: -205px 0;
     }
 

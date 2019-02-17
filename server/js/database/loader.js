@@ -33,7 +33,7 @@ module.exports = Loader = cls.Class.extend({
             if (info.username !== player.username)
                 log.info('Mismatch whilst retrieving wallet data for: ' + player.username);
 
-            callback(info.accessToken, info.gqtToken, info.gold);
+            callback(info.accessToken, info.GOLD, info.RUBY);
 
         });
     },

@@ -59,6 +59,10 @@ define(['jquery'], function($) {
 
         load: function() {
             var self = this;
+            setTimeout(function() {
+                console.log(self.game);
+                self.game.initConnect();
+            }, 1000);
 
             self.loginButton.click(function() {
                 self.login();
@@ -188,6 +192,32 @@ define(['jquery'], function($) {
             $('input[type="range"]').on('input', function() {
                 self.updateRange($(this));
             });
+            $('#login_complete_button').click(function (e){
+                // self.player = {game_login_token: self.game.id};
+                self.game.login(self.gxcAccountName);
+                // self.game.connect(self.gxcAccountName);
+
+                // self.game.socket.send(Packets.Intro, [ self.game.id, self.gxc_account_name]);
+                
+                // $.post(self.config.host + '/login_verify', {game_login_token: self.game.id}, function(res) {
+                //     self.game.connect();
+                // });
+
+            });
+            $('[name="login-form"]').submit(function(e) {
+                var _self = this;
+                e.preventDefault();
+                self.gxcAccountName = $(this).find('#input_gxc_id').val();
+                console.log(self.config.host + '/gxc_login');
+                $.post(self.config.serverHost + '/gxc_login', {gxcAccountName: self.gxcAccountName, gameLoginToken: self.game.id}, function(res) {
+                    $('#qr_login_image').css('display', 'inline-block');
+                    $('#qr_login_image').attr('src', 'data:image/png;base64, ' + res).css('display', 'block');
+                    $('#login_submit_button').hide();
+                    $('.login-qrcode-description').show();
+                });
+                return false;
+
+            });
 
         },
 
@@ -196,26 +226,9 @@ define(['jquery'], function($) {
 
             if (self.loggingIn || !self.game || !self.game.loaded || self.statusMessage || !self.verifyForm())
                 return;
-            self.openWalletWindow();
+            // self.openWalletWindow();
             self.toggleLogin(true);
             // self.game.connect();
-        },
-
-        openWalletWindow: function() {
-            var self = this;
-
-            const width = 400;
-            const height = 500;
-            const left = (screen.availWidth - width) / 2;
-            const top = (screen.availHeight - height) / 2;
-            const config = self.config;
-            const redirectURI = `${config.protocol}://${config.ip}${config.port !== '' ? `:${config.port}`:''}${config.gxc.client.oauthCallbackURL}`;
-            self.walletWindow = window.open(`${config.gxc.client.url}?response_type=code&client_id=${config.gxc.client.id}&redirect_uri=${redirectURI}`, Math.random(), `width=${width}, height=${height}, left=${left}, top=${top}`);
-            window.gxcLoginHander = function (account, password, email) {
-                self.walletWindow.close();
-                self.player = { account, password, email };
-                self.game.connect();
-            }
         },
 
         zoom: function() {

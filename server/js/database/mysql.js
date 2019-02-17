@@ -64,7 +64,7 @@ module.exports = MySQL = cls.Class.extend({
                 return;
             }
 
-			      // self.creator.createTables();
+            // self.creator.createTables();
             log.info('Successfully established connection to the MySQL database!');
             self.loader = new Loader(self);
         });
@@ -103,22 +103,19 @@ module.exports = MySQL = cls.Class.extend({
 
             _.each(rows, function(row) {
                 if (row.username === player.username) {
-                    if (row.password !== player.password) {
-                        callback({ wrongpassword: true });
-                    } else {
-                        found = true;
 
-                        var data = row;
+                    found = true;
 
-                        data.armour = data.armour.split(',').map(Number);
-                        data.weapon = data.weapon.split(',').map(Number);
-                        data.pendant = data.pendant.split(',').map(Number);
-                        data.ring = data.ring.split(',').map(Number);
-                        data.boots = data.boots.split(',').map(Number);
+                    var data = row;
 
-                        player.load(data);
-                        player.intro();
-                    }
+                    data.armour = data.armour.split(',').map(Number);
+                    data.weapon = data.weapon.split(',').map(Number);
+                    data.pendant = data.pendant.split(',').map(Number);
+                    data.ring = data.ring.split(',').map(Number);
+                    data.boots = data.boots.split(',').map(Number);
+
+                    player.load(data);
+                    player.intro();
                 }
             });
 

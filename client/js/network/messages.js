@@ -81,7 +81,7 @@ define(function() {
 
         handleUTF8: function(message) {
             var self = this;
-
+            console.log(message);
             self.app.toggleLogin(false);
 
             switch (message) {

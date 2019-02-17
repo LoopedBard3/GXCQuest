@@ -29,6 +29,8 @@ function Main() {
     if (!config.offlineMode)
         database = new MySQL(config.mysqlHost, config.mysqlPort, config.mysqlUser, config.mysqlPassword, config.mysqlDatabase);
 
+
+    // not use
     webSocket.onOAuth(function (code, res) {
         let gxcData = null;
         let accessToken = null;

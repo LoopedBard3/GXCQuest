@@ -8,7 +8,10 @@ var Socket = require('./socket'),
     _ = require('underscore'),
     SocketIO = require('socket.io'),
     Utils = require('../util/utils'),
+    config = require('../../config.json'),
     querystring = require('querystring'),
+    bodyParser = require('body-parser'),
+    gxc = require('../util/gxc');
     WebSocket = {};
 
 module.exports = WebSocket;
@@ -30,12 +33,22 @@ WebSocket.Server = Socket.extend({
         //Serve statically for faster development
 
         var app = connect();
+        app.use(bodyParser.json({ type: 'application/*+json' }));
+        app.use(bodyParser.urlencoded({ extended: false }));
         app.use(serve('client', {'index': ['index.html']}), null);
 
-        app.use('/oauth_callback', function (request, response, next) {
-            const params = querystring.parse(request._parsedOriginalUrl.query);
-            self.oauthCallback(params.code, response);
-        });
+        app.use('/gxc_login', function(request, response, next) {
+            const { gxcAccountName, gameLoginToken } = request.body;
+            return gxc.login(gxcAccountName, gameLoginToken)
+            .then(function(res) {
+                response.end(res.data.qrcode);
+            }).catch(function(err) {
+                console.error('error!');
+                console.error(err);
+                next(err);
+            });
+
+        })
 
         self.httpServer = http.createServer(app).listen(port, host, function serverEverythingListening() {
             log.notice('Server is now listening on: ' + port);
@@ -44,8 +57,8 @@ WebSocket.Server = Socket.extend({
         self.io = new SocketIO(self.httpServer);
         self.io.on('connection', function webSocketListener(socket) {
             log.notice('Received connection from: ' + socket.conn.remoteAddress);
-
-            var client = new WebSocket.Connection(self.createId(), socket, self);
+            let clientId = self.createId();
+            var client = new WebSocket.Connection(clientId, socket, self);
 
             socket.on('client', function(data) {
                 if (data.gVer !== self.version) {
@@ -55,7 +68,6 @@ WebSocket.Server = Socket.extend({
 
                 if (self.connectionCallback)
                     self.connectionCallback(client);
-
                 self.addConnection(client);
             });
 

@@ -22,5 +22,9 @@ module.exports = Socket = cls.Class.extend({
 
     getConnection: function(id) {
         return this._connections[id];
+    },
+
+    getAllConnections: function() {
+        return this._connections;
     }
 });

@@ -172,7 +172,7 @@ Items.isCurrency = function (id) {
 
 Items.isCryptoCurrency = function (id) {
     if (id in Items.Ids)
-        return Items.Ids[id].cryptocurrency;
+        return Items.Ids[id].cryptoCurrency;
 
     return false;
 };

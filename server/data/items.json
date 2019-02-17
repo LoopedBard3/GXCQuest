@@ -1617,12 +1617,13 @@
       "name":"Black Potion"
     },
     
-    "Gold": {
+    "GOLD": {
       "id":202,
       "type":"object",
-      "name":"Gold",
+      "name":"GOLD",
       "stackable": 1,
-      "currency": 1
+      "currency": 1,
+      "cryptoCurrency": 1
     },
     
     "MountSeaDragon": {
@@ -2059,13 +2060,13 @@
       "name": "Pickle Armour"
     },
   
-    "GQT": {
+    "RUBY": {
       "id": 999,
       "type": "object",
-      "name": "GQT",
+      "name": "RUBY",
       "stackable": 1,
       "currency": 1,
-      "cryptocurrency": 1
+      "cryptoCurrency": 1
     }
   }
   

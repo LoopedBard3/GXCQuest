@@ -1,50 +1,60 @@
-var config = require('../../config.json'),
-    axios = require('axios');
+const config = require('../../config.json');
+const axios = require('axios');
+const jwt = require("jsonwebtoken");
+const querystring = require("querystring");
+const humps = require('humps');
+
+const request = {
+    get: (url, camelizedParams) => {
+        const params = humps.decamelizeKeys(camelizedParams);
+        let payload = {
+            api_key: config.gxc.port.apiKey,
+            nonce: (new Date).getTime(),
+        };
+        
+        if(params) {
+            const query = querystring.stringify(params);
+            payload.query = query;
+        }
+        const jwtToken = jwt.sign(payload, config.gxc.port.secretKey);
+        const authorizationToken = `Bearer ${jwtToken}`;
+        return axios.get(`${config.gxc.port.host}/v0${url}`, {params, headers: {Authorization: authorizationToken}})
+    },
+    post: (url, camelizedParams) => {
+        const params = humps.decamelizeKeys(camelizedParams);
+        let payload = {
+            api_key: config.gxc.port.apiKey,
+            nonce: (new Date).getTime(),
+        };
+        
+        if(params) {
+            const query = querystring.stringify(params);
+            payload.query = query;
+        }
+        const jwtToken = jwt.sign(payload, config.gxc.port.secretKey);
+        const authorizationToken = `Bearer ${jwtToken}`;
+        return axios.post(`${config.gxc.port.host}/v0${url}`, params, {headers: {Authorization: authorizationToken}})
+    },
+}
 
 module.exports = GXC = {
-    getBalance: function(account, callback, error_callback) {
-        return axios.get(`${config.gxc.server.url}${config.gxc.server.balance.url}${account}`)
-            .then(function (response) {
-                if(callback) callback(response);
-            })
-            .catch(function(e) {
-                if(error_callback) {
-                    error_callback(e);
-                } else {
-                    console.log(e);
-                }
-            });
+    login: function(gxcAccountName, gameLoginToken) {
+        return request.post(`/game/${config.gxc.gxcGameName}/login/`, {gxcAccountName, gameLoginToken})
+    },
+    loginVerify: function(gxcAccountName, gameLoginToken) {
+        return request.post(`/game/${config.gxc.gxcGameName}/login_verify/`, {gxcAccountName, gameLoginToken})
+    },
+    getBalance: function(gxcAccountName, symbol) {
+        return request.get('/coin/balance', {gxcGameName: config.gxc.gxcGameName, symbol, gxcAccountName})
     },
 
-    generateToken: function(account, quantity, callback, error_callback) {
-        return axios.post(`${config.gxc.server.url}${config.gxc.server.transfer.url}`,
-            { symbol: config.gxc.tokenSymbol, to: account, quantity: quantity },
-            { headers: { Authorization: `Bearer ${config.faucet.account.accessToken}` } })
-            .then(function (response) {
-                if(callback) callback(response);
-            })
-            .catch(function(e) {
-                if(error_callback) {
-                    error_callback(e);
-                } else {
-                    console.log(e);
-                }
-            });
+    increaseBalance: function(gxcAccountName, symbol, balance) {
+        return request.post('/coin/balance/increase',
+            {gxcGameName: config.gxc.gxcGameName, symbol, gxcAccountName, balance})
     },
 
-    consumeToken: function(accessToken, quantity, callback, error_callback) {
-        return axios.post(`${config.gxc.server.url}${config.gxc.server.transfer.url}`,
-            { symbol: config.gxc.tokenSymbol, to: config.faucet.account.name, quantity: quantity },
-            { headers: { Authorization: `Bearer ${accessToken}` } })
-            .then(function (response) {
-                if(callback) callback(response);
-            })
-            .catch(function(e) {
-                if(error_callback) {
-                    error_callback(e);
-                } else {
-                    console.log(e);
-                }
-            });
+    decreaseBalance: function(gxcAccountName, symbol, balance) {
+        return request.post('/coin/balance/decrease',
+            {gxcGameName: config.gxc.gxcGameName, symbol, gxcAccountName, balance})
     }
 };

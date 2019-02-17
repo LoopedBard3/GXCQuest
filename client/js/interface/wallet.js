@@ -8,35 +8,34 @@ define(['jquery'], function($) {
             self.game = game;
 
             self.wallet = $('#wallet');
-            self.gold = self.wallet.find("li.gold");
-            self.goldAmount = self.gold.find(".amount");
-            self.token = self.wallet.find("li.token");
-            self.tokenAmount = self.token.find(".amount");
+            self.GOLD = self.wallet.find("li.gold");
+            self.GOLDAmount = self.GOLD.find(".amount");
+            self.RUBY = self.wallet.find("li.token");
+            self.RUBYAmount = self.RUBY.find(".amount");
 
             self.player = game.player;
             self.interface = interface;
 
             self.container = null;
             self.data = {
-                goldAmount: 0,
-                tokenAmount: 0
+                GOLDAmount: 0,
+                TOKENAmount: 0
             };
 
-            self.token.click(function(e) {
-                self.game.socket.send(Packets.Click, ['token', true]);
+            self.RUBY.click(function(e) {
+                self.game.socket.send(Packets.Click, ['RUBY', true]);
             })
         },
 
         update: function(data) {
             var self = this;
-
             //Update the global data to current revision
-            if (data.type === 'gold') {
+            if (data.type === 'GOLD') {
                 self.data.goldAmount = data.amount;
-                self.goldAmount.text(data.amount);
+                self.GOLDAmount.text(data.amount);
             } else {
-                self.data.tokenAmount = data.amount;
-                self.tokenAmount.text(data.amount);
+                self.data.RUBYAmount = data.amount;
+                self.RUBYAmount.text(data.amount);
             }
         },
     });

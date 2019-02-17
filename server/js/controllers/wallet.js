@@ -12,19 +12,19 @@ module.exports = Wallet = cls.Class.extend({
 
         self.player = player;
         self.accessToken = '';
-        self.gqtToken = 0;
-        self.gold = 0;
+        self.GOLD = 0;
+        self.RUBY = 0;
     },
 
-    load: function(accessToken, gqtToken, gold) {
+    load: function(accessToken, GOLD, RUBY) {
         var self = this;
 
         self.accessToken = accessToken;
-        self.gqtToken = gqtToken;
-        self.gqtToken = gold;
+        self.GOLD = GOLD;
+        self.RUBY = RUBY;
         
-        var tokenData = { type: 'token', amount: gqtToken };
-        var goldData = { type: 'gold', amount: gold };
+        var tokenData = { type: 'GOLD', amount:  GOLD };
+        var goldData = { type: 'RUBY', amount: RUBY };
 
         self.player.send(new Messages.Wallet(Packets.WalletOpcode.Set, tokenData));
         self.player.send(new Messages.Wallet(Packets.WalletOpcode.Set, goldData));
