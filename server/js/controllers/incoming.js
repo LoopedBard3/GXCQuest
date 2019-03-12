@@ -163,7 +163,10 @@ module.exports = Incoming = cls.Class.extend({
         self.introduced = true;
         gxc.loginVerify(gxcAccountName, gameLoginToken)
         .then(function(res) {
+	    console.log('login verify success: ');
+	    console.log(res.data);
             if (self.world.playerInWorld(self.player.username)) {
+		console.log('already loggedin user: ' + self.player.username);
                 self.connection.sendUTF8('loggedin');
                 self.connection.close('Player already logged in..');
                 return;
@@ -199,7 +202,7 @@ module.exports = Incoming = cls.Class.extend({
             .catch(function(error) {
                 console.log('error at loading balance..');
                 console.error(error);
-                // console.error(error.response.data);
+		if(error && error.response) console.error(error.response.data);
             });
         })
         .then(function() {

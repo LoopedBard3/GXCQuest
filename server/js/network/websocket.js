@@ -41,6 +41,7 @@ WebSocket.Server = Socket.extend({
             const { gxcAccountName, gameLoginToken } = request.body;
             return gxc.login(gxcAccountName, gameLoginToken)
             .then(function(res) {
+		console.log('gxc login attemp: ', gxcAccountName, gameLoginToken);
                 response.end(res.data.qrcode);
             }).catch(function(err) {
                 console.error('error!');

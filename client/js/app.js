@@ -208,7 +208,9 @@ define(['jquery'], function($) {
                 var _self = this;
                 e.preventDefault();
                 self.gxcAccountName = $(this).find('#input_gxc_id').val();
-                console.log(self.config.host + '/gxc_login');
+		if(parseInt(self.game.id) === -1) {
+		  return alert('잠시 후 다시 시도해주세요');
+		}
                 $.post(self.config.serverHost + '/gxc_login', {gxcAccountName: self.gxcAccountName, gameLoginToken: self.game.id}, function(res) {
                     $('#qr_login_image').css('display', 'inline-block');
                     $('#qr_login_image').attr('src', 'data:image/png;base64, ' + res).css('display', 'block');
