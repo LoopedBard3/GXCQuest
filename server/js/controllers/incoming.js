@@ -201,6 +201,7 @@ module.exports = Incoming = cls.Class.extend({
             })
             .catch(function(error) {
                 console.log('error at loading balance..');
+                console.error(error.response.data.error)
                 console.error(error);
 		if(error && error.response) console.error(error.response.data);
             });
@@ -224,8 +225,8 @@ module.exports = Incoming = cls.Class.extend({
 
         }).catch(function(err) {
             console.error(err);
-            self.connection.sendUTF8('loggedin');
-            self.connection.close('Error at fetching auth login.');
+            self.connection.sendUTF8('invalidlogin');
+            // self.connection.close('Error at login verify.');
         })
 
  

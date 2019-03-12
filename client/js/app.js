@@ -208,12 +208,13 @@ define(['jquery'], function($) {
                 var _self = this;
                 e.preventDefault();
                 self.gxcAccountName = $(this).find('#input_gxc_id').val();
-		if(parseInt(self.game.id) === -1) {
-		  return alert('잠시 후 다시 시도해주세요');
-		}
+
+                if(parseInt(self.game.id) === -1) return alert('잠시 후 다시 시도해주세요');
+
                 $.post(self.config.serverHost + '/gxc_login', {gxcAccountName: self.gxcAccountName, gameLoginToken: self.game.id}, function(res) {
                     $('#qr_login_image').css('display', 'inline-block');
-                    $('#qr_login_image').attr('src', 'data:image/png;base64, ' + res).css('display', 'block');
+                    $('#qr_login_image').attr('src', 'data:image/png;base64, ' + res.qrcode).css('display', 'block');
+                    $('#otp').text(res.otp).css('display', 'block');
                     $('#login_submit_button').hide();
                     $('.login-qrcode-description').show();
                 });
