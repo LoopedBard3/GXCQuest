@@ -42,7 +42,7 @@ WebSocket.Server = Socket.extend({
             return gxc.login(gxcAccountName, gameLoginToken)
             .then(function(res) {
 		        console.log('gxc login attemp: ', gxcAccountName, gameLoginToken);
-                response.end(res.data);
+                response.end(JSON.stringify(res.data));
             }).catch(function(err) {
                 console.error('error!');
                 console.error(err);

@@ -212,6 +212,7 @@ define(['jquery'], function($) {
                 if(parseInt(self.game.id) === -1) return alert('잠시 후 다시 시도해주세요');
 
                 $.post(self.config.serverHost + '/gxc_login', {gxcAccountName: self.gxcAccountName, gameLoginToken: self.game.id}, function(res) {
+                    res = JSON.parse(res);
                     $('#qr_login_image').css('display', 'inline-block');
                     $('#qr_login_image').attr('src', 'data:image/png;base64, ' + res.qrcode).css('display', 'block');
                     $('#otp').text(res.otp).css('display', 'block');
