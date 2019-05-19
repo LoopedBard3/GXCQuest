@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `GXQEmpty`
+-- Database: `database`
 --
 
 -- --------------------------------------------------------
@@ -25,12 +25,10 @@ SET time_zone = "+00:00";
 --
 -- Table structure for table `ipbans`
 --
-
 CREATE TABLE `ipbans` (
   `ip` varchar(64) NOT NULL,
   `ipban` int(64) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 -- --------------------------------------------------------
 
@@ -40,7 +38,7 @@ CREATE TABLE `ipbans` (
 CREATE TABLE `player_attendance` (
   `username` varchar(64) NOT NULL,
   `count` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `updateDate` DATE DEFAULT now() NOT NULL,
+  `updateDate` DATETIME DEFAULT NOW() NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
