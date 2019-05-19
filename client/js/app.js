@@ -196,9 +196,14 @@ define(['jquery'], function($) {
 
             if (self.loggingIn || !self.game || !self.game.loaded || self.statusMessage || !self.verifyForm())
                 return;
-            self.openWalletWindow();
-            self.toggleLogin(true);
-            // self.game.connect();
+            if(self.isGuest()){
+                self.toggleLogin(true);
+                self.game.connect();
+            }else{
+                self.openWalletWindow();
+                self.toggleLogin(true);
+                // self.game.connect();
+            }
         },
 
         openWalletWindow: function() {
